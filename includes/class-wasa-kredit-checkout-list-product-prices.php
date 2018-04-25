@@ -22,19 +22,20 @@ class Wasa_Kredit_Checkout_List_Product_Prices
             array($this, 'wasa_save_product_prices'),
             10
         );
-
-        add_filter( 'formatted_woocommerce_price', array($this, 'filter_formatted_woocommerce_price'), 10, 5 ); 
+       
+        add_action( 'woocommerce_after_shop_loop_item', array($this, 'display_leasing_price_per_product'), 9 );
     }
 
-    function filter_formatted_woocommerce_price( $number_format, $price, $decimals, $decimal_separator, $thousand_separator ) { 
+    function display_leasing_price_per_product() {
+        global $product;
+
         $monthly_cost = 0;
 
         if (isset($GLOBALS['product_leasing_prices'])) {
-            $product_id = get_the_ID();
-            $monthly_cost = $GLOBALS['product_leasing_prices'][$product_id];
+            $monthly_cost = $GLOBALS['product_leasing_prices'][$product->id];
         }
             
-        return $number_format . '<br />Monthly cost: ' . $monthly_cost . ' ' . get_woocommerce_currency();
+        echo '<p>' . __('Monthly cost: ', 'wasa-kredit-checkout') . $monthly_cost . ' ' . get_woocommerce_currency() . '</p>';
     }
 
     public function wasa_save_product_prices()
