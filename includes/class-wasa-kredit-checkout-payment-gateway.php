@@ -69,15 +69,6 @@ function init_wasa_kredit_gateway()
         function init_form_fields()
         {
             return array(
-                'enabled' => array(
-                    'title' => __('Enable/Disable', 'wasa-kredit-checkout'),
-                    'type' => 'checkbox',
-                    'label' => __(
-                        'Enable Wasa Kredit Checkout',
-                        'wasa-kredit-checkout'
-                    ),
-                    'default' => 'yes'
-                ),
                 'title' => array(
                     'title' => __('Title', 'wasa-kredit-checkout'),
                     'type' => 'text',
@@ -102,41 +93,28 @@ function init_wasa_kredit_gateway()
                         'wasa-kredit-checkout'
                     )
                 ),
-                'merchant_id' => array(
-                    'title' => __('Merchant ID', 'wasa-kredit-checkout'),
+                'partner_id' => array(
+                    'title' => __('Partner ID', 'wasa-kredit-checkout'),
                     'type' => 'text',
                     'description' => __(
-                        'Please enter your Merchant ID; this is needed in order to take payment.',
+                        'Partner ID is issued by Wasa Kredit.',
                         'wasa-kredit-checkout'
                     ),
                     'default' => ''
                 ),
-                'api_username' => array(
-                    'title' => __('API Username', 'wasa-kredit-checkout'),
+                'client_secret' => array(
+                    'title' => __('Client secret', 'wasa-kredit-checkout'),
                     'type' => 'text',
                     'description' => __(
-                        'Get your API credentials from Wasa.',
+                        'Client Secret is issued by Wasa Kredit.',
                         'wasa-kredit-checkout'
                     ),
-                    'default' => '',
-                    'desc_tip' => true,
-                    'placeholder' => __('Optional', 'wasa-kredit-checkout')
+                    'default' => ''
                 ),
-                'api_password' => array(
-                    'title' => __('API Password', 'wasa-kredit-checkout'),
-                    'type' => 'text',
-                    'description' => __(
-                        'Get your API credentials from DIBS.',
-                        'wasa-kredit-checkout'
-                    ),
-                    'default' => '',
-                    'desc_tip' => true,
-                    'placeholder' => __('Optional', 'wasa-kredit-checkout')
-                ),
-                'debug' => array(
-                    'title' => __('Debug', 'wasa-kredit-checkout'),
+                'test_mode' => array(
+                    'title' => __('Test mode', 'wasa-kredit-checkout'),
                     'type' => 'checkbox',
-                    'label' => __('Enable logging', 'wasa-kredit-checkout'),
+                    'label' => __('Enable test mode', 'wasa-kredit-checkout'),
                     'default' => 'no'
                 )
             );
