@@ -22,42 +22,72 @@ class Wasa_Kredit_Checkout_List_Product_Prices
             array($this, 'wasa_save_product_prices'),
             10
         );
+
+        add_filter( 'formatted_woocommerce_price', array($this, 'filter_formatted_woocommerce_price'), 10, 5 ); 
+    }
+
+    function filter_formatted_woocommerce_price( $number_format, $price, $decimals, $decimal_separator, $thousand_separator ) { 
+        $monthly_cost = 0;
+
+        if (isset($GLOBALS['product_leasing_prices'])) {
+            $product_id = get_the_ID();
+            $monthly_cost = $GLOBALS['product_leasing_prices'][$product_id];
+        }
+            
+        return $number_format . '<br />Monthly cost: ' . $monthly_cost . ' ' . get_woocommerce_currency();
     }
 
     public function wasa_save_product_prices()
     {
-        //TODO: Figure out how to get all products in list
-        $product_leasing_prices = [];
+        $payload['items'] = []; // Payload will contain all products with price, currency and id
+        $current_currency = get_woocommerce_currency();
+        $page_info = get_queried_object();
 
-        $payload['items'][] = array(
-                    'financed_price' => array(
-                        'amount' => '14995.00',
-                        'currency' => 'SEK'
-                    ),
-                    'product_id' => '12345'
-                );
-
-        $response = $this->_client->calculate_monthly_cost($payload);
-
-        if ($response->statusCode == "200") {
-            $GLOBALS['product_leasing_prices'] = $response->data;
-        }
-
+        // Get all products from woocommerce
         $args = array(
             'post_type'      => 'product',
             'posts_per_page' => 10000
         );
+
+        if (isset($page_info->term_id)) {
+            // Only include products in the currenct category, if a category is chosen
+            $args['tax_query'][] = array(
+                'taxonomy' => 'product_cat',
+                'field' => 'term_id',
+                'terms' => $page_info->term_id,
+                'operator' => 'IN'
+            );
+        }
     
         $loop = new WP_Query( $args );
     
+        // Loop through all products
         while ( $loop->have_posts() ) : $loop->the_post();
             global $product;
-            $product_leasing_prices[$product->get_id()] = 'kaka';
-            //echo '<br /><a href="'.get_permalink().'">' . woocommerce_get_product_thumbnail().' '.get_the_title().'</a>';
+
+            // Add this product to payload
+            $payload['items'][] = array(
+                'financed_price' => array(
+                    'amount' => $product->get_price(),
+                    'currency' => $current_currency
+                ),
+                'product_id' => $product->get_id()
+            );
         endwhile;
     
         wp_reset_query();
 
-        echo '<pre>'; print_r($response->data); print_r($product_leasing_prices); echo '</pre>';
+        // Get resposne from API with all products defined in $payload
+        $response = $this->_client->calculate_monthly_cost($payload);
+        $monthly_costs = [];
+
+        if ($response->statusCode == 200) {
+            foreach ($response->data['monthly_costs'] as $current_product) {
+                $monthly_costs[$current_product['product_id']] = $current_product['monthly_cost']['amount'];
+            }
+
+            // Save prices to global variable to access it from template
+            $GLOBALS['product_leasing_prices'] = $monthly_costs;
+        }
     }
 }
