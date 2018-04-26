@@ -37,6 +37,10 @@ function init_wasa_kredit_gateway()
             $this->form_fields = $this->init_form_fields();
             $this->init_settings();
 
+            if ($this->settings['enabled']) {
+                $this->enabled = $this->settings['enabled'];
+            }
+
             if ($this->settings['title']) {
                 $this->title = $this->settings['title'];
             }
@@ -51,7 +55,7 @@ function init_wasa_kredit_gateway()
             );
         }
 
-        function init_settings()
+        public function init_settings()
         {
             $this->settings = get_option($this->options_key, null);
 
@@ -66,9 +70,18 @@ function init_wasa_kredit_gateway()
             }
         }
 
-        function init_form_fields()
+        public function init_form_fields()
         {
             return array(
+                'enabled' => array(
+                    'title' => __('Enable/Disable', 'woocommerce'),
+                    'type' => 'checkbox',
+                    'label' => __(
+                        'Enable Wasa Kredit Checkout',
+                        'wasa-kredit-checkout'
+                    ),
+                    'default' => 'yes'
+                ),
                 'title' => array(
                     'title' => __('Title', 'wasa-kredit-checkout'),
                     'type' => 'text',
@@ -93,7 +106,7 @@ function init_wasa_kredit_gateway()
                         'wasa-kredit-checkout'
                     )
                 ),
-                'enabled_for_countries' => array(
+                'countries' => array(
                     'title' => __(
                         'Enable for these countries',
                         'wasa-kredit-checkout'
@@ -132,7 +145,7 @@ function init_wasa_kredit_gateway()
             );
         }
 
-        function process_admin_options()
+        public function process_admin_options()
         {
             $this->init_settings();
 
@@ -161,7 +174,25 @@ function init_wasa_kredit_gateway()
             );
         }
 
-        function process_payment($order_id)
+        public function is_available()
+        {
+            $location = WC_Geolocation::geolocate_ip();
+            $country = $location['country'];
+            $available_countries = array_flip($this->get_option('countries'));
+            $enabled = $this->get_option('enabled');
+
+            // Only enable checkout if users country is in defined contries in settings
+            if (
+                $enabled === "yes" &&
+                array_key_exists($country, $available_countries)
+            ) {
+                return true;
+            }
+
+            return false;
+        }
+
+        public function process_payment($order_id)
         {
             global $woocommerce;
             $order = new WC_Order($order_id);
