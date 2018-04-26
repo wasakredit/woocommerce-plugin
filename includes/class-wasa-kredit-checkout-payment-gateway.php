@@ -93,6 +93,18 @@ function init_wasa_kredit_gateway()
                         'wasa-kredit-checkout'
                     )
                 ),
+                'enabled_for_countries' => array(
+                    'title' => __(
+                        'Enable for these countries',
+                        'wasa-kredit-checkout'
+                    ),
+                    'desc' => '',
+                    'id' => 'woocommerce_specific_allowed_countries',
+                    'css' => 'min-width: 350px;',
+                    'default' => '',
+                    'type' => 'multiselect',
+                    'options' => WC()->countries->get_countries()
+                ),
                 'partner_id' => array(
                     'title' => __('Partner ID', 'wasa-kredit-checkout'),
                     'type' => 'text',
