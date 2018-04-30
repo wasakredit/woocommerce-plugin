@@ -92,23 +92,24 @@ class Wasa_Kredit_Checkout
     function checkout_template_override($page_template)
     {
         $checkout_page = get_page_by_title('Wasa Kredit Checkout');
-        
+
         if (is_page($checkout_page)) {
-            $page_template = dirname(__FILE__) . '/../templates/checkout-page.php';
+            $page_template =
+                dirname(__FILE__) . '/../templates/checkout-page.php';
         }
 
         return $page_template;
     }
 
-    public function create_checkout_page() {
+    public function create_checkout_page()
+    {
         // This page is used with the template ./templates/checkout-page.php to give the
         // the ability to edit text above and the checkout
-
         if (is_admin()) {
             return;
         }
 
-        if (get_page_by_title('Wasa Kredit Checkout') == NULL) {
+        if (get_page_by_title('Wasa Kredit Checkout') == null) {
             global $user_ID;
 
             $new_page = array(

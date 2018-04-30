@@ -30,6 +30,7 @@ function init_wasa_kredit_gateway()
             $this->method_title = "Wasa Kredit";
             $this->description = "Use to pay with Wasa Kredit Checkout.";
             $this->method_description = "Use to pay with Wasa Kredit Checkout.";
+            $this->order_button_text = "Proceed to Wasa Kredit Checkout";
             $this->selected_currency = get_woocommerce_currency();
 
             $this->options_key = "wasa_kredit_settings";
@@ -196,7 +197,7 @@ function init_wasa_kredit_gateway()
         {
             global $woocommerce;
             $order = new WC_Order($order_id);
-            
+
             return array(
                 'result' => 'success',
                 'redirect' => $this->get_return_url($order)
