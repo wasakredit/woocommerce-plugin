@@ -196,24 +196,19 @@ function init_wasa_kredit_gateway()
         {
             global $woocommerce;
             $order = new WC_Order($order_id);
-
-            // Mark as on-hold (we're awaiting the cheque)
-            $order->update_status(
-                'on-hold',
-                __('Awaiting Wasa Kredit Checkout payment', 'wasa_kredit')
-            );
-
-            // Reduce stock levels
-            $order->reduce_order_stock();
-
-            // Remove cart
-            $woocommerce->cart->empty_cart();
-
-            // Return thankyou redirect
+            
             return array(
                 'result' => 'success',
                 'redirect' => $this->get_return_url($order)
             );
+        }
+
+        public function get_return_url($order = null)
+        {
+            $checkout_page = get_page_by_title('Wasa Kredit Checkout');
+            $returnPage = get_permalink($checkout_page);
+
+            return $returnPage . '?id=' . $order->data['id'];
         }
     }
 }
