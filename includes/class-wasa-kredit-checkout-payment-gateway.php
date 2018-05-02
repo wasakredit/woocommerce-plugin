@@ -152,6 +152,15 @@ function init_wasa_kredit_gateway()
                     ),
                     'default' => 'no'
                 ),
+                'widget_on_product_list' => array(
+                    'title' => __('Enable/Disable', 'wasa-kredit-checkout'),
+                    'type' => 'checkbox',
+                    'label' => __(
+                        'Show monthly cost in product list',
+                        'wasa-kredit-checkout'
+                    ),
+                    'default' => 'yes'
+                ),
                 'partner_id' => array(
                     'title' => __('Partner ID', 'wasa-kredit-checkout'),
                     'type' => 'text',

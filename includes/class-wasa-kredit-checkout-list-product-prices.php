@@ -34,6 +34,12 @@ class Wasa_Kredit_Checkout_List_Product_Prices
     {
         global $product;
 
+        $settings = get_option('wasa_kredit_settings');
+
+        if ($settings['widget_on_product_list'] != "yes") {
+            return;
+        }
+
         $monthly_cost = 0;
 
         if (isset($GLOBALS['product_leasing_prices'])) {
@@ -41,15 +47,19 @@ class Wasa_Kredit_Checkout_List_Product_Prices
         }
 
         echo '<p>' .
-            __('Monthly cost: ', 'wasa-kredit-checkout') .
-            $monthly_cost .
-            ' ' .
-            get_woocommerce_currency() .
+            __('Financing ', 'wasa-kredit-checkout') .
+            wc_price($monthly_cost) .
             '</p>';
     }
 
     public function wasa_save_product_prices()
     {
+        $settings = get_option('wasa_kredit_settings');
+
+        if ($settings['widget_on_product_list'] != "yes") {
+            return;
+        }
+
         $payload['items'] = [];
         // Payload will contain all products with price, currency and id
         $current_currency = get_woocommerce_currency();
