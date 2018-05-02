@@ -67,17 +67,36 @@ foreach ($cart_items as $cart_item_key => $cart_item) {
 
 // Create payload from collected data
 $payload = array(
+    'purchaser_name' => $order->billing_first_name . " " . $order->billing_last_name,
+    'purchaser_email' => $order->billing_email,
+    'purchaser_phone' => $order->billing_phone,
+    'recipient_name' => $order->shipping_first_name . " " . $order->shipping_last_name,
+    'recipient_phone' => $order->billing_phone,
+    'billing_address' => array(
+      'company_name' => $order->billing_company,
+      'street_address' => $order->billing_address_1,
+      'postal_code' => $order->billing_postcode,
+      'city' => $order->billing_city,
+      'country' => $order->billing_country
+    ),
+    'delivery_address' => array(
+      'company_name' => $order->shipping_company,
+      'street_address' => $order->shipping_address_1,
+      'postal_code' => $order->shipping_postcode,
+      'city' => $order->shipping_city,
+      'country' => $order->shipping_country
+    ),
     'order_references' => array(
-        array('key' => 'order_id', 'value' => $order_id)
+        array('key' => 'key', 'value' => $order->order_key)
     ),
     'cart_items' => $wasa_cart_items,
     'shipping_cost_ex_vat' => array(
         'amount' => $shipping_ex_vat,
         'currency' => $currency
     ),
-    'request_domain' => 'http://mydev.local:82/wpdev/',
-    'confirmation_callback_url' => 'https://www.wasakredit.se/payment-callback/',
-    'ping_url' => 'https://www.wasakredit.se/ping-callback/'
+    'request_domain' => get_site_url(),
+    'confirmation_callback_url' => get_site_url(null, '/checkout/order-received/' . $order_id . '/?key=' . $order->order_key),
+    'ping_url' => get_site_url(null, '/wasa-kredit-checkout/order-update/')
 );
 
 // Get answer from API
@@ -87,13 +106,6 @@ get_header();
 ?>
 
   <style>
-    #wasaIframe {
-      min-height: 1000px !important;
-    }
-    .wasa-logo {
-      width: 500px;
-      max-width: 100%;
-    }
     .entry-title {
       display: none;
     }
@@ -148,7 +160,17 @@ get_header();
 	</div>
 
   <script>
-    window.wasaCheckout.init();
+    var options = {
+      onComplete: function (orderReferences) {
+        console.log(orderReferences);
+      },
+      onCancel: function () {
+        var checkoutUrl = '<?php echo get_site_url(null, '/checkout/'); ?>';
+        window.location.href = checkoutUrl;
+      }
+    };
+
+    window.wasaCheckout.init(options);
   </script>
 
 <?php // Meta data. echo wc_get_formatted_cart_item_data($cart_item);  // Backorder notification. if ($_product->backorders_require_notification() && $_product->is_on_backorder($cart_item['quantity'])) { echo '<p class="backorder_notification">' . esc_html__('Available on backorder', 'woocommerce') . '</p>'; }
