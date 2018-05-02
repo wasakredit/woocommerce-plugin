@@ -30,7 +30,7 @@ function init_wasa_kredit_gateway()
             $this->method_title = "Wasa Kredit";
             $this->description = "Use to pay with Wasa Kredit Checkout.";
             $this->method_description = "Use to pay with Wasa Kredit Checkout.";
-            $this->order_button_text = "Proceed to Wasa Kredit Checkout";
+            $this->order_button_text = __("Proceed", "wasa-kredit-checkout");
             $this->selected_currency = get_woocommerce_currency();
 
             $this->options_key = "wasa_kredit_settings";
@@ -118,6 +118,15 @@ function init_wasa_kredit_gateway()
                     'default' => '',
                     'type' => 'multiselect',
                     'options' => WC()->countries->get_countries()
+                ),
+                'cart_on_checkout' => array(
+                    'title' => __('Enable/Disable', 'wasa-kredit-checkout'),
+                    'type' => 'checkbox',
+                    'label' => __(
+                        'Show cart content on checkout',
+                        'wasa-kredit-checkout'
+                    ),
+                    'default' => 'no'
                 ),
                 'partner_id' => array(
                     'title' => __('Partner ID', 'wasa-kredit-checkout'),

@@ -24,6 +24,8 @@ $client = new Sdk\Client(
     true
 );
 
+$settings = get_option('wasa_kredit_settings');
+
 // Collect data about order
 $order_id = $_GET['id'];
 $order = wc_get_order($order_id);
@@ -73,7 +75,7 @@ $payload = array(
         'amount' => $shipping_ex_vat,
         'currency' => $currency
     ),
-    'request_domain' => 'https://www.wasakredit.se/',
+    'request_domain' => 'http://mydev.local:82/wpdev/',
     'confirmation_callback_url' => 'https://www.wasakredit.se/payment-callback/',
     'ping_url' => 'https://www.wasakredit.se/ping-callback/'
 );
@@ -103,9 +105,9 @@ get_header();
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 
-    <img class="wasa-logo" src="<?php echo plugin_dir_url(__FILE__) . '../public/img/lf-wasa-kredit-logo_left_rgb.png'; ?>" alt="Wasa Kredit Logotype" />
   <?php if (have_posts()): get_template_part('loop'); endif; ?>
 
+  <?php if ($settings['cart_on_checkout'] === "yes"): ?>
   <table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents" cellspacing="0">
       <thead>
         <tr>
@@ -128,15 +130,16 @@ get_header();
                 <?php echo apply_filters('woocommerce_cart_item_price', WC()->cart->get_product_price($_product), $cart_item, $cart_item_key); ?>
               </td>
 
-              <td class="product-quantity" data-title="<?php esc_attr_e('Quantity', 'woocommerce'); ?>"><?php $product_quantity = sprintf('1 <input type="hidden" name="cart[%s][qty]" value="1" />', $cart_item_key); echo $product_quantity; ?></td>
+              <td class="product-quantity" data-title="<?php esc_attr_e('Quantity', 'woocommerce'); ?>"><?php echo $cart_item['quantity']; ?></td>
 
               <td class="product-subtotal" data-title="<?php esc_attr_e('Total', 'woocommerce'); ?>">
                 <?php echo apply_filters('woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal($_product, $cart_item['quantity']), $cart_item, $cart_item_key); ?>
               </td>
             </tr>
             <?php } } ?>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+      <?php endif; ?>
     
       <div class="wasa-checkout">
         <?php echo $response->data; ?>
