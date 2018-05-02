@@ -1,0 +1,98 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Wasa Kredit Checkout\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-05-02 08:06+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/"
+
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:132
+msgid "Client secret"
+msgstr ""
+
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:134
+msgid "Client Secret is issued by Wasa Kredit."
+msgstr ""
+
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:99
+msgid "Description"
+msgstr ""
+
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:111
+msgid "Enable for these countries"
+msgstr ""
+
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:143
+msgid "Enable test mode"
+msgstr ""
+
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:80
+msgid "Enable Wasa Kredit Checkout"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://www.github.com"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://www.starrepublic.com"
+msgstr ""
+
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-list-product-prices.php:44
+msgid "Monthly cost: "
+msgstr ""
+
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:123
+msgid "Partner ID"
+msgstr ""
+
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:125
+msgid "Partner ID is issued by Wasa Kredit."
+msgstr ""
+
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:105
+msgid "Pay via Wasa Kredit Checkout."
+msgstr ""
+
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:33
+msgid "Proceed"
+msgstr ""
+
+#. Author of the plugin
+msgid "Star Republic AB"
+msgstr ""
+
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:141
+msgid "Test mode"
+msgstr ""
+
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:101
+msgid "This controls the description which the user sees during checkout."
+msgstr ""
+
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:89
+msgid "This controls the title which the user sees during checkout."
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"This is a short description of what the plugin does. It's displayed in the "
+"WordPress admin area."
+msgstr ""
+
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:87
+msgid "Title"
+msgstr ""
+
+#. Name of the plugin
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:93
+msgid "Wasa Kredit Checkout"
+msgstr ""
