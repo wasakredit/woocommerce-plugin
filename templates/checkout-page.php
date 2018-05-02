@@ -169,7 +169,8 @@ get_header();
     var options = {
       onComplete: function (orderReferences) {
         // Update order to Processing
-        var url = '<?php echo get_site_url(null, '/wc-api/wasa-order-update?status=processing&key=' . $order->order_key); ?>';
+        var transactionId = orderReferences[1].value;
+        var url = '<?php echo get_site_url(null, '/wc-api/wasa-order-payment-complete?key=' . $order->order_key. '&transactionId=')?>' + transactionId;
         jQuery.ajax(url);
       },
       onCancel: function () {

@@ -88,17 +88,12 @@ class Wasa_Kredit_Checkout
 
         add_filter('page_template', array($this, 'checkout_template_override'));
 
-        add_action( 'woocommerce_api_wasa-order-update', array($this, 'update_order') );
+        add_action( 'woocommerce_api_wasa-order-update', array($this, 'api_order_update') );
+        add_action( 'woocommerce_api_wasa-order-payment-complete', array($this, 'api_order_payment_complete') );
     }
 
-    function update_order() {
+    function api_order_payment_complete() {
         if (!isset($_GET['key'])) {
-            return;
-        }
-
-        $approved_statuses = array("pending", "processing", "on-hold", "completed", "cancelled", "refunded", "failed");
-
-        if (!isset($_GET['status']) || !in_array($_GET['status'], $approved_statuses)) {
             return;
         }
 
@@ -110,7 +105,38 @@ class Wasa_Kredit_Checkout
             return;
         }
 
-        $order->update_status($_GET['status'], __("Wasa Kredit Checkout API callback."));
+        if (!empty($_GET['transactionId'])) {
+            $order->payment_complete($_GET['transactionId']);
+        }
+        else {
+            $order->payment_complete();
+        }
+    }
+
+    function api_order_update() {
+        if (!isset($_GET['key'])) {
+            return;
+        }
+
+        $order_key = $_GET['key'];
+        $order_id = wc_get_order_id_by_order_key($order_key);
+        $order = wc_get_order($order_id);
+
+        if (!$order) {
+            return;
+        }
+
+        $approved_statuses = array("pending", "processing", "on-hold", "completed", "cancelled", "refunded", "failed");
+
+        if (isset($_GET['status']) || in_array($_GET['status'], $approved_statuses)) {
+            // Set order status
+            $order->update_status($_GET['status'], __("Wasa Kredit Checkout API callback."));
+        }
+
+        if (isset($_GET['transactionId']) && !empty($_GET['transactionId'])) {
+            // Set transaction ID
+            $order->set_transaction_id($_GET['transactionId']);
+        }
     }
 
     function checkout_template_override($page_template)
