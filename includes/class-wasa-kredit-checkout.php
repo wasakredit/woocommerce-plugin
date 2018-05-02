@@ -88,11 +88,18 @@ class Wasa_Kredit_Checkout
 
         add_filter('page_template', array($this, 'checkout_template_override'));
 
-        add_action( 'woocommerce_api_wasa-order-update', array($this, 'api_order_update') );
-        add_action( 'woocommerce_api_wasa-order-payment-complete', array($this, 'api_order_payment_complete') );
+        add_action('woocommerce_api_wasa-order-update', array(
+            $this,
+            'api_order_update'
+        ));
+        add_action('woocommerce_api_wasa-order-payment-complete', array(
+            $this,
+            'api_order_payment_complete'
+        ));
     }
 
-    function api_order_payment_complete() {
+    function api_order_payment_complete()
+    {
         if (!isset($_GET['key'])) {
             return;
         }
@@ -107,13 +114,13 @@ class Wasa_Kredit_Checkout
 
         if (!empty($_GET['transactionId'])) {
             $order->payment_complete($_GET['transactionId']);
-        }
-        else {
+        } else {
             $order->payment_complete();
         }
     }
 
-    function api_order_update() {
+    function api_order_update()
+    {
         if (!isset($_GET['key'])) {
             return;
         }
@@ -126,11 +133,25 @@ class Wasa_Kredit_Checkout
             return;
         }
 
-        $approved_statuses = array("pending", "processing", "on-hold", "completed", "cancelled", "refunded", "failed");
+        $approved_statuses = array(
+            "pending",
+            "processing",
+            "on-hold",
+            "completed",
+            "cancelled",
+            "refunded",
+            "failed"
+        );
 
-        if (isset($_GET['status']) || in_array($_GET['status'], $approved_statuses)) {
+        if (
+            isset($_GET['status']) ||
+            in_array($_GET['status'], $approved_statuses)
+        ) {
             // Set order status
-            $order->update_status($_GET['status'], __("Wasa Kredit Checkout API callback."));
+            $order->update_status(
+                $_GET['status'],
+                __("Wasa Kredit Checkout API callback.")
+            );
         }
 
         if (isset($_GET['transactionId']) && !empty($_GET['transactionId'])) {

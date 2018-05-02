@@ -107,6 +107,30 @@ function init_wasa_kredit_gateway()
                         'wasa-kredit-checkout'
                     )
                 ),
+                'min_order_value' => array(
+                    'title' => __(
+                        'Minimum order value',
+                        'wasa-kredit-checkout'
+                    ),
+                    'type' => 'number',
+                    'description' => __(
+                        'With a lower order value this gateway cannot be used.',
+                        'wasa-kredit-checkout'
+                    ),
+                    'default' => __("5000", 'wasa-kredit-checkout')
+                ),
+                'max_order_value' => array(
+                    'title' => __(
+                        'Maximum order value',
+                        'wasa-kredit-checkout'
+                    ),
+                    'type' => 'number',
+                    'description' => __(
+                        'With a higher order value this gateway cannot be used.',
+                        'wasa-kredit-checkout'
+                    ),
+                    'default' => __("200000", 'wasa-kredit-checkout')
+                ),
                 'countries' => array(
                     'title' => __(
                         'Enable for these countries',
@@ -186,15 +210,26 @@ function init_wasa_kredit_gateway()
 
         public function is_available()
         {
-            $location = WC_Geolocation::geolocate_ip();
-            $country = $location['country'];
+            $cart_total = WC()->cart->total;
+            $settings = get_option('wasa_kredit_settings');
+            $min_order_value = $settings['min_order_value'];
+            $max_order_value = $settings['max_order_value'];
+
+            if (
+                $cart_total < $min_order_value ||
+                $cart_total > $max_order_value
+            ) {
+                return false;
+            }
+
+            $shipping_country = WC()->customer->get_shipping_country();
             $available_countries = array_flip($this->get_option('countries'));
             $enabled = $this->get_option('enabled');
 
             // Only enable checkout if users country is in defined contries in settings
             if (
                 $enabled === "yes" &&
-                array_key_exists($country, $available_countries)
+                array_key_exists($shipping_country, $available_countries)
             ) {
                 return true;
             }

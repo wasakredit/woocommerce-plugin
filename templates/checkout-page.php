@@ -32,7 +32,7 @@ $order_id = wc_get_order_id_by_order_key($order_key);
 $order = wc_get_order($order_id);
 
 if (!$order) {
-  exit();
+    exit();
 }
 
 $order_data = $order->get_data();
@@ -73,24 +73,28 @@ foreach ($cart_items as $cart_item_key => $cart_item) {
 
 // Create payload from collected data
 $payload = array(
-    'purchaser_name' => $order->billing_first_name . " " . $order->billing_last_name,
+    'purchaser_name' => $order->billing_first_name .
+        " " .
+        $order->billing_last_name,
     'purchaser_email' => $order->billing_email,
     'purchaser_phone' => $order->billing_phone,
-    'recipient_name' => $order->shipping_first_name . " " . $order->shipping_last_name,
+    'recipient_name' => $order->shipping_first_name .
+        " " .
+        $order->shipping_last_name,
     'recipient_phone' => $order->billing_phone,
     'billing_address' => array(
-      'company_name' => $order->billing_company,
-      'street_address' => $order->billing_address_1,
-      'postal_code' => $order->billing_postcode,
-      'city' => $order->billing_city,
-      'country' => $order->billing_country
+        'company_name' => $order->billing_company,
+        'street_address' => $order->billing_address_1,
+        'postal_code' => $order->billing_postcode,
+        'city' => $order->billing_city,
+        'country' => $order->billing_country
     ),
     'delivery_address' => array(
-      'company_name' => $order->shipping_company,
-      'street_address' => $order->shipping_address_1,
-      'postal_code' => $order->shipping_postcode,
-      'city' => $order->shipping_city,
-      'country' => $order->shipping_country
+        'company_name' => $order->shipping_company,
+        'street_address' => $order->shipping_address_1,
+        'postal_code' => $order->shipping_postcode,
+        'city' => $order->shipping_city,
+        'country' => $order->shipping_country
     ),
     'order_references' => array(
         array('key' => 'key', 'value' => $order->order_key)
@@ -101,7 +105,10 @@ $payload = array(
         'currency' => $currency
     ),
     'request_domain' => get_site_url(),
-    'confirmation_callback_url' => get_site_url(null, '/checkout/order-received/' . $order_id . '/?key=' . $order->order_key),
+    'confirmation_callback_url' => get_site_url(
+        null,
+        '/checkout/order-received/' . $order_id . '/?key=' . $order->order_key
+    ),
     'ping_url' => get_site_url(null, '/wasa-kredit-checkout/order-update/')
 );
 
@@ -170,7 +177,7 @@ get_header();
       onComplete: function (orderReferences) {
         // Update order to Processing
         var transactionId = orderReferences[1].value;
-        var url = '<?php echo get_site_url(null, '/wc-api/wasa-order-payment-complete?key=' . $order->order_key. '&transactionId=')?>' + transactionId;
+        var url = '<?php echo get_site_url(null, '/wc-api/wasa-order-payment-complete?key=' . $order->order_key . '&transactionId='); ?>' + transactionId;
         jQuery.ajax(url);
       },
       onCancel: function () {
