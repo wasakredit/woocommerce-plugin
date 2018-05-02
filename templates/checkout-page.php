@@ -17,14 +17,14 @@ if (!$_GET['key'] || empty($_GET['key'])) {
 
 require_once plugin_dir_path(__FILE__) . '../php-checkout-sdk/Wasa.php';
 
+$settings = get_option('wasa_kredit_settings');
+
 // Connect WASA SDK client
 $client = new Sdk\Client(
-    "03efa7fb-e3bf-4699-84d1-927de133dba7",
-    "abc123",
-    true
+  $settings['partner_id'],
+  $settings['client_secret'],
+  $settings['test_mode'] == "yes" ? true : false
 );
-
-$settings = get_option('wasa_kredit_settings');
 
 // Collect data about order
 $order_key = $_GET['key'];

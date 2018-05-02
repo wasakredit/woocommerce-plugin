@@ -11,10 +11,12 @@ class Wasa_Kredit_Checkout_List_Product_Prices
 
     public function __construct()
     {
+        $settings = get_option('wasa_kredit_settings');
+        
         $this->_client = new Sdk\Client(
-            "03efa7fb-e3bf-4699-84d1-927de133dba7",
-            "abc123",
-            true
+            $settings['partner_id'],
+            $settings['client_secret'],
+            $settings['test_mode'] == "yes" ? true : false
         );
 
         add_action(
