@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
     exit(); // Exit if accessed directly
 }
 
-if (!$_GET['id'] || empty($_GET['id'])) {
+if (!$_GET['key'] || empty($_GET['key'])) {
     exit();
 }
 
@@ -27,8 +27,14 @@ $client = new Sdk\Client(
 $settings = get_option('wasa_kredit_settings');
 
 // Collect data about order
-$order_id = $_GET['id'];
+$order_key = $_GET['key'];
+$order_id = wc_get_order_id_by_order_key($order_key);
 $order = wc_get_order($order_id);
+
+if (!$order) {
+  exit();
+}
+
 $order_data = $order->get_data();
 $currency = get_woocommerce_currency();
 $shipping_cost = $order_data['shipping_total'];

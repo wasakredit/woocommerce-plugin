@@ -218,7 +218,7 @@ function init_wasa_kredit_gateway()
             $checkout_page = get_page_by_title('Wasa Kredit Checkout');
             $returnPage = get_permalink($checkout_page);
 
-            return $returnPage . '?id=' . $order->data['id'];
+            return $returnPage . '?key=' . $order->order_key;
         }
     }
 }
