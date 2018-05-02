@@ -162,7 +162,9 @@ get_header();
   <script>
     var options = {
       onComplete: function (orderReferences) {
-        console.log(orderReferences);
+        // Update order to Processing
+        var url = '<?php echo get_site_url(null, '/wc-api/wasa-order-update?status=processing&key=' . $order->order_key); ?>';
+        jQuery.ajax(url);
       },
       onCancel: function () {
         var checkoutUrl = '<?php echo get_site_url(null, '/checkout/'); ?>';

@@ -87,6 +87,30 @@ class Wasa_Kredit_Checkout
         $this->create_checkout_page();
 
         add_filter('page_template', array($this, 'checkout_template_override'));
+
+        add_action( 'woocommerce_api_wasa-order-update', array($this, 'update_order') );
+    }
+
+    function update_order() {
+        if (!isset($_GET['key'])) {
+            return;
+        }
+
+        $approved_statuses = array("pending", "processing", "on-hold", "completed", "cancelled", "refunded", "failed");
+
+        if (!isset($_GET['status']) || !in_array($_GET['status'], $approved_statuses)) {
+            return;
+        }
+
+        $order_key = $_GET['key'];
+        $order_id = wc_get_order_id_by_order_key($order_key);
+        $order = wc_get_order($order_id);
+
+        if (!$order) {
+            return;
+        }
+
+        $order->update_status($_GET['status'], __("Wasa Kredit Checkout API callback."));
     }
 
     function checkout_template_override($page_template)
