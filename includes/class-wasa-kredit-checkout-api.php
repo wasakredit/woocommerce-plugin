@@ -9,38 +9,29 @@ class Wasa_Kredit_Checkout_API
 {
     public function __construct()
     {
-        $settings = get_option( 'wasa_kredit_settings' );
-
-        // Connect to WASA PHP SDK
-        $this->_client = new Sdk\Client(
-            $settings['partner_id'],
-            $settings['client_secret'],
-            $settings['test_mode'] == 'yes' ? true : false
-        );
-
         // Hooks
         add_action( 'woocommerce_api_wasa-order-update-status' , array(
             $this,
-            'api_order_update_status'
+            'order_update_status'
         ));
 
         add_action( 'woocommerce_api_wasa-order-payment-complete' , array(
             $this,
-            'api_order_payment_complete'
+            'order_payment_complete'
         ));
 
         add_action( 'woocommerce_order_status_completed' , array(
             $this,
-            'api_order_status_change_completed'
+            'order_status_change_completed'
         ));
 
         add_action( 'woocommerce_order_status_cancelled' , array(
             $this,
-            'api_order_status_change_cancelled'
+            'order_status_change_cancelled'
         ));
     }
 
-    public function api_order_payment_complete()
+    public function order_payment_complete()
     {
         /* Is run onComplete after Wasa Checkout Payment is accepted.
             It will complete the payment, decrease stock, set it to status Processing.
@@ -68,7 +59,7 @@ class Wasa_Kredit_Checkout_API
         }
     }
 
-    public function api_order_update_status()
+    public function order_update_status()
     {
         /* Updates the order status from WASA order ID
          Ie: domain/wc-api/wasa-order-update-status?id=6e-9f2e-4b4a-a25f-004068e9d210&status=processing */
@@ -102,27 +93,32 @@ class Wasa_Kredit_Checkout_API
 
             $order->update_status(
                 $approved_statuses[ $_GET['status'] ],
-                __( 'Wasa Kredit Checkout API change order status callback.' )
+                __( 'Wasa Kredit Checkout API change order status callback to ' . $_GET['status'] )
             );
         }
     }
 
-    public function api_order_status_change_completed( $order_id ) {
+    public function order_status_change_completed( $order_id ) {
         // When an order is set to status Completed in WooCommerce
-
-        $order = wc_get_order( $order_id );
-        $transaction_id = $order->get_transaction_id();
-        $order_status = 'shipped';
-
-        $this->_client->update_order_status($transaction_id, $order_status);
+        $this->send_order_status_to_wasa_api( $order_id, 'shipped' );
     }
 
-    public function api_order_status_change_cancelled( $order_id ) {
+    public function order_status_change_cancelled( $order_id ) {
         // When an order is set to status Cancelled in WooCommerce
+        $this->send_order_status_to_wasa_api( $order_id, 'cancelled' );
+    }
 
+    private function send_order_status_to_wasa_api( $order_id, $order_status ) {
         $order = wc_get_order( $order_id );
         $transaction_id = $order->get_transaction_id();
-        $order_status = 'cancelled';
+        $settings = get_option( 'wasa_kredit_settings' );
+
+        // Connect to WASA PHP SDK
+        $this->_client = new Sdk\Client(
+            $settings['partner_id'],
+            $settings['client_secret'],
+            $settings['test_mode'] == 'yes' ? true : false
+        );
 
         $this->_client->update_order_status($transaction_id, $order_status);
     }
