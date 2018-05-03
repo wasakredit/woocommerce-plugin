@@ -3,10 +3,21 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit();
 }
 
+require_once plugin_dir_path(__FILE__) . '../php-checkout-sdk/Wasa.php';
+
 class Wasa_Kredit_Checkout_API
 {
     public function __construct()
     {
+        $settings = get_option( 'wasa_kredit_settings' );
+
+        // Connect to WASA PHP SDK
+        $this->_client = new Sdk\Client(
+            $settings['partner_id'],
+            $settings['client_secret'],
+            $settings['test_mode'] == 'yes' ? true : false
+        );
+
         // Hooks
         add_action( 'woocommerce_api_wasa-order-update-status' , array(
             $this,
@@ -16,6 +27,16 @@ class Wasa_Kredit_Checkout_API
         add_action( 'woocommerce_api_wasa-order-payment-complete' , array(
             $this,
             'api_order_payment_complete'
+        ));
+
+        add_action( 'woocommerce_order_status_completed' , array(
+            $this,
+            'api_order_status_change_completed'
+        ));
+
+        add_action( 'woocommerce_order_status_cancelled' , array(
+            $this,
+            'api_order_status_change_cancelled'
         ));
     }
 
@@ -84,5 +105,25 @@ class Wasa_Kredit_Checkout_API
                 __( 'Wasa Kredit Checkout API change order status callback.' )
             );
         }
+    }
+
+    public function api_order_status_change_completed( $order_id ) {
+        // When an order is set to status Completed in WooCommerce
+
+        $order = wc_get_order( $order_id );
+        $transaction_id = $order->get_transaction_id();
+        $order_status = 'shipped';
+
+        $this->_client->update_order_status($transaction_id, $order_status);
+    }
+
+    public function api_order_status_change_cancelled( $order_id ) {
+        // When an order is set to status Cancelled in WooCommerce
+
+        $order = wc_get_order( $order_id );
+        $transaction_id = $order->get_transaction_id();
+        $order_status = 'cancelled';
+
+        $this->_client->update_order_status($transaction_id, $order_status);
     }
 }
