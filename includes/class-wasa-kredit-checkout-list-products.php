@@ -32,7 +32,7 @@ class Wasa_Kredit_Checkout_List_Products
         );
     }
 
-    function display_leasing_price_per_product()
+    public function display_leasing_price_per_product()
     {
         // Adds financing info betweeen price and Add to cart button
         global $product;
@@ -46,7 +46,7 @@ class Wasa_Kredit_Checkout_List_Products
         $monthly_cost = 0;
 
         if ( isset( $GLOBALS['product_leasing_prices'] ) ) {
-            $monthly_cost = $GLOBALS['product_leasing_prices'][ $product->id ];
+            $monthly_cost = $GLOBALS['product_leasing_prices'][ $product->get_id() ];
         }
 
         if ( $monthly_cost < 1 ) {

@@ -129,7 +129,7 @@ function init_wasa_kredit_gateway()
                     'desc' => '',
                     'id' => 'woocommerce_specific_allowed_countries',
                     'css' => 'min-width: 350px;',
-                    'default' => '',
+                    'default' => 'Sweden',
                     'type' => 'multiselect',
                     'options' => WC()->countries->get_countries()
                 ),
