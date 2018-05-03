@@ -69,11 +69,11 @@ class Wasa_Kredit_Checkout_API
         $order = $orders[0];
 
         $approved_statuses = array(
-            'initialized'   => 'processing',
-            'canceled'      => 'cancelled',
-            'pending'       => 'on-hold',
+            'initialized'   => 'pending',
+            'pending'       => 'pending',
             'ready_to_ship' => 'processing',
-            'shipped'       => 'completed'
+            'shipped'       => 'completed',
+            'canceled'      => 'cancelled'
         );
 
         if ( array_key_exists( $_GET['status'], $approved_statuses ) ) {

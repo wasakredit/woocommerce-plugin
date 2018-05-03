@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once plugin_dir_path(__FILE__) . '../php-checkout-sdk/Wasa.php';
 
-class Wasa_Kredit_Checkout_List_Product_Prices
+class Wasa_Kredit_Checkout_List_Products
 {
     public function __construct()
     {
@@ -39,14 +39,18 @@ class Wasa_Kredit_Checkout_List_Product_Prices
 
         $settings = get_option( 'wasa_kredit_settings' );
 
-        if ( $settings['widget_on_product_list'] != 'yes' ) {
+        if ($settings['widget_on_product_list'] != 'yes') {
             return;
         }
 
         $monthly_cost = 0;
 
         if ( isset( $GLOBALS['product_leasing_prices'] ) ) {
-            $monthly_cost = $GLOBALS['product_leasing_prices'] [$product->id ];
+            $monthly_cost = $GLOBALS['product_leasing_prices'][ $product->id ];
+        }
+
+        if ( $monthly_cost < 1 ) {
+            return;
         }
 
         echo '<p>' .
@@ -71,30 +75,30 @@ class Wasa_Kredit_Checkout_List_Product_Prices
         $page_info = get_queried_object();
 
         // Get all products from woocommerce
-        $args = array( 'post_type' => 'product', 'posts_per_page' => 10000 );
+        $args = array( 'post_type' => 'product', 'posts_per_page' => 1000 );
 
         if (isset($page_info->term_id)) {
             // Only include products in the currenct category, if a category is chosen
             $args['tax_query'][] = array(
-                'taxonomy' => 'product_cat',
-                'field' => 'term_id',
-                'terms' => $page_info->term_id,
-                'operator' => 'IN'
+                'taxonomy'  => 'product_cat',
+                'field'     => 'term_id',
+                'terms'     => $page_info->term_id,
+                'operator'  => 'IN'
             );
         }
 
-        $loop = new WP_Query( $args );
+        $loop = new WP_Query($args);
 
         // Loop through all products
-        while ( $loop->have_posts() ):
+        while ($loop->have_posts()):
             $loop->the_post();
             global $product;
 
             // Add this product to payload
             $payload['items'][] = array(
-                'financed_price' => array(
-                    'amount' => $product->get_price(),
-                    'currency' => $current_currency
+                'financed_price'    => array(
+                    'amount'        => $product->get_price(),
+                    'currency'      => $current_currency
                 ),
                 'product_id' => $product->get_id()
             );
