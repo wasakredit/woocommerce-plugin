@@ -3,6 +3,8 @@ if (!defined('ABSPATH')) {
     exit(); // Exit if accessed directly
 }
 
+require_once plugin_dir_path(__FILE__) . '../php-checkout-sdk/Wasa.php';
+
 add_action('plugins_loaded', 'init_wasa_kredit_gateway');
 add_filter('woocommerce_payment_gateways', 'add_wasa_kredit_gateway');
 
@@ -52,6 +54,13 @@ function init_wasa_kredit_gateway()
             if ( $this->settings['description'] ) {
                 $this->description = $this->settings['description'];
             }
+
+            // Connect to WASA PHP SDK
+            $this->_client = new Sdk\Client(
+                $this->settings['partner_id'],
+                $this->settings['client_secret'],
+                $this->settings['test_mode'] == 'yes' ? true : false
+            );
 
             // Hooks
             add_action(
@@ -111,30 +120,6 @@ function init_wasa_kredit_gateway()
                         "Pay via Wasa Kredit Checkout.",
                         'wasa-kredit-checkout'
                     )
-                ),
-                'min_order_value' => array(
-                    'title' => __(
-                        'Minimum order value',
-                        'wasa-kredit-checkout'
-                    ),
-                    'type' => 'number',
-                    'description' => __(
-                        'With a lower order value this gateway cannot be used.',
-                        'wasa-kredit-checkout'
-                    ),
-                    'default' => 5000
-                ),
-                'max_order_value' => array(
-                    'title' => __(
-                        'Maximum order value',
-                        'wasa-kredit-checkout'
-                    ),
-                    'type' => 'number',
-                    'description' => __(
-                        'With a higher order value this gateway cannot be used.',
-                        'wasa-kredit-checkout'
-                    ),
-                    'default' => 200000
                 ),
                 'countries' => array(
                     'title' => __(
@@ -226,15 +211,11 @@ function init_wasa_kredit_gateway()
         public function is_available()
         {
             // If payment gateway should be available for customers
-            $cart_total      = WC()->cart->total;
-            $settings        = get_option( 'wasa_kredit_settings' );
-            $min_order_value = $settings['min_order_value'];
-            $max_order_value = $settings['max_order_value'];
+            $cart_total = WC()->cart->total;
+            $financed_amount_status = $this->_client->validate_financed_amount($cart_total);
+            $amount_is_ok = $financed_amount_status->data['validation_result'];
 
-            if (
-                $cart_total < $min_order_value ||
-                $cart_total > $max_order_value
-            ) {
+            if ( ! $amount_is_ok ) {
                 // If total order value is too small or too large
                 return false;
             }
