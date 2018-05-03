@@ -1,35 +1,34 @@
 <?php
-if (!defined('ABSPATH')) {
-    exit(); // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
 }
 
 require_once plugin_dir_path(__FILE__) . '../php-checkout-sdk/Wasa.php';
 
 class Wasa_Kredit_Checkout_Shortcodes
 {
-    private $_client;
-
     public function __construct()
     {
-        $settings = get_option('wasa_kredit_settings');
+        $settings = get_option( 'wasa_kredit_settings' );
 
         $this->_client = new Sdk\Client(
             $settings['partner_id'],
             $settings['client_secret'],
-            $settings['test_mode'] == "yes" ? true : false
+            $settings['test_mode'] == 'yes' ? true : false
         );
 
-        add_shortcode('wasa_kredit_product_widget', array(
+        // Hooks
+        add_shortcode( 'wasa_kredit_product_widget' , array(
             $this,
             'wasa_kredit_product_widget'
         ));
     }
 
-    public function wasa_kredit_product_widget($atts = [])
+    public function wasa_kredit_product_widget( $atts = [] )
     {
         $atts = array_change_key_case((array) $atts, CASE_LOWER);
 
-        if (!$atts['price'] || !$atts['currency']) {
+        if ( ! $atts['price'] || !$atts['currency'] ) {
             echo '<p style="color: red">Wrong widget attributes!</p>';
             return;
         }
@@ -42,9 +41,9 @@ class Wasa_Kredit_Checkout_Shortcodes
             )
         );
 
-        $response = $this->_client->create_product_widget($payload);
+        $response = $this->_client->create_product_widget( $payload );
 
-        if ($response->statusCode == "201") {
+        if ( $response->statusCode == '201' ) {
             echo '<div>' . $response->data . '</div>';
         }
     }

@@ -23,59 +23,64 @@ function init_wasa_kredit_gateway()
     {
         public function __construct()
         {
-            $this->id = 'wasa_kredit';
-            $this->plugin_id = 'wasa_kredit';
-            $this->name = 'Wasa Kredit';
-            $this->title = "Wasa Kredit";
-            $this->method_title = "Wasa Kredit";
-            $this->description = "Use to pay with Wasa Kredit Checkout.";
-            $this->method_description = "Use to pay with Wasa Kredit Checkout.";
-            $this->order_button_text = __("Proceed", "wasa-kredit-checkout");
-            $this->selected_currency = get_woocommerce_currency();
+            // Setup payment gateway properties
+            $this->id                   = 'wasa_kredit';
+            $this->plugin_id            = 'wasa_kredit';
+            $this->name                 = 'Wasa Kredit';
+            $this->title                = 'Wasa Kredit';
+            $this->method_title         = 'Wasa Kredit';
+            $this->description          = 'Use to pay with Wasa Kredit Checkout.';
+            $this->method_description   = 'Use to pay with Wasa Kredit Checkout.';
+            $this->order_button_text    = __( 'Proceed', 'wasa-kredit-checkout' );
+            $this->selected_currency    = get_woocommerce_currency();
 
-            $this->options_key = "wasa_kredit_settings";
+            // Where to store settings in DB
+            $this->options_key = 'wasa_kredit_settings';
 
             $this->form_fields = $this->init_form_fields();
             $this->init_settings();
 
-            if ($this->settings['enabled']) {
+            // Setup dynamic gateway properties
+            if ( $this->settings['enabled'] ) {
                 $this->enabled = $this->settings['enabled'];
             }
 
-            if ($this->settings['title']) {
+            if ( $this->settings['title'] ) {
                 $this->title = $this->settings['title'];
             }
 
-            if ($this->settings['description']) {
+            if ( $this->settings['description'] ) {
                 $this->description = $this->settings['description'];
             }
 
+            // Hooks
             add_action(
                 'woocommerce_update_options_payment_gateways_' . $this->id,
-                array($this, 'process_admin_options')
+                array( $this, 'process_admin_options' )
             );
         }
 
         public function init_settings()
         {
-            $this->settings = get_option($this->options_key, null);
+            $this->settings = get_option( $this->options_key, null );
 
             // If there are no settings defined, use defaults.
-            if (!is_array($this->settings)) {
+            if ( ! is_array( $this->settings ) ) {
                 $form_fields = $this->get_form_fields();
 
                 $this->settings = array_merge(
-                    array_fill_keys(array_keys($form_fields), ''),
-                    wp_list_pluck($form_fields, 'default')
+                    array_fill_keys( array_keys( $form_fields ), '' ),
+                    wp_list_pluck( $form_fields, 'default' )
                 );
             }
         }
 
         public function init_form_fields()
         {
+            // Defines settings fields on WooCommerce > Settings > Checkout > Wasa Kredit
             return array(
                 'enabled' => array(
-                    'title' => __('Enable/Disable', 'woocommerce'),
+                    'title' => __( 'Enable/Disable', 'woocommerce' ),
                     'type' => 'checkbox',
                     'label' => __(
                         'Enable Wasa Kredit Checkout',
@@ -84,7 +89,7 @@ function init_wasa_kredit_gateway()
                     'default' => 'yes'
                 ),
                 'title' => array(
-                    'title' => __('Title', 'wasa-kredit-checkout'),
+                    'title' => __( 'Title', 'wasa-kredit-checkout' ),
                     'type' => 'text',
                     'description' => __(
                         'This controls the title which the user sees during checkout.',
@@ -96,7 +101,7 @@ function init_wasa_kredit_gateway()
                     )
                 ),
                 'description' => array(
-                    'title' => __('Description', 'wasa-kredit-checkout'),
+                    'title' => __( 'Description', 'wasa-kredit-checkout' ),
                     'type' => 'textarea',
                     'description' => __(
                         'This controls the description which the user sees during checkout.',
@@ -117,7 +122,7 @@ function init_wasa_kredit_gateway()
                         'With a lower order value this gateway cannot be used.',
                         'wasa-kredit-checkout'
                     ),
-                    'default' => __("5000", 'wasa-kredit-checkout')
+                    'default' => 5000
                 ),
                 'max_order_value' => array(
                     'title' => __(
@@ -129,7 +134,7 @@ function init_wasa_kredit_gateway()
                         'With a higher order value this gateway cannot be used.',
                         'wasa-kredit-checkout'
                     ),
-                    'default' => __("200000", 'wasa-kredit-checkout')
+                    'default' => 200000
                 ),
                 'countries' => array(
                     'title' => __(
@@ -144,7 +149,7 @@ function init_wasa_kredit_gateway()
                     'options' => WC()->countries->get_countries()
                 ),
                 'cart_on_checkout' => array(
-                    'title' => __('Enable/Disable', 'wasa-kredit-checkout'),
+                    'title' => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
                     'type' => 'checkbox',
                     'label' => __(
                         'Show cart content on checkout',
@@ -153,7 +158,7 @@ function init_wasa_kredit_gateway()
                     'default' => 'no'
                 ),
                 'widget_on_product_list' => array(
-                    'title' => __('Enable/Disable', 'wasa-kredit-checkout'),
+                    'title' => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
                     'type' => 'checkbox',
                     'label' => __(
                         'Show monthly cost in product list',
@@ -162,7 +167,7 @@ function init_wasa_kredit_gateway()
                     'default' => 'yes'
                 ),
                 'partner_id' => array(
-                    'title' => __('Partner ID', 'wasa-kredit-checkout'),
+                    'title' => __( 'Partner ID', 'wasa-kredit-checkout' ),
                     'type' => 'text',
                     'description' => __(
                         'Partner ID is issued by Wasa Kredit.',
@@ -171,7 +176,7 @@ function init_wasa_kredit_gateway()
                     'default' => ''
                 ),
                 'client_secret' => array(
-                    'title' => __('Client secret', 'wasa-kredit-checkout'),
+                    'title' => __( 'Client secret', 'wasa-kredit-checkout' ),
                     'type' => 'text',
                     'description' => __(
                         'Client Secret is issued by Wasa Kredit.',
@@ -182,7 +187,7 @@ function init_wasa_kredit_gateway()
                 'test_mode' => array(
                     'title' => __('Test mode', 'wasa-kredit-checkout'),
                     'type' => 'checkbox',
-                    'label' => __('Enable test mode', 'wasa-kredit-checkout'),
+                    'label' => __( 'Enable test mode', 'wasa-kredit-checkout' ),
                     'default' => 'no'
                 )
             );
@@ -190,20 +195,21 @@ function init_wasa_kredit_gateway()
 
         public function process_admin_options()
         {
+            // On save in admin settings
             $this->init_settings();
 
             $post_data = $this->get_post_data();
 
-            foreach ($this->get_form_fields() as $key => $field) {
-                if ('title' !== $this->get_field_type($field)) {
+            foreach ( $this->get_form_fields() as $key => $field ) {
+                if ( 'title' !== $this->get_field_type( $field ) ) {
                     try {
-                        $this->settings[$key] = $this->get_field_value(
+                        $this->settings[ $key ] = $this->get_field_value(
                             $key,
                             $field,
                             $post_data
                         );
-                    } catch (Exception $e) {
-                        $this->add_error($e->getMessage());
+                    } catch ( Exception $e ) {
+                        $this->add_error( $e->getMessage() );
                     }
                 }
             }
@@ -219,8 +225,9 @@ function init_wasa_kredit_gateway()
 
         public function is_available()
         {
-            $cart_total = WC()->cart->total;
-            $settings = get_option('wasa_kredit_settings');
+            // If payment gateway should be available for customers
+            $cart_total      = WC()->cart->total;
+            $settings        = get_option( 'wasa_kredit_settings' );
             $min_order_value = $settings['min_order_value'];
             $max_order_value = $settings['max_order_value'];
 
@@ -228,17 +235,18 @@ function init_wasa_kredit_gateway()
                 $cart_total < $min_order_value ||
                 $cart_total > $max_order_value
             ) {
+                // If total order value is too small or too large
                 return false;
             }
 
             $shipping_country = WC()->customer->get_shipping_country();
-            $available_countries = array_flip($this->get_option('countries'));
-            $enabled = $this->get_option('enabled');
+            $available_countries = array_flip( $this->get_option( 'countries' ) );
+            $enabled = $this->get_option( 'enabled' );
 
             // Only enable checkout if users country is in defined contries in settings
             if (
-                $enabled === "yes" &&
-                array_key_exists($shipping_country, $available_countries)
+                $enabled === 'yes' &&
+                array_key_exists( $shipping_country, $available_countries )
             ) {
                 return true;
             }
@@ -246,21 +254,23 @@ function init_wasa_kredit_gateway()
             return false;
         }
 
-        public function process_payment($order_id)
+        public function process_payment( $order_id )
         {
+            // When clicking Proceed button, create a on-hold order
             global $woocommerce;
-            $order = new WC_Order($order_id);
+            $order = new WC_Order( $order_id );
 
             return array(
                 'result' => 'success',
-                'redirect' => $this->get_return_url($order)
+                'redirect' => $this->get_return_url( $order )
             );
         }
 
-        public function get_return_url($order = null)
+        public function get_return_url( $order = null )
         {
-            $checkout_page = get_page_by_title('Wasa Kredit Checkout');
-            $returnPage = get_permalink($checkout_page);
+            // Get the URL for the checkout page, add order key to URL
+            $checkout_page = get_page_by_title( 'Wasa Kredit Checkout' );
+            $returnPage = get_permalink( $checkout_page );
 
             return $returnPage . '?key=' . $order->order_key;
         }

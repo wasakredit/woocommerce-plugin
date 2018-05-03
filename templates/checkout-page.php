@@ -7,67 +7,68 @@
  * @since Wasa_Kredit_Checkout 1.0
  */
 
-if (!defined('ABSPATH')) {
-    exit(); // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+  exit();
 }
 
-if (!$_GET['key'] || empty($_GET['key'])) {
+if ( ! $_GET['key'] || empty( $_GET['key'] ) ) {
     exit();
 }
 
 require_once plugin_dir_path(__FILE__) . '../php-checkout-sdk/Wasa.php';
 
-$settings = get_option('wasa_kredit_settings');
+$settings = get_option( 'wasa_kredit_settings' );
 
 // Connect WASA SDK client
 $client = new Sdk\Client(
-  $settings['partner_id'],
-  $settings['client_secret'],
-  $settings['test_mode'] == "yes" ? true : false
+    $settings['partner_id'],
+    $settings['client_secret'],
+    $settings['test_mode'] == 'yes' ? true : false
 );
 
 // Collect data about order
-$order_key = $_GET['key'];
-$order_id = wc_get_order_id_by_order_key($order_key);
-$order = wc_get_order($order_id);
+$order_key  = $_GET['key'];
+$order_id   = wc_get_order_id_by_order_key( $order_key );
+$order      = wc_get_order( $order_id );
 
-if (!$order) {
+if ( ! $order ) {
     exit();
 }
 
-$order_data = $order->get_data();
-$currency = get_woocommerce_currency();
-$shipping_cost = $order_data['shipping_total'];
-$shipping_tax = $order_data['shipping_tax'];
-$cart_items = WC()->cart->get_cart();
-$wasa_cart_items = array();
+$order_data       = $order->get_data();
+$currency         = get_woocommerce_currency();
+$shipping_cost    = $order_data['shipping_total'];
+$shipping_tax     = $order_data['shipping_tax'];
+$cart_items       = WC()->cart->get_cart();
+$wasa_cart_items  = array();
 
-foreach ($cart_items as $cart_item_key => $cart_item) {
+foreach ( $cart_items as $cart_item_key => $cart_item ) {
     $product = apply_filters(
         'woocommerce_cart_item_product',
         $cart_item['data'],
         $cart_item,
         $cart_item_key
     );
-    $id = $cart_item['product_id'];
-    $name = $product->get_name();
-    $price_inc_vat = $product->get_price_including_tax();
-    $price_ex_vat = $product->get_price_excluding_tax();
-    $vat_percentage = ($price_ex_vat - $price_inc_vat) * 100;
-    $price_vat = $price_inc_vat - $price_ex_vat;
-    $shipping_ex_vat = $shipping_cost - $shipping_tax;
-    $quantity = $cart_item['quantity'];
+
+    $id               = $cart_item['product_id'];
+    $name             = $product->get_name();
+    $price_inc_vat    = $product->get_price_including_tax();
+    $price_ex_vat     = $product->get_price_excluding_tax();
+    $vat_percentage   = ( $price_ex_vat - $price_inc_vat ) * 100;
+    $price_vat        = $price_inc_vat - $price_ex_vat;
+    $shipping_ex_vat  = $shipping_cost - $shipping_tax;
+    $quantity         = $cart_item['quantity'];
 
     $wasa_cart_items[] = array(
-        'product_id' => $id,
-        'product_name' => $name,
-        'price_ex_vat' => array(
-            'amount' => $price_ex_vat,
+        'product_id'      => $id,
+        'product_name'    => $name,
+        'price_ex_vat'    => array(
+            'amount'   => $price_ex_vat,
             'currency' => $currency
         ),
-        'quantity' => $quantity,
-        'vat_percentage' => $vat_percentage,
-        'vat_amount' => array('amount' => $price_vat, 'currency' => $currency)
+        'quantity'        => $quantity,
+        'vat_percentage'  => $vat_percentage,
+        'vat_amount'      => array( 'amount' => $price_vat, 'currency' => $currency )
     );
 }
 
@@ -97,7 +98,7 @@ $payload = array(
         'country' => $order->shipping_country
     ),
     'order_references' => array(
-        array('key' => 'key', 'value' => $order->order_key)
+        array( 'key' => 'key', 'value' => $order->order_key )
     ),
     'cart_items' => $wasa_cart_items,
     'shipping_cost_ex_vat' => array(
@@ -109,11 +110,11 @@ $payload = array(
         null,
         '/checkout/order-received/' . $order_id . '/?key=' . $order->order_key
     ),
-    'ping_url' => get_site_url(null, '/wasa-kredit-checkout/order-update/')
+    'ping_url' => get_site_url( null, '/wasa-kredit-checkout/order-update/' )
 );
 
 // Get answer from API
-$response = $client->create_checkout($payload);
+$response = $client->create_checkout( $payload );
 
 get_header();
 ?>
@@ -130,21 +131,21 @@ get_header();
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 
-  <?php if (have_posts()): get_template_part('loop'); endif; ?>
+  <?php if ( have_posts()): get_template_part( 'loop' ); endif; ?>
 
-  <?php if ($settings['cart_on_checkout'] === "yes"): ?>
+  <?php if ( $settings['cart_on_checkout'] === 'yes' ): ?>
   <table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents" cellspacing="0">
       <thead>
         <tr>
           <th class="product-thumbnail">&nbsp;</th>
-          <th class="product-name"><?php esc_html_e('Product', 'woocommerce'); ?></th>
-          <th class="product-price"><?php esc_html_e('Price', 'woocommerce'); ?></th>
-          <th class="product-quantity"><?php esc_html_e('Quantity', 'woocommerce'); ?></th>
-          <th class="product-subtotal"><?php esc_html_e('Total', 'woocommerce'); ?></th>
+          <th class="product-name"><?php esc_html_e( 'Product', 'woocommerce' ); ?></th>
+          <th class="product-price"><?php esc_html_e( 'Price', 'woocommerce' ); ?></th>
+          <th class="product-quantity"><?php esc_html_e( 'Quantity', 'woocommerce' ); ?></th>
+          <th class="product-subtotal"><?php esc_html_e( 'Total', 'woocommerce' ); ?></th>
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($cart_items as $cart_item_key => $cart_item) { $_product = apply_filters('woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key); $product_id = apply_filters('woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key); if ($_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters('woocommerce_cart_item_visible', true, $cart_item, $cart_item_key)) { $product_permalink = apply_filters('woocommerce_cart_item_permalink', $_product->is_visible() ? $_product->get_permalink($cart_item) : '', $cart_item, $cart_item_key); ?>
+        <?php foreach ( $cart_items as $cart_item_key => $cart_item ) { $_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key); $product_id = apply_filters('woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key); if ($_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters('woocommerce_cart_item_visible', true, $cart_item, $cart_item_key)) { $product_permalink = apply_filters('woocommerce_cart_item_permalink', $_product->is_visible() ? $_product->get_permalink($cart_item) : '', $cart_item, $cart_item_key); ?>
             <tr class="woocommerce-cart-form__cart-item <?php echo esc_attr(apply_filters('woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key)); ?>">
 
               <td class="product-thumbnail"><?php $thumbnail = apply_filters('woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key); if (!$product_permalink) { echo $thumbnail; } else { printf('<a href="%s">%s</a>', esc_url($product_permalink), $thumbnail); } ?></td>
@@ -174,20 +175,22 @@ get_header();
 
   <script>
     var options = {
-      onComplete: function (orderReferences) {
+      onComplete: function ( orderReferences ) {
         // Update order to Processing
         var transactionId = orderReferences[1].value;
-        var url = '<?php echo get_site_url(null, '/wc-api/wasa-order-payment-complete?key=' . $order->order_key . '&transactionId='); ?>' + transactionId;
+        var url = '<?php echo get_site_url( null, '/wc-api/wasa-order-payment-complete?key=' . $order->order_key . '&transactionId=' ); ?>' + transactionId;
+        
         jQuery.ajax(url);
       },
       onCancel: function () {
-        var checkoutUrl = '<?php echo get_site_url(null, '/checkout/'); ?>';
+        var checkoutUrl = '<?php echo get_site_url( null, '/checkout/' ); ?>';
+
         window.location.href = checkoutUrl;
       }
     };
 
-    window.wasaCheckout.init(options);
+    window.wasaCheckout.init( options );
   </script>
 
-<?php // Meta data. echo wc_get_formatted_cart_item_data($cart_item);  // Backorder notification. if ($_product->backorders_require_notification() && $_product->is_on_backorder($cart_item['quantity'])) { echo '<p class="backorder_notification">' . esc_html__('Available on backorder', 'woocommerce') . '</p>'; }
+<?php
 get_footer();

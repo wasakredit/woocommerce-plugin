@@ -1,74 +1,14 @@
 <?php
-if (!defined('ABSPATH')) {
-    exit(); // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
 }
 
-/**
- * The file that defines the core plugin class
- *
- * A class definition that includes attributes and functions used across both the
- * public-facing side of the site and the admin area.
- *
- * @link       https://www.starrepublic.com
- * @since      1.0.0
- *
- * @package    Wasa_Kredit_Checkout
- * @subpackage Wasa_Kredit_Checkout/includes
- */
-
-/**
- * The core plugin class.
- *
- * This is used to define internationalization, admin-specific hooks, and
- * public-facing site hooks.
- *
- * Also maintains the unique identifier of this plugin as well as the current
- * version of the plugin.
- *
- * @since      1.0.0
- * @package    Wasa_Kredit_Checkout
- * @subpackage Wasa_Kredit_Checkout/includes
- * @author     Star Republic AB <support@starrepublic.com>
- */
 class Wasa_Kredit_Checkout
 {
-    /**
-     * The loader that's responsible for maintaining and registering all hooks that power
-     * the plugin.
-     *
-     * @since    1.0.0
-     * @access   protected
-     * @var      Wasa_Kredit_Checkout_Loader    $loader    Maintains and registers all hooks for the plugin.
-     */
     protected $loader;
-
-    /**
-     * The unique identifier of this plugin.
-     *
-     * @since    1.0.0
-     * @access   protected
-     * @var      string    $plugin_name    The string used to uniquely identify this plugin.
-     */
     protected $plugin_name;
-
-    /**
-     * The current version of the plugin.
-     *
-     * @since    1.0.0
-     * @access   protected
-     * @var      string    $version    The current version of the plugin.
-     */
     protected $version;
 
-    /**
-     * Define the core functionality of the plugin.
-     *
-     * Set the plugin name and the plugin version that can be used throughout the plugin.
-     * Load the dependencies, define the locale, and set the hooks for the admin area and
-     * the public-facing side of the site.
-     *
-     * @since    1.0.0
-     */
     public function __construct()
     {
         if (defined('PLUGIN_NAME_VERSION')) {
@@ -76,162 +16,45 @@ class Wasa_Kredit_Checkout
         } else {
             $this->version = '1.0.0';
         }
+
         $this->plugin_name = 'wasa-kredit-checkout';
 
+        // Include important plugin files
         $this->load_dependencies();
-        $this->setup_shortcodes();
-        $this->setup_product_list_prices();
+
+        // Add support for translation
         $this->set_locale();
+
+        // Support for custom admin CSS and JS
         $this->define_admin_hooks();
+
+        // Support for custom public CSS and JS
         $this->define_public_hooks();
-        $this->create_checkout_page();
 
-        add_filter('page_template', array($this, 'checkout_template_override'));
+        // Load API parts and callbacks
+        $this->api = new Wasa_Kredit_Checkout_API();
 
-        add_action('woocommerce_api_wasa-order-update-status', array(
-            $this,
-            'api_order_update_status'
-        ));
+        // Load shortcodes, like [wasa_kredit_product_widget]
+        $this->shortcodes = new Wasa_Kredit_Checkout_Shortcodes();
 
-        add_action('woocommerce_api_wasa-order-payment-complete', array(
-            $this,
-            'api_order_payment_complete'
-        ));
+        // Load monthly cost on product listings
+        $this->product_prices = new Wasa_Kredit_Checkout_List_Product_Prices();
+
+        // Create checkout page if not exists, override templates
+        $this->page = new Wasa_Kredit_Checkout_Page();
     }
 
-    function api_order_payment_complete()
-    {
-        if (!isset($_GET['key'])) {
-            return;
-        }
-
-        $order_key = $_GET['key'];
-        $order_id = wc_get_order_id_by_order_key($order_key);
-        $order = wc_get_order($order_id);
-
-        if (!$order) {
-            return;
-        }
-
-        if (!empty($_GET['transactionId'])) {
-            $order->payment_complete($_GET['transactionId']);
-        } else {
-            $order->payment_complete();
-        }
-    }
-
-    function api_order_update_status()
-    {
-        if (!isset($_GET['id']) || !isset($_GET['status'])) {
-            return;
-        }
-
-        $orders = wc_get_orders( array(
-            'limit' => 1,
-            'transaction_id' => $_GET['id'],
-        ) );
-
-        if (!$orders || count($orders) < 1) {
-            return;
-        }
-
-        $order = $orders[0];
-
-        $approved_statuses = array(
-            "initialized" => "processing",
-            "canceled" => "cancelled",
-            "pending" => "on-hold",
-            "ready_to_ship" => "processing",
-            "shipped" => "completed"
-        );
-
-        if (array_key_exists($_GET['status'], $approved_statuses)) {
-            // Set order status
-            $order->update_status(
-                $approved_statuses[$_GET['status']],
-                __("Wasa Kredit Checkout API change order status callback.")
-            );
-        }
-    }
-
-    function checkout_template_override($page_template)
-    {
-        $checkout_page = get_page_by_title('Wasa Kredit Checkout');
-
-        if (is_page($checkout_page)) {
-            $page_template =
-                dirname(__FILE__) . '/../templates/checkout-page.php';
-        }
-
-        return $page_template;
-    }
-
-    public function create_checkout_page()
-    {
-        // This page is used with the template ./templates/checkout-page.php to give the
-        // the ability to edit text above and the checkout
-        if (is_admin()) {
-            return;
-        }
-
-        if (get_page_by_title('Wasa Kredit Checkout') == null) {
-            global $user_ID;
-
-            $new_page = array(
-                'post_title' => 'Wasa Kredit Checkout',
-                'post_content' => 'Please fill out the forms in the Wasa Kredit Checkout and follow the wizard.',
-                'post_status' => 'publish',
-                'post_date' => date('Y-m-d H:i:s'),
-                'post_author' => $user_ID,
-                'post_type' => 'page'
-            );
-
-            $page_id = wp_insert_post($new_page);
-        }
-    }
-
-    /**
-     * Load the required dependencies for this plugin.
-     *
-     * Include the following files that make up the plugin:
-     *
-     * - Wasa_Kredit_Checkout_Loader. Orchestrates the hooks of the plugin.
-     * - Wasa_Kredit_Checkout_i18n. Defines internationalization functionality.
-     * - Wasa_Kredit_Checkout_Admin. Defines all hooks for the admin area.
-     * - Wasa_Kredit_Checkout_Public. Defines all hooks for the public side of the site.
-     *
-     * Create an instance of the loader which will be used to register the hooks
-     * with WordPress.
-     *
-     * @since    1.0.0
-     * @access   private
-     */
     private function load_dependencies()
     {
-        /**
-         * The class responsible for orchestrating the actions and filters of the
-         * core plugin.
-         */
         require_once plugin_dir_path(dirname(__FILE__)) .
             'includes/class-wasa-kredit-checkout-loader.php';
 
-        /**
-         * The class responsible for defining internationalization functionality
-         * of the plugin.
-         */
         require_once plugin_dir_path(dirname(__FILE__)) .
             'includes/class-wasa-kredit-checkout-i18n.php';
 
-        /**
-         * The class responsible for defining all actions that occur in the admin area.
-         */
         require_once plugin_dir_path(dirname(__FILE__)) .
             'admin/class-wasa-kredit-checkout-admin.php';
 
-        /**
-         * The class responsible for defining all actions that occur in the public-facing
-         * side of the site.
-         */
         require_once plugin_dir_path(dirname(__FILE__)) .
             'public/class-wasa-kredit-checkout-public.php';
 
@@ -244,18 +67,15 @@ class Wasa_Kredit_Checkout
         require_once plugin_dir_path(dirname(__FILE__)) .
             'includes/class-wasa-kredit-checkout-list-product-prices.php';
 
+        require_once plugin_dir_path(dirname(__FILE__)) .
+            'includes/class-wasa-kredit-checkout-api.php';
+
+        require_once plugin_dir_path(dirname(__FILE__)) .
+            'includes/class-wasa-kredit-checkout-page.php';
+
         $this->loader = new Wasa_Kredit_Checkout_Loader();
     }
 
-    /**
-     * Define the locale for this plugin for internationalization.
-     *
-     * Uses the Wasa_Kredit_Checkout_i18n class in order to set the domain and to register the hook
-     * with WordPress.
-     *
-     * @since    1.0.0
-     * @access   private
-     */
     private function set_locale()
     {
         $plugin_i18n = new Wasa_Kredit_Checkout_i18n();
@@ -267,30 +87,9 @@ class Wasa_Kredit_Checkout
         );
     }
 
-    private function setup_shortcodes()
-    {
-        $shortcodes = new Wasa_Kredit_Checkout_Shortcodes();
-    }
-
-    private function setup_product_list_prices()
-    {
-        $product_prices = new Wasa_Kredit_Checkout_List_Product_Prices();
-    }
-
-    private function load_payment_gateway()
-    {
-        $plugin_settings = new Wasa_Kredit_Checkout_Payment_Gateway();
-    }
-
-    /**
-     * Register all of the hooks related to the admin area functionality
-     * of the plugin.
-     *
-     * @since    1.0.0
-     * @access   private
-     */
     private function define_admin_hooks()
     {
+        // Add custom admin CSS and JS
         $plugin_admin = new Wasa_Kredit_Checkout_Admin(
             $this->get_plugin_name(),
             $this->get_version()
@@ -308,15 +107,9 @@ class Wasa_Kredit_Checkout
         );
     }
 
-    /**
-     * Register all of the hooks related to the public-facing functionality
-     * of the plugin.
-     *
-     * @since    1.0.0
-     * @access   private
-     */
     private function define_public_hooks()
     {
+        // Add custom public css and JS
         $plugin_public = new Wasa_Kredit_Checkout_Public(
             $this->get_plugin_name(),
             $this->get_version()
@@ -334,45 +127,21 @@ class Wasa_Kredit_Checkout
         );
     }
 
-    /**
-     * Run the loader to execute all of the hooks with WordPress.
-     *
-     * @since    1.0.0
-     */
     public function run()
     {
         $this->loader->run();
     }
 
-    /**
-     * The name of the plugin used to uniquely identify it within the context of
-     * WordPress and to define internationalization functionality.
-     *
-     * @since     1.0.0
-     * @return    string    The name of the plugin.
-     */
     public function get_plugin_name()
     {
         return $this->plugin_name;
     }
 
-    /**
-     * The reference to the class that orchestrates the hooks with the plugin.
-     *
-     * @since     1.0.0
-     * @return    Wasa_Kredit_Checkout_Loader    Orchestrates the hooks of the plugin.
-     */
     public function get_loader()
     {
         return $this->loader;
     }
 
-    /**
-     * Retrieve the version number of the plugin.
-     *
-     * @since     1.0.0
-     * @return    string    The version number of the plugin.
-     */
     public function get_version()
     {
         return $this->version;
