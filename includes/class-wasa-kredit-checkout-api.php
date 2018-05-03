@@ -110,7 +110,17 @@ class Wasa_Kredit_Checkout_API
 
     private function send_order_status_to_wasa_api( $order_id, $order_status ) {
         $order = wc_get_order( $order_id );
+
+        if ( ! $order ) {
+            return;
+        }
+
         $transaction_id = $order->get_transaction_id();
+
+        if ( empty( $transaction_id ) ) {
+            return;
+        }
+
         $settings = get_option( 'wasa_kredit_settings' );
 
         // Connect to WASA PHP SDK
