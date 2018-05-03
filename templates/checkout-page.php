@@ -54,7 +54,7 @@ foreach ( $cart_items as $cart_item_key => $cart_item ) {
     $name             = $product->get_name();
     $price_inc_vat    = wc_get_price_including_tax($product);
     $price_ex_vat     = wc_get_price_excluding_tax($product);
-    $vat_percentage   = ( $price_ex_vat - $price_inc_vat ) * 100;
+    $vat_percentage   = ( $price_ex_vat / $price_inc_vat ) * 100;
     $price_vat        = $price_inc_vat - $price_ex_vat;
     $shipping_ex_vat  = $shipping_cost - $shipping_tax;
     $quantity         = $cart_item['quantity'];
@@ -168,7 +168,14 @@ get_header();
       <?php endif; ?>
     
       <div class="wasa-checkout">
-        <?php echo $response->data; ?>
+        <?php
+          if ($response->statusCode == 201) {
+            echo $response->data;
+          }
+          else {
+            echo '<strong style="color: red">' . __( " Something went wrong while contacting Wasa Kredit API." ) . '</strong>';
+          }
+        ?>
       </div>
 		</main>
 	</div>

@@ -213,9 +213,8 @@ function init_wasa_kredit_gateway()
             // If payment gateway should be available for customers
             $cart_total = WC()->cart->total;
             $financed_amount_status = $this->_client->validate_financed_amount($cart_total);
-            $amount_is_ok = $financed_amount_status->data['validation_result'];
 
-            if ( ! $amount_is_ok ) {
+            if ($financed_amount_status->statusCode != 200 || ! $financed_amount_status->data['validation_result'] ) {
                 // If total order value is too small or too large
                 return false;
             }
