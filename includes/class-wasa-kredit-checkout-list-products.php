@@ -110,7 +110,7 @@ class Wasa_Kredit_Checkout_List_Products
         $response = $this->_client->calculate_monthly_cost( $payload );
         $monthly_costs = [];
 
-        if ( $response->statusCode == 200 ) {
+        if ( isset( $response ) &&  $response->statusCode == 200 ) {
             foreach ( $response->data['monthly_costs'] as $current_product ) {
                 $monthly_costs[
                     $current_product['product_id']

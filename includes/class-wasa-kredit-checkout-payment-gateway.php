@@ -214,7 +214,9 @@ function init_wasa_kredit_gateway()
             $cart_total = WC()->cart->total;
             $financed_amount_status = $this->_client->validate_financed_amount($cart_total);
 
-            if ($financed_amount_status->statusCode != 200 || ! $financed_amount_status->data['validation_result'] ) {
+            if ( ! isset( $financed_amount_status )
+                || ($financed_amount_status->statusCode != 200
+                || ! $financed_amount_status->data['validation_result'] )) {
                 // If total order value is too small or too large
                 return false;
             }
