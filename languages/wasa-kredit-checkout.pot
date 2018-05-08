@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wasa Kredit Checkout\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-08 08:27+0000\n"
+"POT-Creation-Date: 2018-05-08 11:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -108,4 +108,7 @@ msgstr ""
 #. Name of the plugin
 #: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:107
 msgid "Wasa Kredit Checkout"
+msgstr ""
+
+msgid "Enable for these currencies"
 msgstr ""

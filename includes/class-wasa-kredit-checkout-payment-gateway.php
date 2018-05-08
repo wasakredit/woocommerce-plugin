@@ -133,6 +133,18 @@ function init_wasa_kredit_gateway()
                     'type' => 'multiselect',
                     'options' => WC()->countries->get_countries()
                 ),
+                'currencies' => array(
+                    'title' => __(
+                        'Enable for these currencies',
+                        'wasa-kredit-checkout'
+                    ),
+                    'desc' => '',
+                    'id' => 'woocommerce_specific_allowed_currencies',
+                    'css' => 'min-width: 350px;',
+                    'default' => 'SEK',
+                    'type' => 'multiselect',
+                    'options' => get_woocommerce_currencies()
+                ),
                 'cart_on_checkout' => array(
                     'title' => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
                     'type' => 'checkbox',
@@ -212,6 +224,7 @@ function init_wasa_kredit_gateway()
         {
             // If payment gateway should be available for customers
             $cart_total = WC()->cart->total;
+            $currency = get_woocommerce_currency();
             $financed_amount_status = $this->_client->validate_financed_amount($cart_total);
 
             if ( ! isset( $financed_amount_status )
@@ -223,15 +236,21 @@ function init_wasa_kredit_gateway()
 
             $shipping_country = WC()->customer->get_shipping_country();
             $available_countries = array_flip( $this->get_option( 'countries' ) );
+            $available_currencies = array_flip( $this->get_option( 'currencies' ) );
             $enabled = $this->get_option( 'enabled' );
 
-            // Only enable checkout if users country is in defined contries in settings
-            if (
-                $enabled === 'yes' &&
-                array_key_exists( $shipping_country, $available_countries )
-            ) {
+            if ( $enabled != 'yes' ) {
+                return false;
+            }
+
+            // Only enable checkout if users country and currency is in defined in settings
+            if  (
+                    array_key_exists( $shipping_country, $available_countries )
+                    && array_key_exists( $currency, $available_currencies )
+                ) {
                 return true;
             }
+
 
             return false;
         }
