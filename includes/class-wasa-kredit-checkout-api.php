@@ -132,8 +132,10 @@ class Wasa_Kredit_Checkout_API
 
         $response = $this->_client->update_order_status($transaction_id, $order_status);
 
-        if ( $response->statusCode !== 200 ) {
-            // Log this
+        if ( $response->statusCode != 200 ) {
+            $note = __("Error: You changed order status to " . $order_status . " but the order could not be changed at Wasa Kredit.");
+            $order->add_order_note($note);
+            $order->save();
         }
     }
 }
