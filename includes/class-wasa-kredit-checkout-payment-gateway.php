@@ -131,7 +131,8 @@ function init_wasa_kredit_gateway()
                     'css' => 'min-width: 350px;',
                     'default' => 'SE',
                     'type' => 'multiselect',
-                    'options' => WC()->countries->get_countries()
+                    'options' => WC()->countries->get_countries(),
+                    'description' => __( 'This controls for which countries the payment provider will be shown/hidden.', 'wasa-kredit-checkout' )
                 ),
                 'currencies' => array(
                     'title' => __(
@@ -143,7 +144,8 @@ function init_wasa_kredit_gateway()
                     'css' => 'min-width: 350px;',
                     'default' => 'SEK',
                     'type' => 'multiselect',
-                    'options' => get_woocommerce_currencies()
+                    'options' => get_woocommerce_currencies(),
+                    'description' => __( 'This controls for which currencies the payment provider will be shown/hidden.', 'wasa-kredit-checkout' )
                 ),
                 'cart_on_checkout' => array(
                     'title' => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
@@ -185,7 +187,8 @@ function init_wasa_kredit_gateway()
                     'title' => __('Test mode', 'wasa-kredit-checkout'),
                     'type' => 'checkbox',
                     'label' => __( 'Enable test mode', 'wasa-kredit-checkout' ),
-                    'default' => 'no'
+                    'default' => 'no',
+                    'description' => __( 'This controls if the test API should be called or not. Do not use in production.', 'wasa-kredit-checkout' )
                 )
             );
         }
@@ -234,7 +237,7 @@ function init_wasa_kredit_gateway()
                 return false;
             }
 
-            $shipping_country = WC()->customer->get_shipping_country();
+            $shipping_country = WC()->customer->get_billing_country();
             $available_countries = array_flip( $this->get_option( 'countries' ) );
             $available_currencies = array_flip( $this->get_option( 'currencies' ) );
             $enabled = $this->get_option( 'enabled' );
