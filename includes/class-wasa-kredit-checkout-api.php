@@ -105,7 +105,7 @@ class Wasa_Kredit_Checkout_API
 
     public function order_status_change_cancelled( $order_id ) {
         // When an order is set to status Cancelled in WooCommerce
-        $this->send_order_status_to_wasa_api( $order_id, 'cancelled' );
+        $this->send_order_status_to_wasa_api( $order_id, 'canceled' );
     }
 
     private function send_order_status_to_wasa_api( $order_id, $order_status ) {
@@ -130,6 +130,10 @@ class Wasa_Kredit_Checkout_API
             $settings['test_mode'] == 'yes' ? true : false
         );
 
-        $this->_client->update_order_status($transaction_id, $order_status);
+        $response = $this->_client->update_order_status($transaction_id, $order_status);
+
+        if ( $response->statusCode !== 200 ) {
+            // Log this
+        }
     }
 }
