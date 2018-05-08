@@ -1,14 +1,13 @@
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Wasa Kredit Checkout\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-08 08:27+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: \n"
-"Language: \n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"PO-Revision-Date: 2018-05-08 08:31+0000\n"
+"Last-Translator: Tony <tony.gustafsson@starrepublic.com>\n"
+"Language-Team: Swedish\n"
+"Language: sv_SE\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,32 +19,32 @@ msgstr ""
 
 #: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:166
 msgid "Client Secret is issued by Wasa Kredit."
-msgstr ""
+msgstr "Client Secret ges ut av Wasa Kredit."
 
 #: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:113
 msgid "Description"
-msgstr ""
+msgstr "Beskrivning"
 
 #: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:125
 msgid "Enable for these countries"
-msgstr ""
+msgstr "Slå på för följande länder"
 
 #: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:175
 msgid "Enable test mode"
-msgstr ""
+msgstr "Slå på testläge"
 
 #: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:94
 msgid "Enable Wasa Kredit Checkout"
-msgstr ""
+msgstr "Slå på Wasa Kredit Checkout"
 
 #: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:137
 #: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:146
 msgid "Enable/Disable"
-msgstr ""
+msgstr "Slå på/Slå av"
 
 #: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-list-products.php:57
 msgid "Financing "
-msgstr ""
+msgstr "Finansiering"
 
 #. URI of the plugin
 msgid "https://www.github.com"
@@ -61,23 +60,23 @@ msgstr ""
 
 #: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:157
 msgid "Partner ID is issued by Wasa Kredit."
-msgstr ""
+msgstr "Partner ID ges ut av Wasa Kredit."
 
 #: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:119
 msgid "Pay via Wasa Kredit Checkout."
-msgstr ""
+msgstr "Betala genom Wasa Kredit Checkout."
 
 #: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:36
 msgid "Proceed"
-msgstr ""
+msgstr "Fortsätt"
 
 #: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:139
 msgid "Show cart content on checkout"
-msgstr ""
+msgstr "Visa kundkorgsinnehåll i checkouten"
 
 #: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:148
 msgid "Show monthly cost in product list"
-msgstr ""
+msgstr "Visa finansiering i produktlistan"
 
 #. Author of the plugin
 msgid "Star Republic AB"
@@ -85,15 +84,15 @@ msgstr ""
 
 #: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:173
 msgid "Test mode"
-msgstr ""
+msgstr "Testläge"
 
 #: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:115
 msgid "This controls the description which the user sees during checkout."
-msgstr ""
+msgstr "Detta ändrar beskrivningen av betalsättet i kassan."
 
 #: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:103
 msgid "This controls the title which the user sees during checkout."
-msgstr ""
+msgstr "Kontrollerar titeln för betalsättet som syns i kassan."
 
 #. Description of the plugin
 msgid ""
@@ -103,7 +102,7 @@ msgstr ""
 
 #: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:101
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #. Name of the plugin
 #: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:107

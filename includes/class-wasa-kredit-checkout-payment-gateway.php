@@ -89,7 +89,7 @@ function init_wasa_kredit_gateway()
             // Defines settings fields on WooCommerce > Settings > Checkout > Wasa Kredit
             return array(
                 'enabled' => array(
-                    'title' => __( 'Enable/Disable', 'woocommerce' ),
+                    'title' => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
                     'type' => 'checkbox',
                     'label' => __(
                         'Enable Wasa Kredit Checkout',
