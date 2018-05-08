@@ -26,11 +26,16 @@ class Wasa_Kredit_Checkout_Shortcodes
 
     public function wasa_kredit_product_widget( $atts = [] )
     {
-        $atts = array_change_key_case((array) $atts, CASE_LOWER);
+        $atts = array_change_key_case( (array) $atts, CASE_LOWER );
 
-        if ( ! $atts['price'] || !$atts['currency'] ) {
+        if ( ! $atts['price'] ) {
             echo '<p style="color: red">Wrong widget attributes!</p>';
             return;
+        }
+
+        if ( ! $atts['currency'] ) {
+            // Fallback if no currency is defined
+            $atts['currency'] = get_woocommerce_currency();
         }
 
         $payload = array(
@@ -43,7 +48,7 @@ class Wasa_Kredit_Checkout_Shortcodes
 
         $response = $this->_client->create_product_widget( $payload );
 
-        if ( $response->statusCode == '201' ) {
+        if ( isset( $response ) && $response->statusCode == '201' ) {
             echo '<div>' . $response->data . '</div>';
         }
     }
