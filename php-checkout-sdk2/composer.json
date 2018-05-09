@@ -1,0 +1,20 @@
+{
+  "name": "wasa/client-php-sdk",
+  "description": "PHP SDK for communicating with the Wasa Leasing API",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Jim Skogman",
+      "email": "jim.skogman@starrepublic.com"
+    },
+    {
+      "name": "Conrad Ohlsson",
+      "email": "conrad.ohlsson@starrepublic.com"
+    }
+  ],
+  "require": {},
+  "require-dev": {
+    "phpdocumentor/phpdocumentor": "2.*",
+    "phpunit/phpunit": "^5.7"
+  }
+}
