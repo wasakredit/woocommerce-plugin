@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once plugin_dir_path(__FILE__) . '../php-checkout-sdk/Wasa.php';
 
-class Wasa_Kredit_Checkout_List_Products
+class Wasa_Kredit_Checkout_List_Widget
 {
     public function __construct()
     {
@@ -21,7 +21,7 @@ class Wasa_Kredit_Checkout_List_Products
         // Hooks
         add_action(
             'woocommerce_before_shop_loop',
-            array( $this, 'wasa_save_product_prices' ),
+            array( $this, 'save_product_prices' ),
             10
         );
 
@@ -30,6 +30,11 @@ class Wasa_Kredit_Checkout_List_Products
             array( $this, 'display_leasing_price_per_product' ),
             9
         );
+
+        add_shortcode( 'wasa_kredit_list_widget' , array(
+            $this,
+            'display_leasing_price_per_product'
+        ));
     }
 
     public function display_leasing_price_per_product()
@@ -59,7 +64,7 @@ class Wasa_Kredit_Checkout_List_Products
             '</p>';
     }
 
-    public function wasa_save_product_prices()
+    public function save_product_prices()
     {
         // Collects all financing costs for all shown products
         // Store as global variable to be accessed in display_leasing_price_per_product()

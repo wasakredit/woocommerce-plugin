@@ -163,6 +163,7 @@ function init_wasa_kredit_gateway()
                         'Show monthly cost in product list',
                         'wasa-kredit-checkout'
                     ),
+                    'description' => __('Will be shown under the price in product listings. You can also use the shortcode [wasa_kredit_list_widget]'),
                     'default' => 'yes'
                 ),
                 'widget_on_product_details' => array(
