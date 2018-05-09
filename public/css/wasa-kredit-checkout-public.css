@@ -2,3 +2,7 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+
+ .wasa-kredit-product-widget-container {
+     margin-bottom: 1em;
+ }

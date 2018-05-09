@@ -35,7 +35,7 @@ class Wasa_Kredit_Checkout
         $this->api = new Wasa_Kredit_Checkout_API();
 
         // Load shortcodes, like [wasa_kredit_product_widget]
-        $this->shortcodes = new Wasa_Kredit_Checkout_Shortcodes();
+        $this->product_widget = new Wasa_Kredit_Checkout_Product_Widget();
 
         // Load monthly cost on product listings
         $this->product_prices = new Wasa_Kredit_Checkout_List_Products();
@@ -62,7 +62,7 @@ class Wasa_Kredit_Checkout
             'includes/class-wasa-kredit-checkout-payment-gateway.php';
 
         require_once plugin_dir_path(dirname(__FILE__)) .
-            'includes/class-wasa-kredit-checkout-shortcodes.php';
+            'includes/class-wasa-kredit-checkout-product-widget.php';
 
         require_once plugin_dir_path(dirname(__FILE__)) .
             'includes/class-wasa-kredit-checkout-list-products.php';

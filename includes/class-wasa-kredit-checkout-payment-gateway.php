@@ -165,6 +165,16 @@ function init_wasa_kredit_gateway()
                     ),
                     'default' => 'yes'
                 ),
+                'widget_on_product_details' => array(
+                    'title' => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
+                    'type' => 'checkbox',
+                    'label' => __(
+                        'Show monthly cost in product details',
+                        'wasa-kredit-checkout'
+                    ),
+                    'description' => __('Will be shown between the price and the add to cart button. You can also use the shortcode [wasa_kredit_product_widget price="100" currency="SEK"] whereever you want.'),
+                    'default' => 'yes'
+                ),
                 'partner_id' => array(
                     'title' => __( 'Partner ID', 'wasa-kredit-checkout' ),
                     'type' => 'text',
