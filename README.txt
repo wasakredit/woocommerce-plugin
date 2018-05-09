@@ -24,6 +24,8 @@ The title and description of this payment provider can be changed in WooCommerce
 
 Turned on by detault but can be turned off in settings page.
 
+You can also add this by adding the shortcode [wasa_kredit_list_widget].
+
 === Short code for specific product ===
 
 You can show financing for a specific product with the following shortcode:
