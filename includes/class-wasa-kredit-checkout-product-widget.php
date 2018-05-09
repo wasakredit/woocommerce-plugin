@@ -30,35 +30,27 @@ class Wasa_Kredit_Checkout_Product_Widget
     }
 
     public function add_product_widget_to_product_page() {
-        global $product;
-
         if ( $this->settings['widget_on_product_details'] != "yes" ) {
             return;
         }
+
+        echo $this->get_product_widget();
+    }
+
+    public function wasa_kredit_product_widget()
+    {        
+        echo $this->get_product_widget();
+    }
+
+    private function get_product_widget() {
+        global $product;
 
         if ( ! $product ) {
             return;
         }
 
-        echo $this->get_product_widget( $product->get_price() );
-    }
-
-    public function wasa_kredit_product_widget( $atts = [] )
-    {
-        $atts = array_change_key_case( (array) $atts, CASE_LOWER );
-
-        if ( ! $atts['price'] ) {
-            echo '<p style="color: red">Wrong widget attributes!</p>';
-            return;
-        }
-        
-        echo $this->get_product_widget( $atts['price'], $atts['currency'] );
-    }
-
-    private function get_product_widget($price, $currency = null) {
-        if ( ! $currency ) {
-            $currency = get_woocommerce_currency();
-        }
+        $price = $product->get_price();
+        $currency = get_woocommerce_currency();
 
         $payload = array(
             'financial_product' => 'leasing',

@@ -173,7 +173,7 @@ function init_wasa_kredit_gateway()
                         'Show monthly cost in product details',
                         'wasa-kredit-checkout'
                     ),
-                    'description' => __('Will be shown between the price and the add to cart button. You can also use the shortcode [wasa_kredit_product_widget price="100" currency="SEK"] whereever you want.'),
+                    'description' => __('Will be shown between the price and the add to cart button. You can also use the shortcode [wasa_kredit_product_widget] whereever you want.'),
                     'default' => 'yes'
                 ),
                 'partner_id' => array(

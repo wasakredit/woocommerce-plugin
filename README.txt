@@ -28,11 +28,7 @@ Turned on by detault but can be turned off in settings page.
 
 You can show financing for a specific product with the following shortcode:
 
-`<?php echo do_shortcode("[wasa_kredit_product_widget price='" . $product->get_price() . "') ?>`
-
-Or
-
-`<?php echo do_shortcode("[wasa_kredit_product_widget price='" . $product->get_price() . "' currency='" . get_woocommerce_currency() . "']") ?>`
+`<?php echo do_shortcode("[wasa_kredit_product_widget]") ?>`
 
 Or
 
