@@ -106,10 +106,7 @@ $payload = array(
         'currency' => $currency
     ),
     'request_domain' => get_site_url(),
-    'confirmation_callback_url' => get_site_url(
-        null,
-        '/checkout/order-received/' . $order_id . '/?key=' . $order->get_order_key()
-    ),
+    'confirmation_callback_url' => $order->get_checkout_order_received_url(),
     'ping_url' => get_site_url( null, '/wasa-kredit-checkout/order-update/' )
 );
 

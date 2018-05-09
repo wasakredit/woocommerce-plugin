@@ -32,7 +32,7 @@ You can show financing for a specific product with the following shortcode:
 
 Or
 
-[wasa_kredit_product_widget price="100"]
+[wasa_kredit_product_widget]
 
 == Installation ==
 
