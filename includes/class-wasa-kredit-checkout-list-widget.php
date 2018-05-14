@@ -59,7 +59,7 @@ class Wasa_Kredit_Checkout_List_Widget
         }
 
         echo '<p>' .
-            __( 'Financing ', 'wasa-kredit-checkout' ) .
+            __( 'Financing', 'wasa-kredit-checkout' ) . ' ' .
             wc_price( $monthly_cost ) .
             '</p>';
     }
