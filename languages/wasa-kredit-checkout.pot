@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wasa Kredit Checkout\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-08 11:24+0000\n"
+"POT-Creation-Date: 2018-05-14 12:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -14,11 +14,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/"
 
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:164
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:189
 msgid "Client secret"
 msgstr ""
 
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:166
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:191
 msgid "Client Secret is issued by Wasa Kredit."
 msgstr ""
 
@@ -30,7 +30,11 @@ msgstr ""
 msgid "Enable for these countries"
 msgstr ""
 
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:175
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:138
+msgid "Enable for these currencies"
+msgstr ""
+
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:200
 msgid "Enable test mode"
 msgstr ""
 
@@ -38,13 +42,15 @@ msgstr ""
 msgid "Enable Wasa Kredit Checkout"
 msgstr ""
 
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:137
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:146
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:92
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:151
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:160
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:170
 msgid "Enable/Disable"
 msgstr ""
 
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-list-products.php:57
-msgid "Financing "
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-list-widget.php:62
+msgid "Financing"
 msgstr ""
 
 #. URI of the plugin
@@ -55,11 +61,11 @@ msgstr ""
 msgid "https://www.starrepublic.com"
 msgstr ""
 
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:155
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:180
 msgid "Partner ID"
 msgstr ""
 
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:157
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:182
 msgid "Partner ID is issued by Wasa Kredit."
 msgstr ""
 
@@ -71,11 +77,15 @@ msgstr ""
 msgid "Proceed"
 msgstr ""
 
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:139
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:153
 msgid "Show cart content on checkout"
 msgstr ""
 
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:148
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:172
+msgid "Show monthly cost in product details"
+msgstr ""
+
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:162
 msgid "Show monthly cost in product list"
 msgstr ""
 
@@ -83,8 +93,24 @@ msgstr ""
 msgid "Star Republic AB"
 msgstr ""
 
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:173
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:198
 msgid "Test mode"
+msgstr ""
+
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:135
+msgid ""
+"This controls for which countries the payment provider will be shown/hidden."
+msgstr ""
+
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:148
+msgid ""
+"This controls for which currencies the payment provider will be shown/hidden."
+msgstr ""
+
+#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:202
+msgid ""
+"This controls if the test API should be called or not. Do not use in "
+"production."
 msgstr ""
 
 #: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:115
@@ -108,7 +134,4 @@ msgstr ""
 #. Name of the plugin
 #: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:107
 msgid "Wasa Kredit Checkout"
-msgstr ""
-
-msgid "Enable for these currencies"
 msgstr ""
