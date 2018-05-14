@@ -16,7 +16,7 @@ class Wasa_Kredit_Checkout_Page
     public function checkout_template_override($page_template)
     {
         // Always load our checkout page template on checkout page
-        $checkout_page = get_page_by_title( 'Wasa Kredit Checkout' );
+        $checkout_page = get_page_by_path( 'wasa-kredit-checkout' );
 
         if ( is_page( $checkout_page ) ) {
             $page_template =
@@ -34,7 +34,7 @@ class Wasa_Kredit_Checkout_Page
             return;
         }
 
-        if ( get_page_by_title( 'Wasa Kredit Checkout' ) == null ) {
+        if ( get_page_by_path( 'wasa-kredit-checkout' ) == null ) {
             global $user_ID;
 
             $new_page = array(
