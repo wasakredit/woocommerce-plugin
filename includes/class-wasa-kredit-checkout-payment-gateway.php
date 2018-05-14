@@ -286,8 +286,8 @@ function init_wasa_kredit_gateway()
             // Get the URL for the checkout page, add order key to URL
             $checkout_page = get_page_by_title( 'Wasa Kredit Checkout' );
             $returnPage = get_permalink( $checkout_page );
-
-            return $returnPage . '?key=' . $order->order_key;
+            
+            return add_query_arg( 'key', $order->order_key, $returnPage );
         }
     }
 }
