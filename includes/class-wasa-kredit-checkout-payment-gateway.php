@@ -198,7 +198,7 @@ function init_wasa_kredit_gateway()
                     'title' => __('Test mode', 'wasa-kredit-checkout'),
                     'type' => 'checkbox',
                     'label' => __( 'Enable test mode', 'wasa-kredit-checkout' ),
-                    'default' => 'no',
+                    'default' => 'yes',
                     'description' => __( 'This controls if the test API should be called or not. Do not use in production.', 'wasa-kredit-checkout' )
                 )
             );
