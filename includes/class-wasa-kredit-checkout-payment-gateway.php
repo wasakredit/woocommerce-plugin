@@ -121,32 +121,6 @@ function init_wasa_kredit_gateway()
                         'wasa-kredit-checkout'
                     )
                 ),
-                'countries' => array(
-                    'title' => __(
-                        'Enable for these countries',
-                        'wasa-kredit-checkout'
-                    ),
-                    'desc' => '',
-                    'id' => 'woocommerce_specific_allowed_countries',
-                    'css' => 'min-width: 350px;',
-                    'default' => 'SE',
-                    'type' => 'multiselect',
-                    'options' => WC()->countries->get_countries(),
-                    'description' => __( 'This controls for which countries the payment provider will be shown/hidden.', 'wasa-kredit-checkout' )
-                ),
-                'currencies' => array(
-                    'title' => __(
-                        'Enable for these currencies',
-                        'wasa-kredit-checkout'
-                    ),
-                    'desc' => '',
-                    'id' => 'woocommerce_specific_allowed_currencies',
-                    'css' => 'min-width: 350px;',
-                    'default' => 'SEK',
-                    'type' => 'multiselect',
-                    'options' => get_woocommerce_currencies(),
-                    'description' => __( 'This controls for which currencies the payment provider will be shown/hidden.', 'wasa-kredit-checkout' )
-                ),
                 'cart_on_checkout' => array(
                     'title' => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
                     'type' => 'checkbox',
@@ -249,24 +223,18 @@ function init_wasa_kredit_gateway()
             }
 
             $shipping_country = WC()->customer->get_billing_country();
-            $available_countries = array_flip( $this->get_option( 'countries' ) );
-            $available_currencies = array_flip( $this->get_option( 'currencies' ) );
             $enabled = $this->get_option( 'enabled' );
 
             if ( $enabled != 'yes' ) {
                 return false;
             }
 
-            // Only enable checkout if users country and currency is in defined in settings
-            if  (
-                    array_key_exists( $shipping_country, $available_countries )
-                    && array_key_exists( $currency, $available_currencies )
-                ) {
-                return true;
+            // Only enable checkout if users country is Sweden and currency is Swedish krona
+            if  ($shipping_country != "SE" || $currency != "SEK") {
+                return false;
             }
 
-
-            return false;
+            return true;
         }
 
         public function process_payment( $order_id )
