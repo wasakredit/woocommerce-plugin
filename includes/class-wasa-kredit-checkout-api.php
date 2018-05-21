@@ -29,6 +29,11 @@ class Wasa_Kredit_Checkout_API
             $this,
             'order_status_change_cancelled'
         ));
+
+        add_action( 'admin_notices' , array(
+            $this,
+            'no_credential_notice'
+        ));
     }
 
     public function order_payment_complete()
@@ -137,5 +142,17 @@ class Wasa_Kredit_Checkout_API
             $order->add_order_note($note);
             $order->save();
         }
+    }
+
+    function no_credential_notice() {
+      $settings = get_option( 'wasa_kredit_settings' );
+
+      if( $settings['enabled'] == 'yes' && ( strlen($settings['partner_id']) == 0 || strlen($settings['client_secret'] ) == 0 )){
+        ?>
+            <div class="error notice">
+                <p><b><?php _e( 'Wasa Kredit Checkout:', 'wasa-kredit-checkout' ); ?></b> <?php _e( 'Please set your partner credentials on the', 'wasa-kredit-checkout' ); ?> <a href="/wp-admin/admin.php?page=wc-settings&tab=checkout&section=wasa_kredit"><?php _e( 'settings page', 'wasa-kredit-checkout' ); ?></a>.</p>
+            </div>
+        <?php
+      }
     }
 }

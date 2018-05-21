@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wasa Kredit Checkout\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-14 12:34+0000\n"
-"PO-Revision-Date: 2018-05-14 12:53+0000\n"
-"Last-Translator: Tony <tony.gustafsson@starrepublic.com>\n"
-"Language-Team: Swedish\n"
+"POT-Creation-Date: 2018-05-21 08:46+0000\n"
+"PO-Revision-Date: 2018-05-21 08:48+0000\n"
+"Last-Translator: admin <ehandel@wasakredit.se>\n"
+"Language-Team: Svenska\n"
 "Language: sv_SE\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
@@ -13,113 +13,104 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/"
 
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:189
-msgid "Client secret"
-msgstr ""
+#: includes/class-wasa-kredit-checkout-api.php:153
+msgid "Wasa Kredit Checkout:"
+msgstr "Wasa Kredit Checkout:"
 
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:191
-msgid "Client Secret is issued by Wasa Kredit."
-msgstr "Client Secret ges ut av Wasa Kredit."
+#: includes/class-wasa-kredit-checkout-api.php:153
+msgid "Please set your partner credentials on the"
+msgstr "Ange dina partneruppgifter på"
 
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:113
-msgid "Description"
-msgstr "Beskrivning"
+#: includes/class-wasa-kredit-checkout-api.php:153
+msgid "settings page"
+msgstr "inställningssidan"
 
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:125
-msgid "Enable for these countries"
-msgstr "Slå på för följande länder"
-
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:138
-msgid "Enable for these currencies"
-msgstr "Slå på för följande valutor"
-
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:200
-msgid "Enable test mode"
-msgstr "Slå på testläge"
-
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:94
-msgid "Enable Wasa Kredit Checkout"
-msgstr "Slå på Wasa Kredit Checkout"
-
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:92
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:151
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:160
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:170
-msgid "Enable/Disable"
-msgstr "Slå på/av"
-
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-list-widget.php:62
+#: includes/class-wasa-kredit-checkout-list-widget.php:62
 msgid "Financing"
 msgstr "Finansiering"
 
-#. URI of the plugin
-msgid "https://www.github.com"
-msgstr ""
-
-#. Author URI of the plugin
-msgid "https://www.starrepublic.com"
-msgstr ""
-
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:180
-msgid "Partner ID"
-msgstr ""
-
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:182
-msgid "Partner ID is issued by Wasa Kredit."
-msgstr "Partner ID ges ut av Wasa Kredit."
-
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:119
-msgid "Pay via Wasa Kredit Checkout."
-msgstr "Betala med Wasa Kredit Checkout"
-
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:36
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:36
 msgid "Proceed"
 msgstr "Fortsätt"
 
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:153
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:92
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:125
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:134
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:144
+msgid "Enable/Disable"
+msgstr "Slå på/av"
+
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:94
+msgid "Enable Wasa Kredit Checkout"
+msgstr "Slå på Wasa Kredit Checkout"
+
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:101
+msgid "Title"
+msgstr "Titel"
+
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:103
+msgid "This controls the title which the user sees during checkout."
+msgstr "Kontrollerar titeln som syns i checkouten vid betalsättet."
+
+#. Name of the plugin
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:107
+msgid "Wasa Kredit Checkout"
+msgstr "Wasa Kredit Checkout"
+
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:113
+msgid "Description"
+msgstr "Beskrivning"
+
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:115
+msgid "This controls the description which the user sees during checkout."
+msgstr "Kontrollerar beskrivningen som syns i checkouten vid betallösningen."
+
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:119
+msgid "Pay via Wasa Kredit Checkout."
+msgstr "Betala med Wasa Kredit Checkout"
+
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:127
 msgid "Show cart content on checkout"
 msgstr "Visa kundkorgsinnehåll i checkouten"
 
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:172
-msgid "Show monthly cost in product details"
-msgstr "Visa månatlig kostnad på produktsidor"
-
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:162
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:136
 msgid "Show monthly cost in product list"
 msgstr "Visa månatlig kostnad i produktlista"
 
-#. Author of the plugin
-msgid "Star Republic AB"
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:146
+msgid "Show monthly cost in product details"
+msgstr "Visa månatlig kostnad på produktsidor"
+
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:154
+msgid "Partner ID"
 msgstr ""
 
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:198
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:156
+msgid "Partner ID is issued by Wasa Kredit."
+msgstr "Partner ID ges ut av Wasa Kredit."
+
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:163
+msgid "Client secret"
+msgstr ""
+
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:165
+msgid "Client Secret is issued by Wasa Kredit."
+msgstr "Client Secret ges ut av Wasa Kredit."
+
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:172
 msgid "Test mode"
 msgstr "Testläge"
 
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:135
-msgid ""
-"This controls for which countries the payment provider will be shown/hidden."
-msgstr "Kontrollera vilka länder som betalmetoden är tillgänglig för."
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:174
+msgid "Enable test mode"
+msgstr "Slå på testläge"
 
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:148
-msgid ""
-"This controls for which currencies the payment provider will be shown/hidden."
-msgstr "Kontrollera vilka valutor som betalmetoden är tillgänglig för."
-
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:202
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:176
 msgid ""
 "This controls if the test API should be called or not. Do not use in "
 "production."
 msgstr ""
 "Kontrollerar om test-APIet ska kallas på eller inte. Använd ej i produktion."
-
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:115
-msgid "This controls the description which the user sees during checkout."
-msgstr "Kontrollerar beskrivningen som syns i checkouten vid betallösningen."
-
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:103
-msgid "This controls the title which the user sees during checkout."
-msgstr "Kontrollerar titeln som syns i checkouten vid betalsättet."
 
 #. Description of the plugin
 msgid ""
@@ -127,11 +118,14 @@ msgid ""
 "WordPress admin area."
 msgstr ""
 
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:101
-msgid "Title"
-msgstr "Titel"
+#. URI of the plugin
+msgid "https://www.github.com"
+msgstr ""
 
-#. Name of the plugin
-#: ../../../../woocommerse-plugin/includes/class-wasa-kredit-checkout-payment-gateway.php:107
-msgid "Wasa Kredit Checkout"
+#. Author of the plugin
+msgid "Star Republic AB"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://www.starrepublic.com"
 msgstr ""
