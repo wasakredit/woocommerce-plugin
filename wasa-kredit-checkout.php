@@ -85,3 +85,15 @@ function run_wasa_kredit_checkout()
     $plugin->run();
 }
 run_wasa_kredit_checkout();
+
+/**
+ * Add settings link to plugin list view
+ *
+ * @since    1.0.0
+ */
+function plugin_add_settings_link( $links ) {
+    $settings_link = '<a href="/wp-admin/admin.php?page=wc-settings&tab=checkout&section=wasa_kredit">' . __( 'Settings' ) . '</a>';
+    array_unshift( $links, $settings_link );
+  	return $links;
+}
+add_filter( "plugin_action_links_wasa-kredit-checkout/wasa-kredit-checkout.php", 'plugin_add_settings_link' );
