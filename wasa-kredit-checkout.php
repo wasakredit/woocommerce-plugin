@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              https://www.starrepublic.com
+ * @link              https://developer.wasakredit.se/
  * @since             1.0.0
  * @package           Wasa_Kredit_Checkout
  *
@@ -20,7 +20,7 @@ if (!defined('ABSPATH')) {
  * Plugin URI:        https://www.github.com
  * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
  * Version:           1.0.0
- * Author:            Star Republic AB
+ * Author:            Wasa Kredit
  * Author URI:        https://www.starrepublic.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
