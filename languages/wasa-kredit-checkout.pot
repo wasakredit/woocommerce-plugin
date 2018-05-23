@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wasa Kredit Checkout\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-21 08:46+0000\n"
+"POT-Creation-Date: 2018-05-23 08:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -113,19 +113,17 @@ msgid ""
 msgstr ""
 
 #. Description of the plugin
-msgid ""
-"This is a short description of what the plugin does. It's displayed in the "
-"WordPress admin area."
+msgid "Wasa Kredit Checkout offers financing as a payment method for B2B."
 msgstr ""
 
 #. URI of the plugin
-msgid "https://www.github.com"
+msgid "https://github.com/wasakredit/woocommerse-plugin"
 msgstr ""
 
 #. Author of the plugin
-msgid "Star Republic AB"
+msgid "Wasa Kredit"
 msgstr ""
 
 #. Author URI of the plugin
-msgid "https://www.starrepublic.com"
+msgid "https://developer.wasakredit.se"
 msgstr ""

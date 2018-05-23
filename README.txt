@@ -1,6 +1,6 @@
 === Plugin Name ===
 Contributors: starrepublic
-Donate link: https://www.starrepublic.com
+Donate link: https://developer.wasakredit.se
 Tags: woocommerce, ecommerce, e-commerce, checkout
 Requires at least: 3.0.1
 Tested up to: 3.4

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wasa Kredit Checkout\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-21 08:46+0000\n"
-"PO-Revision-Date: 2018-05-21 08:48+0000\n"
+"POT-Creation-Date: 2018-05-23 08:27+0000\n"
+"PO-Revision-Date: 2018-05-23 08:29+0000\n"
 "Last-Translator: admin <ehandel@wasakredit.se>\n"
 "Language-Team: Svenska\n"
 "Language: sv_SE\n"
@@ -83,7 +83,7 @@ msgstr "Visa månatlig kostnad på produktsidor"
 
 #: includes/class-wasa-kredit-checkout-payment-gateway.php:154
 msgid "Partner ID"
-msgstr ""
+msgstr "Partner ID"
 
 #: includes/class-wasa-kredit-checkout-payment-gateway.php:156
 msgid "Partner ID is issued by Wasa Kredit."
@@ -91,7 +91,7 @@ msgstr "Partner ID ges ut av Wasa Kredit."
 
 #: includes/class-wasa-kredit-checkout-payment-gateway.php:163
 msgid "Client secret"
-msgstr ""
+msgstr "Client secret"
 
 #: includes/class-wasa-kredit-checkout-payment-gateway.php:165
 msgid "Client Secret is issued by Wasa Kredit."
@@ -113,19 +113,18 @@ msgstr ""
 "Kontrollerar om test-APIet ska kallas på eller inte. Använd ej i produktion."
 
 #. Description of the plugin
-msgid ""
-"This is a short description of what the plugin does. It's displayed in the "
-"WordPress admin area."
+msgid "Wasa Kredit Checkout offers financing as a payment method for B2B."
 msgstr ""
+"Wasa Kredit Checkout erbjuder finansiering som ett betalalternativ för B2B."
 
 #. URI of the plugin
-msgid "https://www.github.com"
-msgstr ""
+msgid "https://github.com/wasakredit/woocommerse-plugin"
+msgstr "https://github.com/wasakredit/woocommerse-plugin"
 
 #. Author of the plugin
-msgid "Star Republic AB"
-msgstr ""
+msgid "Wasa Kredit"
+msgstr "Wasa Kredit"
 
 #. Author URI of the plugin
-msgid "https://www.starrepublic.com"
-msgstr ""
+msgid "https://developer.wasakredit.se"
+msgstr "https://developer.wasakredit.se"

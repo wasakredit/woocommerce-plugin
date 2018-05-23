@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) {
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link       https://www.starrepublic.com
+ * @link       https://developer.wasakredit.se
  * @since      1.0.0
  *
  * @package    Wasa_Kredit_Checkout
@@ -21,7 +21,7 @@ if (!defined('ABSPATH')) {
  *
  * @package    Wasa_Kredit_Checkout
  * @subpackage Wasa_Kredit_Checkout/admin
- * @author     Star Republic AB <support@starrepublic.com>
+ * @author     Wasa Kredit <ehandel@wasakredit.se>
  */
 class Wasa_Kredit_Checkout_Admin
 {

@@ -3,7 +3,7 @@
  *
  * This file is used to markup the admin-facing aspects of the plugin.
  *
- * @link       https://www.starrepublic.com
+ * @link       https://developer.wasakredit.se
  * @since      1.0.0
  *
  * @package    Wasa_Kredit_Checkout

@@ -17,11 +17,11 @@ if (!defined('ABSPATH')) {
  *
  * @wordpress-plugin
  * Plugin Name:       Wasa Kredit Checkout
- * Plugin URI:        https://www.github.com
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Plugin URI:        https://github.com/wasakredit/woocommerse-plugin
+ * Description:       Wasa Kredit Checkout offers financing as a payment method for B2B.
  * Version:           1.0.0
  * Author:            Wasa Kredit
- * Author URI:        https://www.starrepublic.com
+ * Author URI:        https://developer.wasakredit.se
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       wasa-kredit-checkout
