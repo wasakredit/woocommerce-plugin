@@ -251,11 +251,8 @@ function init_wasa_kredit_gateway()
 
         public function get_return_url( $order = null )
         {
-            // Get the URL for the checkout page, add order key to URL
-            $checkout_page = get_page_by_title( 'Wasa Kredit Checkout' );
-            $returnPage = get_permalink( $checkout_page );
-            
-            return add_query_arg( 'key', $order->order_key, $returnPage );
+            // Add order key to custom endpoint route as query param
+            return add_query_arg( 'wasa_kredit_checkout', $order->order_key, "/" );
         }
     }
 }
