@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
   exit();
 }
 
-if ( ! $_GET['key'] || empty( $_GET['key'] ) ) {
+if ( ! $_GET['wasa_kredit_checkout'] || empty( $_GET['wasa_kredit_checkout'] ) ) {
     exit();
 }
 
@@ -27,7 +27,7 @@ $client = new Sdk\Client(
 );
 
 // Collect data about order
-$order_key  = $_GET['key'];
+$order_key  = $_GET['wasa_kredit_checkout'];
 $order_id   = wc_get_order_id_by_order_key( $order_key );
 $order      = wc_get_order( $order_id );
 
@@ -128,8 +128,6 @@ get_header();
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 
-  <?php if ( have_posts()): get_template_part( 'loop' ); endif; ?>
-
   <?php if ( $settings['cart_on_checkout'] === 'yes' ): ?>
   <table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents" cellspacing="0">
       <thead>
@@ -163,7 +161,7 @@ get_header();
         </tbody>
       </table>
       <?php endif; ?>
-    
+
       <div class="wasa-checkout">
         <?php
           if ($response->statusCode == 201) {
@@ -183,7 +181,7 @@ get_header();
         // Update order to Processing
         var transactionId = orderReferences[1].value;
         var url = '<?php echo get_site_url( null, '/wc-api/wasa-order-payment-complete?key=' . $order->get_order_key() . '&transactionId=' ); ?>' + transactionId;
-        
+
         jQuery.ajax(url);
       },
       onCancel: function () {
