@@ -195,6 +195,7 @@ get_header();
         var url = '<?php echo get_site_url( null, '/wc-api/wasa-order-payment-complete?key=' . $order->get_order_key() . '&transactionId=' ); ?>' + transactionId;
 
         jQuery.ajax(url);
+        window.location.href = "<?php echo $order->get_checkout_order_received_url() ?>";
       },
       onCancel: function () {
         var checkoutUrl = '<?php echo get_site_url( null, '/checkout/' ); ?>';
