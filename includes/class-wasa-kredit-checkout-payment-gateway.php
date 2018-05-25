@@ -252,7 +252,7 @@ function init_wasa_kredit_gateway()
         public function get_return_url( $order = null )
         {
             // Add order key to custom endpoint route as query param
-            return add_query_arg( 'wasa_kredit_checkout', $order->order_key, "/" );
+            return add_query_arg( 'wasa_kredit_checkout', $order->order_key, get_site_url() );
         }
     }
 }
