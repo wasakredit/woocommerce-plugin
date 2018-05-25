@@ -172,6 +172,9 @@ get_header();
 
             if ($settings['test_mode'] == "yes") {
               echo "<hr/>";
+              echo "<h4>Request to API</h4>";
+              echo "<pre>".json_encode($payload, JSON_PRETTY_PRINT)."</pre>";
+              echo "<hr/>";
               echo "<h4>Response from Api</h4>";
               echo "<p>Wasa Kredit checkout is currently set to run in test mode, the plugin will echo out the error response from the Wasa Kredit Checkout API for easier debugging.</p>";
               echo "<ul>";
