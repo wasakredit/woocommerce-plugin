@@ -168,7 +168,19 @@ get_header();
             echo $response->data;
           }
           else {
-            echo '<strong style="color: red">' . __( " Something went wrong while contacting Wasa Kredit API." ) . '</strong>';
+            echo '<p><strong style="color: red">' . __( " Something went wrong while contacting Wasa Kredit API." ) . '</strong></p>';
+
+            if ($settings['test_mode'] == "yes") {
+              echo "<hr/>";
+              echo "<h4>Response from Api</h4>";
+              echo "<p>Wasa Kredit checkout is currently set to run in test mode, the plugin will echo out the error response from the Wasa Kredit Checkout API for easier debugging.</p>";
+              echo "<ul>";
+              echo "<li><strong>Status Code:</strong> ".$response->statusCode."</li>";
+              echo "<li><strong>Error:</strong> ".$response->error."</li>";
+              echo "</ul>";
+              echo "<pre>".json_encode($response->data, JSON_PRETTY_PRINT)."</pre>";
+              echo "<hr/>";
+            }
           }
         ?>
       </div>
