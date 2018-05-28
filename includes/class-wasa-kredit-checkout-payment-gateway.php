@@ -47,10 +47,6 @@ function init_wasa_kredit_gateway()
                 $this->enabled = $this->settings['enabled'];
             }
 
-            if ( $this->settings['title'] ) {
-                $this->title = $this->settings['title'];
-            }
-
             if ( $this->settings['description'] ) {
                 $this->description = $this->settings['description'];
             }
@@ -96,18 +92,6 @@ function init_wasa_kredit_gateway()
                         'wasa-kredit-checkout'
                     ),
                     'default' => 'yes'
-                ),
-                'title' => array(
-                    'title' => __( 'Title', 'wasa-kredit-checkout' ),
-                    'type' => 'text',
-                    'description' => __(
-                        'This controls the title which the user sees during checkout.',
-                        'wasa-kredit-checkout'
-                    ),
-                    'default' => __(
-                        'Wasa Kredit Checkout',
-                        'wasa-kredit-checkout'
-                    )
                 ),
                 'description' => array(
                     'title' => __( 'Description', 'wasa-kredit-checkout' ),
@@ -253,6 +237,33 @@ function init_wasa_kredit_gateway()
         {
             // Add order key to custom endpoint route as query param
             return add_query_arg( 'wasa_kredit_checkout', $order->order_key, get_site_url() );
+        }
+
+        public function get_title()
+        {
+            //Set custom title to payment to display in checkout
+            if( isset( WC()->cart) ){
+                $cart_totals = WC()->cart->get_totals();
+
+                $total_costs = $cart_totals["subtotal"] + ( $cart_totals["shipping_total"] - $cart_totals["shipping_tax"] );
+
+                $payload['items'][] = array(
+                    'financed_price'    => array(
+                        'amount'        => $total_costs,
+                        'currency'      => "SEK"
+                    ),
+                    'product_id' => "CART_VALUE"
+                );
+
+                $monthlyCostResponse = $this->_client->calculate_monthly_cost( $payload );
+
+                if ( isset( $monthlyCostResponse ) && $monthlyCostResponse->statusCode == 200 ){
+                    $monthly_cost = $monthlyCostResponse->data["monthly_costs"][0]["monthly_cost"]["amount"];
+                    return $this->title = __('Financing', 'wasa-kredit-checkout')." ".wc_price( $monthly_cost, array( 'decimals' => 0 ) ).__('/month', 'wasa-kredit-checkout');
+                }
+            }
+
+            return $this->title = __('Financing with Wasa Kredit Checkout', 'wasa-kredit-checkout');
         }
     }
 }
