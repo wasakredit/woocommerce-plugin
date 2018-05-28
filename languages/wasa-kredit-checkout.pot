@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wasa Kredit Checkout\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-23 08:27+0000\n"
+"POT-Creation-Date: 2018-05-28 12:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -27,6 +27,7 @@ msgid "settings page"
 msgstr ""
 
 #: includes/class-wasa-kredit-checkout-list-widget.php:62
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:76
 msgid "Financing"
 msgstr ""
 
@@ -34,82 +35,81 @@ msgstr ""
 msgid "Proceed"
 msgstr ""
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:92
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:125
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:134
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:144
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:76
+msgid "/month"
+msgstr ""
+
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:78
+msgid "Financing with Wasa Kredit Checkout"
+msgstr ""
+
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:109
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:130
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:139
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:149
 msgid "Enable/Disable"
 msgstr ""
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:94
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:111
 msgid "Enable Wasa Kredit Checkout"
 msgstr ""
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:101
-msgid "Title"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:103
-msgid "This controls the title which the user sees during checkout."
-msgstr ""
-
-#. Name of the plugin
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:107
-msgid "Wasa Kredit Checkout"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:113
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:118
 msgid "Description"
 msgstr ""
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:115
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:120
 msgid "This controls the description which the user sees during checkout."
 msgstr ""
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:119
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:124
 msgid "Pay via Wasa Kredit Checkout."
 msgstr ""
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:127
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:132
 msgid "Show cart content on checkout"
 msgstr ""
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:136
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:141
 msgid "Show monthly cost in product list"
 msgstr ""
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:146
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:151
 msgid "Show monthly cost in product details"
 msgstr ""
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:154
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:159
 msgid "Partner ID"
 msgstr ""
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:156
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:161
 msgid "Partner ID is issued by Wasa Kredit."
 msgstr ""
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:163
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:168
 msgid "Client secret"
 msgstr ""
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:165
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:170
 msgid "Client Secret is issued by Wasa Kredit."
 msgstr ""
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:172
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:177
 msgid "Test mode"
 msgstr ""
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:174
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:179
 msgid "Enable test mode"
 msgstr ""
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:176
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:181
 msgid ""
 "This controls if the test API should be called or not. Do not use in "
 "production."
+msgstr ""
+
+#. Name of the plugin
+msgid "Wasa Kredit Checkout"
 msgstr ""
 
 #. Description of the plugin
