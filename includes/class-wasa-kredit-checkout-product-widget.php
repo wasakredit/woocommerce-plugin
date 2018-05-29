@@ -59,7 +59,7 @@ class Wasa_Kredit_Checkout_Product_Widget {
 
 		$response = $this->_client->create_product_widget( $payload );
 
-		if ( isset( $response ) && $response->statusCode === '201' ) {
+		if ( isset( $response ) && $response->statusCode === 201 ) {
 			return '<div class="wasa-kredit-product-widget-container">' . $response->data . '</div>';
 		}
 
