@@ -94,10 +94,10 @@ class Wasa_Kredit_Checkout_API {
 
 		if ( array_key_exists( $_GET['status'], $approved_statuses ) ) {
 			// Set order status if valid status
-
+			$status = $_GET['status'];
 			$order->update_status(
-				$approved_statuses[ $_GET['status'] ],
-				__( "Wasa Kredit Checkout API change order status callback to $_GET['status']" ),
+				$approved_statuses[$status],
+				__( "Wasa Kredit Checkout API change order status callback to $status" )
 			);
 		}
 	}
