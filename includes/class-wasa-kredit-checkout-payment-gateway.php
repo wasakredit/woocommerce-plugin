@@ -99,15 +99,6 @@ function init_wasa_kredit_gateway() {
 						'wasa-kredit-checkout'
 					),
 				),
-				'cart_on_checkout'          => array(
-					'title'   => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
-					'type'    => 'checkbox',
-					'label'   => __(
-						'Show cart content on checkout',
-						'wasa-kredit-checkout'
-					),
-					'default' => 'no',
-				),
 				'widget_on_product_list'    => array(
 					'title'       => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
 					'type'        => 'checkbox',
