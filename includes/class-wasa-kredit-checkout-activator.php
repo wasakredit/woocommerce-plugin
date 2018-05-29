@@ -1,6 +1,6 @@
 <?php
-if (!defined('ABSPATH')) {
-    exit(); // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit(); // Exit if accessed directly
 }
 
 /**
@@ -23,17 +23,14 @@ if (!defined('ABSPATH')) {
  * @subpackage Wasa_Kredit_Checkout/includes
  * @author     Wasa Kredit <ehandel@wasakredit.se>
  */
-class Wasa_Kredit_Checkout_Activator
-{
-    /**
-     * Short Description. (use period)
-     *
-     * Long Description.
-     *
-     * @since    1.0.0
-     */
-    public static function activate()
-    {
-
-    }
+class Wasa_Kredit_Checkout_Activator {
+	/**
+	 * Short Description. (use period)
+	 *
+	 * Long Description.
+	 *
+	 * @since    1.0.0
+	 */
+	public static function activate() {
+	}
 }
