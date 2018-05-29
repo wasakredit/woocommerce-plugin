@@ -195,10 +195,18 @@ function init_wasa_kredit_gateway()
         public function is_available()
         {
             // If payment gateway should be available for customers
-            $cart_total = WC()->cart->total;
-            $currency = get_woocommerce_currency();
+
+            $enabled = $this->get_option( 'enabled' );
+            // Plugin is enabled
+            if ( $enabled != 'yes' ) {
+                return false;
+            }
+
+            $cart_totals = WC()->cart->get_totals();
+            $cart_total = $cart_totals['subtotal'] + ( $cart_totals["shipping_total"] - $cart_totals["shipping_tax"] );
             $financed_amount_status = $this->_client->validate_financed_amount($cart_total);
 
+            // Cart value is within partner limits
             if ( ! isset( $financed_amount_status )
                 || ($financed_amount_status->statusCode != 200
                 || ! $financed_amount_status->data['validation_result'] )) {
@@ -207,17 +215,14 @@ function init_wasa_kredit_gateway()
             }
 
             $shipping_country = WC()->customer->get_billing_country();
-            $enabled = $this->get_option( 'enabled' );
+            $currency = get_woocommerce_currency();
 
-            if ( $enabled != 'yes' ) {
-                return false;
-            }
-
-            // Only enable checkout if users country is Sweden and currency is Swedish krona
+            // Country is Sweden and currency is Swedish krona
             if  ($shipping_country != "SE" || $currency != "SEK") {
                 return false;
             }
 
+            // Everything is fine, show payment method.
             return true;
         }
 
