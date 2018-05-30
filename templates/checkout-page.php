@@ -52,8 +52,8 @@ foreach ( $cart_items as $cart_item_key => $cart_item ) {
 
 	$id              = $cart_item['product_id'];
 	$name            = $product->get_name();
-	$price_inc_vat   = wc_get_price_including_tax($product);
-	$price_ex_vat    = wc_get_price_excluding_tax($product);
+	$price_inc_vat   = wc_get_price_including_tax( $product );
+	$price_ex_vat    = wc_get_price_excluding_tax( $product );
 	$vat_percentage  = ( $price_inc_vat > 0 ? ( $price_ex_vat / $price_inc_vat ) * 100 : 0 );
 	$price_vat       = $price_inc_vat - $price_ex_vat;
 	$shipping_ex_vat = $shipping_cost - $shipping_tax;
@@ -98,7 +98,7 @@ $payload = array(
 	),
 	'order_references'          => array(
 		array(
-			'key'   => 'key',
+			'key'   => 'wasa_kredit_woocommerce_order_key',
 			'value' => $order->get_order_key(),
 		),
 	),
@@ -132,12 +132,12 @@ get_header();
 
 		<div class="wasa-checkout">
 		<?php
-		if ( $response->statusCode == 201 ) {
+		if ( 201 === $response->statusCode ) {
 			echo $response->data;
 		} else {
 			echo '<p><strong style="color: red">' . __( 'Something went wrong while contacting Wasa Kredit API.' ) . '</strong></p>';
 
-			if ( $settings['test_mode'] == "yes" ) {
+			if ( 'yes' === $settings['test_mode'] ) {
 				echo '<hr/>';
 				echo '<h4>Request to API</h4>';
 				echo '<pre>' . json_encode( $payload, JSON_PRETTY_PRINT ) . '</pre>';
@@ -161,8 +161,8 @@ get_header();
 		var options = {
 			onComplete: function ( orderReferences ) {
 			// Update order to Processing
-			var transactionId = orderReferences[1].value;
-			var url = '<?php echo get_site_url( null, '/wc-api/wasa-order-payment-complete?key=' . $order->get_order_key() . '&transactionId=' ); ?>' + transactionId;
+			var wasaKreditOrderId = orderReferences[1].value;
+			var url = '<?php echo get_site_url( null, '/wc-api/wasa-order-payment-complete?key=' . $order->get_order_key() . '&wasa_kredit_order_id=' ); ?>' + wasaKreditOrderId;
 
 			jQuery.ajax(url);
 			window.location.href = "<?php echo $order->get_checkout_order_received_url(); ?>";

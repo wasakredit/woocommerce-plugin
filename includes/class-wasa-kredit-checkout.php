@@ -74,7 +74,7 @@ class Wasa_Kredit_Checkout {
 	}
 
 	private function set_locale() {
-		$plugin_i18n = new Wasa_Kredit_Checkout_i18n();
+		$plugin_i18n = new Wasa_Kredit_Checkout_I18n();
 
 		$this->loader->add_action(
 			'plugins_loaded',

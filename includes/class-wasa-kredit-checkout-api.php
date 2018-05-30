@@ -57,7 +57,7 @@ class Wasa_Kredit_Checkout_API {
 
 		if ( ! empty( $_GET['transactionId'] ) ) {
 			// Add transaction ID to order, which is the WASA ID
-			$order->payment_complete( $_GET['transactionId'] );
+			$order->payment_complete( sanitize_text_field( wp_unslash( $_GET['transactionId'] ) ) );
 		} else {
 			$order->payment_complete();
 		}
@@ -75,7 +75,7 @@ class Wasa_Kredit_Checkout_API {
 		// Find the woo order with the correct WASA ID
 		$orders = wc_get_orders( array(
 			'limit'          => 1,
-			'transaction_id' => $_GET['id'],
+			'transaction_id' => sanitize_text_field( wp_unslash( $_GET['id'] ) ),
 		));
 
 		if ( ! $orders || count( $orders ) < 1 ) {
@@ -92,12 +92,12 @@ class Wasa_Kredit_Checkout_API {
 			'canceled'      => 'cancelled',
 		);
 
-		if ( array_key_exists( $_GET['status'], $approved_statuses ) ) {
+		if ( array_key_exists( wp_unslash( $_GET['status'] ), $approved_statuses ) ) {
 			// Set order status if valid status
-			$status = $_GET['status'];
+			$status = sanitize_text_field( wp_unslash( $_GET['status'] ) );
 			$order->update_status(
-				$approved_statuses[$status],
-				__( "Wasa Kredit Checkout API change order status callback to $status" )
+				$approved_statuses[ $status ],
+				__( 'Wasa Kredit Checkout API change order status callback to' ) . ' ' . $status
 			);
 		}
 	}
@@ -136,8 +136,8 @@ class Wasa_Kredit_Checkout_API {
 
 		$response = $this->_client->update_order_status( $transaction_id, $order_status );
 
-		if ( $response->statusCode != 200 ) {
-			$note = __("Error: You changed order status to " . $order_status . " but the order could not be changed at Wasa Kredit.");
+		if ( 200 !== $response->statusCode ) {
+			$note = __( 'Error: You changed order status to ' ) . $order_status . __( ' but the order could not be changed at Wasa Kredit.' );
 			$order->add_order_note( $note );
 			$order->save();
 		}
@@ -146,10 +146,11 @@ class Wasa_Kredit_Checkout_API {
 	function no_credential_notice() {
 		$settings = get_option( 'wasa_kredit_settings' );
 
-		if ( $settings['enabled'] == 'yes' && ( strlen( $settings['partner_id'] ) == 0 || strlen( $settings['client_secret'] ) == 0 ) ) {
+		if ( 'yes' === $settings['enabled'] && ( strlen( $settings['partner_id'] ) === 0 || strlen( $settings['client_secret'] ) === 0 ) ) {
 			?>
 				<div class="error notice">
-					<p><b><?php _e( 'Wasa Kredit Checkout:', 'wasa-kredit-checkout' ); ?></b> <?php _e( 'Please set your partner credentials on the', 'wasa-kredit-checkout' ); ?> <a href="/wp-admin/admin.php?page=wc-settings&tab=checkout&section=wasa_kredit"><?php _e( 'settings page', 'wasa-kredit-checkout' ); ?></a>.</p>
+					<p>
+						<b><?php esc_html_e( 'Wasa Kredit Checkout:', 'wasa-kredit-checkout' ); ?></b> <?php esc_html_e( 'Please set your partner credentials on the', 'wasa-kredit-checkout' ); ?> <a href="/wp-admin/admin.php?page=wc-settings&tab=checkout&section=wasa_kredit"><?php esc_html_e( 'settings page', 'wasa-kredit-checkout' ); ?></a>.</p>
 				</div>
 			<?php
 		}
