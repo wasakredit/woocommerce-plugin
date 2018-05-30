@@ -28,7 +28,7 @@ class Wasa_Kredit_Checkout_Product_Widget {
 	}
 
 	public function add_product_widget_to_product_page() {
-		if ( $this->settings['widget_on_product_details'] !== 'yes' ) {
+		if ( 'yes' !== $this->settings['widget_on_product_details'] ) {
 			return;
 		}
 
@@ -59,7 +59,7 @@ class Wasa_Kredit_Checkout_Product_Widget {
 
 		$response = $this->_client->create_product_widget( $payload );
 
-		if ( isset( $response ) && $response->statusCode === 201 ) {
+		if ( isset( $response ) && 201 === $response->statusCode ) {
 			return '<div class="wasa-kredit-product-widget-container">' . $response->data . '</div>';
 		}
 
