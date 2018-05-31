@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @subpackage Wasa_Kredit_Checkout/includes
  * @author     Wasa Kredit <ehandel@wasakredit.se>
  */
-class Wasa_Kredit_Checkout_i18n {
+class Wasa_Kredit_Checkout_I18n {
 	/**
 	 * Load the plugin text domain for translation.
 	 *

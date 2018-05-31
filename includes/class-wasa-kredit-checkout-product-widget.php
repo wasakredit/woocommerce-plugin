@@ -28,15 +28,15 @@ class Wasa_Kredit_Checkout_Product_Widget {
 	}
 
 	public function add_product_widget_to_product_page() {
-		if ( $this->settings['widget_on_product_details'] !== 'yes' ) {
+		if ( 'yes' !== $this->settings['widget_on_product_details'] ) {
 			return;
 		}
 
-		echo $this->get_product_widget();
+		echo $this->get_product_widget(); // @codingStandardsIgnoreLine - Should output html from our Backend
 	}
 
 	public function wasa_kredit_product_widget() {
-		echo $this->get_product_widget();
+		echo $this->get_product_widget(); // @codingStandardsIgnoreLine - Should output html from our Backend
 	}
 
 	private function get_product_widget() {
@@ -59,7 +59,7 @@ class Wasa_Kredit_Checkout_Product_Widget {
 
 		$response = $this->_client->create_product_widget( $payload );
 
-		if ( isset( $response ) && $response->statusCode === 201 ) {
+		if ( isset( $response ) && 201 === $response->statusCode ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
 			return '<div class="wasa-kredit-product-widget-container">' . $response->data . '</div>';
 		}
 

@@ -41,7 +41,7 @@ class Wasa_Kredit_Checkout_List_Widget {
 
 		$settings = get_option( 'wasa_kredit_settings' );
 
-		if ( $settings['widget_on_product_list'] !== 'yes' ) {
+		if ( 'yes' !== $settings['widget_on_product_list'] ) {
 			return;
 		}
 
@@ -66,7 +66,7 @@ class Wasa_Kredit_Checkout_List_Widget {
 		// Store as global variable to be accessed in display_leasing_price_per_product()
 		$settings = get_option( 'wasa_kredit_settings' );
 
-		if ( $settings['widget_on_product_list'] != 'yes' ) {
+		if ( 'yes' !== $settings['widget_on_product_list'] ) {
 			return;
 		}
 
@@ -114,7 +114,7 @@ class Wasa_Kredit_Checkout_List_Widget {
 		$response      = $this->_client->calculate_monthly_cost( $payload );
 		$monthly_costs = [];
 
-		if ( isset( $response ) && $response->statusCode == 200 ) {
+		if ( isset( $response ) && 200 === $response->statusCode ) {
 			foreach ( $response->data['monthly_costs'] as $current_product ) {
 				$monthly_costs[
 					$current_product['product_id']
