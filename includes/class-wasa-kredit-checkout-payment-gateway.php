@@ -9,7 +9,7 @@ add_action( 'plugins_loaded', 'init_wasa_kredit_gateway' );
 add_filter( 'woocommerce_payment_gateways', 'add_wasa_kredit_gateway' );
 
 function add_wasa_kredit_gateway( $methods ) {
-	$methods[] = 'WC_Gateway_Wasa_Kredit';
+	$methods[] = 'Wasa_Kredit_Checkout_Payment_Gateway';
 
 	return $methods;
 }
@@ -19,7 +19,7 @@ function init_wasa_kredit_gateway() {
 		return;
 	}
 
-	class WC_Gateway_Wasa_Kredit extends WC_Payment_Gateway {
+	class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 		public function __construct() {
 			// Setup payment gateway properties
 			$this->id                 = 'wasa_kredit';
@@ -200,7 +200,7 @@ function init_wasa_kredit_gateway() {
 
 			// Cart value is within partner limits
 			if ( ! isset( $financed_amount_status )
-				|| ( 200 !== $financed_amount_status->statusCode
+				|| ( 200 !== $financed_amount_status->statusCode // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
 				|| ! $financed_amount_status->data['validation_result'] ) ) {
 				// If total order value is too small or too large
 				return false;
@@ -251,7 +251,7 @@ function init_wasa_kredit_gateway() {
 
 				$monthly_cost_response = $this->_client->calculate_monthly_cost( $payload );
 
-				if ( isset( $monthly_cost_response ) && 200 === $monthly_cost_response->statusCode ) {
+				if ( isset( $monthly_cost_response ) && 200 === $monthly_cost_response->statusCode ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
 					$monthly_cost = $monthly_cost_response->data['monthly_costs'][0]['monthly_cost']['amount'];
 
 					return __( 'Financing', 'wasa-kredit-checkout' ) . ' ' . wc_price( $monthly_cost, array( 'decimals' => 0 ) ) . __( '/month', 'wasa-kredit-checkout' );

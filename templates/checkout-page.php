@@ -11,7 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-if ( ! $_GET['wasa_kredit_checkout'] || empty( $_GET['wasa_kredit_checkout'] ) ) {
+$order_key = sanitize_key( wp_unslash( $_GET['wasa_kredit_checkout'] ) ); // @codingStandardsIgnoreLine - Validation okay. Will exit further down if order is not found.
+
+if ( ! isset( $order_key ) || empty( $order_key ) ) {
 	exit();
 }
 
@@ -27,9 +29,8 @@ $client = new Sdk\Client(
 );
 
 // Collect data about order
-$order_key = $_GET['wasa_kredit_checkout'];
-$order_id  = wc_get_order_id_by_order_key( $order_key );
-$order     = wc_get_order( $order_id );
+$order_id = wc_get_order_id_by_order_key( $order_key );
+$order    = wc_get_order( $order_id );
 
 if ( ! $order ) {
 	exit();
@@ -131,24 +132,25 @@ get_header();
 	<main id="main" class="site-main" role="main">
 
 		<div class="wasa-checkout">
+
 		<?php
-		if ( 201 === $response->statusCode ) {
-			echo $response->data;
+		if ( 201 === $response->statusCode ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
+			echo $response->data; // @codingStandardsIgnoreLine - Echo out the HTML response from our backend
 		} else {
-			echo '<p><strong style="color: red">' . __( 'Something went wrong while contacting Wasa Kredit API.' ) . '</strong></p>';
+			echo '<p><strong style="color: red">' . esc_html( 'Something went wrong while contacting Wasa Kredit API.' ) . '</strong></p>';
 
 			if ( 'yes' === $settings['test_mode'] ) {
 				echo '<hr/>';
 				echo '<h4>Request to API</h4>';
-				echo '<pre>' . json_encode( $payload, JSON_PRETTY_PRINT ) . '</pre>';
+				echo '<pre>' . wp_json_encode( $payload, JSON_PRETTY_PRINT ) . '</pre>';
 				echo '<hr/>';
 				echo '<h4>Response from Api</h4>';
 				echo '<p>Wasa Kredit checkout is currently set to run in test mode, the plugin will echo out the error response from the Wasa Kredit Checkout API for easier debugging.</p>';
 				echo '<ul>';
-				echo '<li><strong>Status Code:</strong> ' . $response->statusCode . '</li>';
-				echo '<li><strong>Error:</strong> ' . $response->error . '</li>';
+				echo '<li><strong>Status Code:</strong> ' . esc_html( $response->statusCode ) . '</li>'; // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
+				echo '<li><strong>Error:</strong> ' . esc_html( $response->error ) . '</li>';
 				echo '</ul>';
-				echo '<pre>' . json_encode( $response->data, JSON_PRETTY_PRINT ) . '</pre>';
+				echo '<pre>' . wp_json_encode( $response->data, JSON_PRETTY_PRINT ) . '</pre>';
 				echo '<hr/>';
 			}
 		}
@@ -162,13 +164,13 @@ get_header();
 			onComplete: function ( orderReferences ) {
 			// Update order to Processing
 			var wasaKreditOrderId = orderReferences[1].value;
-			var url = '<?php echo get_site_url( null, '/wc-api/wasa-order-payment-complete?key=' . $order->get_order_key() . '&wasa_kredit_order_id=' ); ?>' + wasaKreditOrderId;
+			var url = '<?php echo esc_url( get_site_url( null, '/wc-api/wasa-order-payment-complete?key=' . $order->get_order_key() . '&wasa_kredit_order_id=' ) ); ?>' + wasaKreditOrderId;
 
 			jQuery.ajax(url);
-			window.location.href = "<?php echo $order->get_checkout_order_received_url(); ?>";
+			window.location.href = "<?php echo esc_url( $order->get_checkout_order_received_url() ); ?>";
 			},
 			onCancel: function () {
-				var checkoutUrl = '<?php echo get_site_url( null, '/checkout/' ); ?>';
+				var checkoutUrl = '<?php echo esc_url( get_site_url( null, '/checkout/' ) ); ?>';
 
 				window.location.href = checkoutUrl;
 			}
