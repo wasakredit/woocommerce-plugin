@@ -174,11 +174,17 @@ get_header();
 		var options = {
 			onComplete: function ( orderReferences ) {
 			// Update order to Processing
-			var wasaKreditOrderId = orderReferences[1].value;
+			var wasaKreditOrderId = '';
+			for ( i = 0; i < orderReferences.length; i++ ) {
+				if ( orderReferences[i].key === 'wasakredit-order-id' ){
+					wasaKreditOrderId = orderReferences[i].value;
+				}
+			}
+
 			var url = '<?php echo $confirm_url; // @codingStandardsIgnoreLine - Url with Query parameters pointing towards custom endpoint ?>' + '=' + wasaKreditOrderId;
 
 			jQuery.ajax(url);
-			window.location.href = "<?php echo $order->get_checkout_order_received_url();  // @codingStandardsIgnoreLine - Proceed Url with Query parameters ?>";
+			window.location.href = '<?php echo $order->get_checkout_order_received_url();  // @codingStandardsIgnoreLine - Proceed Url with Query parameters ?>';
 			},
 			onCancel: function () {
 				var checkoutUrl = '<?php echo esc_url( $cancel_url ); ?>';
