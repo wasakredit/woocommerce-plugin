@@ -160,17 +160,28 @@ get_header();
 	</div>
 
 	<script>
+		<?php
+			$confirm_url = add_query_arg(
+				array(
+					'key'                  => $order_key,
+					'wasa_kredit_order_id' => '',
+				),
+				get_site_url( null, '/wc-api/wasa-order-payment-complete' )
+			);
+
+			$cancel_url = wc_get_checkout_url();
+			?>
 		var options = {
 			onComplete: function ( orderReferences ) {
 			// Update order to Processing
 			var wasaKreditOrderId = orderReferences[1].value;
-			var url = '<?php echo esc_url( get_site_url( null, '/wc-api/wasa-order-payment-complete?key=' . $order->get_order_key() . '&wasa_kredit_order_id=' ) ); ?>' + wasaKreditOrderId;
+			var url = '<?php echo $confirm_url; // @codingStandardsIgnoreLine - Url with Query parameters pointing towards custom endpoint ?>' + '=' + wasaKreditOrderId;
 
 			jQuery.ajax(url);
-			window.location.href = "<?php echo esc_url( $order->get_checkout_order_received_url() ); ?>";
+			window.location.href = "<?php echo $order->get_checkout_order_received_url();  // @codingStandardsIgnoreLine - Proceed Url with Query parameters ?>";
 			},
 			onCancel: function () {
-				var checkoutUrl = '<?php echo esc_url( get_site_url( null, '/checkout/' ) ); ?>';
+				var checkoutUrl = '<?php echo esc_url( $cancel_url ); ?>';
 
 				window.location.href = checkoutUrl;
 			}

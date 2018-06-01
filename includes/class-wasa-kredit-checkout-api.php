@@ -38,7 +38,7 @@ class Wasa_Kredit_Checkout_API {
 		/**
 		 * Is run onComplete after Wasa Checkout Payment is accepted.
 		 * It will complete the payment, decrease stock, set it to status Processing.
-		 * Ie: domain/wc-api/wasa-order-payment-complete?key=wc_order_6543116e&transactionId=6e-9f2e-4b4a-a25f-004068e9d210
+		 * Ie: domain/wc-api/wasa-order-payment-complete?key=wc_order_6543116e&wasa_kredit_order_id=6e-9f2e-4b4a-a25f-004068e9d210
 		 */
 
 		if ( ! isset( $_GET['key'] ) ) { //input var okay
@@ -55,9 +55,9 @@ class Wasa_Kredit_Checkout_API {
 			return;
 		}
 
-		if ( ! empty( $_GET['transactionId'] ) ) { //input var okay
+		if ( ! empty( (string) $_GET['wasa_kredit_order_id'] ) ) { //input var okay
 			// Add transaction ID to order, which is the WASA ID
-			$order->payment_complete( sanitize_text_field( wp_unslash( $_GET['transactionId'] ) ) ); //input var okay
+			$order->payment_complete( sanitize_text_field( wp_unslash( (string) $_GET['wasa_kredit_order_id'] ) ) ); //input var okay
 		} else {
 			$order->payment_complete();
 		}
