@@ -188,7 +188,6 @@ get_header();
 			},
 			onCancel: function () {
 				var checkoutUrl = '<?php echo esc_url( $cancel_url ); ?>';
-
 				window.location.href = checkoutUrl;
 			}
 		};
