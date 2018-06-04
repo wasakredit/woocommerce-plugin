@@ -110,7 +110,7 @@ $payload = array(
 	),
 	'request_domain'            => get_site_url(),
 	'confirmation_callback_url' => $order->get_checkout_order_received_url(),
-	'ping_url'                  => get_site_url( null, '/wasa-kredit-checkout/order-update/' ),
+	'ping_url'                  => get_rest_url( null, 'wasa-kredit-checkout/v1/update_order_status' ),
 );
 
 // Get answer from API
