@@ -21,6 +21,8 @@ function init_wasa_kredit_gateway() {
 
 	class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 		public function __construct() {
+			$plugin_dir = plugin_dir_url( __FILE__ );
+
 			// Setup payment gateway properties
 			$this->id                 = 'wasa_kredit';
 			$this->plugin_id          = 'wasa_kredit';
@@ -31,7 +33,7 @@ function init_wasa_kredit_gateway() {
 			$this->method_description = 'Use to pay with Wasa Kredit Checkout.';
 			$this->order_button_text  = __( 'Proceed', 'wasa-kredit-checkout' );
 			$this->selected_currency  = get_woocommerce_currency();
-
+			$this->icon               = $plugin_dir . 'assets/wasakredit-logo.png';
 			// Where to store settings in DB
 			$this->options_key = 'wasa_kredit_settings';
 
