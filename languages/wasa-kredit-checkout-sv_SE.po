@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wasa Kredit Checkout\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-01 08:43+0000\n"
-"PO-Revision-Date: 2018-06-01 08:47+0000\n"
+"POT-Creation-Date: 2018-06-21 09:50+0000\n"
+"PO-Revision-Date: 2018-06-21 09:53+0000\n"
 "Last-Translator: admin <ehandel@wasakredit.se>\n"
-"Language-Team: Svenska\n"
+"Language-Team: Swedish\n"
 "Language: sv_SE\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
@@ -13,54 +13,48 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/"
 
-#: includes/class-wasa-kredit-checkout-api.php:153
+#: includes/class-wasa-kredit-checkout-api.php:165
 msgid "Wasa Kredit Checkout:"
 msgstr "Wasa Kredit Checkout:"
 
-#: includes/class-wasa-kredit-checkout-api.php:153
+#: includes/class-wasa-kredit-checkout-api.php:165
 msgid "Please set your partner credentials on the"
 msgstr "Ange dina partneruppgifter på"
 
-#: includes/class-wasa-kredit-checkout-api.php:153
+#: includes/class-wasa-kredit-checkout-api.php:165
 msgid "settings page"
 msgstr "inställningssidan"
 
 #: includes/class-wasa-kredit-checkout-list-widget.php:59
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:257
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:240
 msgid "Financing"
 msgstr "Finansiering"
+
+#: includes/class-wasa-kredit-checkout-list-widget.php:60
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:240
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:279
+msgid "/month"
+msgstr "/mån"
 
 #: includes/class-wasa-kredit-checkout-payment-gateway.php:32
 msgid "Proceed"
 msgstr "Fortsätt"
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:82
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:103
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:116
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:77
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:86
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:99
 msgid "Enable/Disable"
 msgstr "Slå på/av"
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:84
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:79
 msgid "Enable Wasa Kredit Checkout"
 msgstr "Slå på Wasa Kredit Checkout"
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:91
-msgid "Description"
-msgstr "Beskrivning"
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:93
-msgid "This controls the description which the user sees during checkout."
-msgstr "Kontrollerar beskrivningen som syns i checkouten vid betallösningen."
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:97
-msgid "Pay via Wasa Kredit Checkout."
-msgstr "Betala med Wasa Kredit Checkout"
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:105
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:88
 msgid "Show monthly cost in product list"
 msgstr "Visa månatlig kostnad i produktlista"
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:109
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:92
 msgid ""
 "Will be shown under the price in product listings. You can also use the "
 "shortcode [wasa_kredit_list_widget]"
@@ -69,11 +63,11 @@ msgstr ""
 "kan även använda dig av shortcode [wasa_kredit_list_widget] för att anpassa "
 "detta."
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:118
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:101
 msgid "Show monthly cost in product details"
 msgstr "Visa månatlig kostnad på produktsidor"
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:122
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:105
 msgid ""
 "Will be shown between the price and the add to cart button. You can also use "
 "the shortcode [wasa_kredit_product_widget] whereever you want."
@@ -82,44 +76,62 @@ msgstr ""
 "varukorg\"-knappen på produktdetaljsidan. Du kan även använda dig av "
 "shortcode [wasa_kredit_list_widget] för att anpassa detta."
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:129
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:112
 msgid "Partner ID"
 msgstr "Partner ID"
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:131
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:114
 msgid "Partner ID is issued by Wasa Kredit."
 msgstr "Partner ID ges ut av Wasa Kredit."
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:138
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:121
 msgid "Client secret"
 msgstr "Client secret"
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:140
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:123
 msgid "Client Secret is issued by Wasa Kredit."
 msgstr "Client Secret ges ut av Wasa Kredit."
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:147
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:130
 msgid "Test mode"
 msgstr "Testläge"
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:149
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:132
 msgid "Enable test mode"
 msgstr "Slå på testläge"
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:151
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:134
 msgid ""
 "This controls if the test API should be called or not. Do not use in "
 "production."
 msgstr ""
 "Kontrollerar om test-APIet ska kallas på eller inte. Använd ej i produktion."
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:257
-msgid "/month"
-msgstr "/mån"
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:261
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:244
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:290
 msgid "Financing with Wasa Kredit Checkout"
 msgstr "Finansiering med Wasa Kredit Checkout"
+
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:262
+msgid "Finance your purchase with Wasa Kredit"
+msgstr "Finansiera ditt köp med Wasa Kredit"
+
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:264
+msgid "Finance your purchase with Wasa Kredit leasing"
+msgstr "Finansiera ditt köp med Wasa Kredit leasing"
+
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:267
+msgid "Finance your purchase with Wasa Kredit rental"
+msgstr "Finansiera ditt köp med Wasa Kredit hyra"
+
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:278
+#, php-format
+msgid " for %s months."
+msgstr "i %s månader."
+
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:283
+msgid "Proceed to select your monthly cost."
+msgstr "Fortsätt för att välja din månadskostnad."
 
 #. Name of the plugin
 msgid "Wasa Kredit Checkout"

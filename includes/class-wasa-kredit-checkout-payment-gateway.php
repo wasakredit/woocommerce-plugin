@@ -42,10 +42,6 @@ function init_wasa_kredit_gateway() {
 				$this->enabled = $this->settings['enabled'];
 			}
 
-			if ( $this->settings['description'] ) {
-				$this->description = $this->settings['description'];
-			}
-
 			// Connect to WASA PHP SDK
 			$this->_client = new Sdk\Client(
 				$this->settings['partner_id'],
@@ -85,18 +81,6 @@ function init_wasa_kredit_gateway() {
 						'wasa-kredit-checkout'
 					),
 					'default' => 'yes',
-				),
-				'description'               => array(
-					'title'       => __( 'Description', 'wasa-kredit-checkout' ),
-					'type'        => 'textarea',
-					'description' => __(
-						'This controls the description which the user sees during checkout.',
-						'wasa-kredit-checkout'
-					),
-					'default'     => __(
-						'Pay via Wasa Kredit Checkout.',
-						'wasa-kredit-checkout'
-					),
 				),
 				'widget_on_product_list'    => array(
 					'title'       => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
@@ -257,6 +241,52 @@ function init_wasa_kredit_gateway() {
 				}
 			}
 
+			return __( 'Financing with Wasa Kredit Checkout', 'wasa-kredit-checkout' );
+		}
+
+		public function get_description() {	
+			//Set custom description to display in checkout	
+			if ( isset( WC()->cart ) ) {
+
+				$cart_totals = WC()->cart->get_totals();
+				$cart_total = $cart_totals['subtotal'] + ( $cart_totals['shipping_total'] - $cart_totals['shipping_tax'] );
+
+				$response2 = $this->_client->get_payment_methods($cart_total, 'SEK');
+
+				  
+				if ( isset( $response2 ) && 200 === $response2->statusCode ) { 
+
+					foreach ($response2->data['payment_methods'] as $key => $value) {
+						if ('leasing' === $value['id'] || 'rental' === $value['id']) {
+
+							$desc = '<p><b>' . __('Finance your purchase with Wasa Kredit','wasa-kredit-checkout') . '</b><br>';
+							if ('leasing' === $value['id']) {
+								$desc = '<p><b>' . __('Finance your purchase with Wasa Kredit leasing','wasa-kredit-checkout') . '</b><br>';
+							}
+							if ('rental' === $value['id']) {
+								$desc = '<p><b>' . __('Finance your purchase with Wasa Kredit rental','wasa-kredit-checkout') . '</b><br>';
+							}
+							$desc .= '<br>';
+
+							$options = $value['options'];
+							$contract_lengths = $options['contract_lengths']; 
+
+							foreach ($contract_lengths as $key3 => $value3) {
+								$months = $value3['contract_length'];
+								$amount = $value3['monthly_cost']['amount'];
+						
+								$desc_months = sprintf( __(' for %s months.', 'wasa-kredit-checkout'), $months );
+								$desc_item = '<br>' . wc_price( $amount, array( 'decimals' => 0 ) ) . __( '/month', 'wasa-kredit-checkout' ) . $desc_months;
+								$desc .= $desc_item;
+							}
+							$desc .= '<br><br>';
+							$desc .= __('Proceed to select your monthly cost.','wasa-kredit-checkout');
+						}
+					}
+					$desc .= '</p>';
+				}
+				return $desc;
+			}
 			return __( 'Financing with Wasa Kredit Checkout', 'wasa-kredit-checkout' );
 		}
 	}
