@@ -1,4 +1,4 @@
-# Wasa Kredit Client PHP SDK v2.2
+# Wasa Kredit Client PHP SDK v2.3
 
 **Table of Content**
 
@@ -12,9 +12,15 @@
   * [Get Order status](#get_order_status)
   * [Update Order status](#update_order_status)
   * [Add Order Reference](#add_order_reference)
+  * [Get Payment Methods](#get_payment_methods)
 * [Handling the Response](#handling_the_response)
 
 ## <a name="change_log"></a>Change log
+
+### What's new in 2.3
+
+Added new operation "Get Payment Methods". This can be used for a more detailed description of the Wasa Kredit Checkout payment method.  
+Resolve an issue with session scoping when running multiple partners on the same session/domain.
 
 ### What's new in v2.2
 
@@ -575,6 +581,64 @@ $response = $this->_client->add_order_reference($orderId, $orderReference);
 {
   "status": "shipped"
 }
+```
+### <a name="get_payment_methods"></a>Get Payment Methods
+
+Get information from Wasa Kredit about the different payment options available in the checkout. This can be used to compose a description of which options are available in the checkout before it's loaded.
+
+#### Parameters
+| Name | Type | Description |
+|---|---|---|
+| total_amount   | *string* (required) | A string value that will be parsed to a decimal, e.g. 19999 is '19999.00' |
+| currency | *string* (required) | The currency |
+
+#### Example usage:
+
+```
+$total_amount = "10000.00";
+$currency = "SEK";
+
+$response = $this->_client->get_payment_methods($total_amount, $currency);
+```
+
+#### Response
+
+```
+{
+  "payment_methods": [
+    {
+      "id": "leasing",
+      "display_name": "Leasing",
+      "options": {
+        "default_contract_length": 24,
+        "contract_lengths": [
+          {
+            "contract_length": 12,
+            "monthly_cost": {
+              "amount": "802",
+              "currency": "SEK"
+            }
+          },
+          {
+            "contract_length": 24,
+            "monthly_cost": {
+              "amount": "442",
+              "currency": "SEK"
+            }
+          },
+          {
+            "contract_length": 36,
+            "monthly_cost": {
+              "amount": "321",
+              "currency": "SEK"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
+
 ```
 
 ## <a name="handling_the_response"></a>Handling the Response

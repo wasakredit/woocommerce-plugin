@@ -9,7 +9,6 @@ namespace Sdk;
  * to other classes.
  *
  * @package    Client PHP SDK
- * @author     Jim Skogman <jim.skogman@starrepublic.com>
  */
 
 class Client
@@ -60,127 +59,79 @@ class Client
     public function __construct($clientId, $clientSecret, $testMode = true)
     {
         $this->base_url = wasa_config('base_url');
-        $this->token_client = new AccessToken(
-            $clientId,
-            $clientSecret,
-            $testMode
-        );
+        $this->token_client = new AccessToken($clientId, $clientSecret, $testMode);
         $this->api_client = new Api($clientId, $clientSecret, $testMode);
     }
 
     /**
      * @deprecated
      */
-    public function calculate_leasing_cost($calculateLeasingBody)
+    public function calculate_leasing_cost($calculateLeasingBody) // @codingStandardsIgnoreLine
     {
         // Method calculate_leasing_cost is deprecated, use calculate_monthly_cost instead.
-        return $this->api_client->execute(
-            $this->base_url . "/v1/leasing",
-            "POST",
-            $calculateLeasingBody
-        );
+        return $this->api_client->execute($this->base_url . "/v1/leasing", "POST", $calculateLeasingBody);
     }
 
-    public function calculate_monthly_cost($calculateMonthlyCostBody)
+    public function calculate_monthly_cost($calculateMonthlyCostBody) // @codingStandardsIgnoreLine
     {
-        return $this->api_client->execute(
-            $this->base_url . "/v1/monthly-cost",
-            "POST",
-            $calculateMonthlyCostBody
-        );
+        return $this->api_client->execute($this->base_url . "/v1/monthly-cost", "POST", $calculateMonthlyCostBody);
     }
 
     /**
      * @deprecated
      */
-    public function calculate_total_leasing_cost(
-        $calculateTotalLeasingCostBody
-    ) {
+    public function calculate_total_leasing_cost($calculateTotalLeasingCostBody) // @codingStandardsIgnoreLine
+    {
         // Method calculate_total_leasing_cost is deprecated.
-        return $this->api_client->execute(
-            $this->base_url . "/v1/leasing/total-cost",
-            "POST",
-            $calculateTotalLeasingCostBody
-        );
+        return $this->api_client->execute($this->base_url . "/v1/leasing/total-cost", "POST", $calculateTotalLeasingCostBody);
     }
 
-    public function create_checkout($createCheckoutBody)
+    public function create_checkout($createCheckoutBody) // @codingStandardsIgnoreLine
     {
-        return $this->api_client->execute(
-            $this->base_url . "/v2/checkouts",
-            "POST",
-            $createCheckoutBody
-        );
+        return $this->api_client->execute($this->base_url . "/v2/checkouts", "POST", $createCheckoutBody);
     }
 
     /**
      * @deprecated
      */
-    public function validate_allowed_leasing_amount($amount)
+    public function validate_allowed_leasing_amount($amount) // @codingStandardsIgnoreLine
     {
         // Method validate_allowed_leasing_amount is deprecated, use validate_financed_amount instead.
-        return $this->api_client->execute(
-            $this->base_url . "/v1/leasing/validate-amount?amount=" . $amount,
-            "GET",
-            null
-        );
+        return $this->api_client->execute($this->base_url . "/v1/leasing/validate-amount?amount=" . $amount, "GET", null);
     }
 
-    public function validate_financed_amount($amount)
+    public function validate_financed_amount($amount) // @codingStandardsIgnoreLine
     {
-        return $this->api_client->execute(
-            $this->base_url . "/v1/validate-financed-amount?amount=" . $amount,
-            "GET",
-            null
-        );
+        return $this->api_client->execute($this->base_url . "/v1/validate-financed-amount?amount=" . $amount, "GET", null);
     }
 
-    public function create_product_widget($productPrice)
+    public function create_product_widget($productPrice) // @codingStandardsIgnoreLine
     {
-        return $this->api_client->execute(
-            $this->base_url . "/v1/checkouts/widget",
-            "POST",
-            $productPrice
-        );
+        return $this->api_client->execute($this->base_url . "/v1/checkouts/widget", "POST", $productPrice);
     }
 
-    public function add_order_reference($orderId, $orderReferences)
+    public function add_order_reference($orderId, $orderReferences) // @codingStandardsIgnoreLine
     {
-        return $this->api_client->execute(
-            $this->base_url . "/v1/orders/" . $orderId . "/order-references",
-            "POST",
-            $orderReferences
-        );
+        return $this->api_client->execute($this->base_url . "/v1/orders/" . $orderId . "/order-references", "POST", $orderReferences);
     }
 
-    public function get_order($orderId)
+    public function get_order($orderId) // @codingStandardsIgnoreLine
     {
-        return $this->api_client->execute(
-            $this->base_url . "/v1/orders/" . $orderId,
-            "GET",
-            null
-        );
+        return $this->api_client->execute($this->base_url . "/v1/orders/" . $orderId, "GET", null);
     }
 
-    public function get_order_status($orderId)
+    public function get_order_status($orderId) // @codingStandardsIgnoreLine
     {
-        return $this->api_client->execute(
-            $this->base_url . "/v1/orders/" . $orderId . "/status",
-            "GET",
-            null
-        );
+        return $this->api_client->execute($this->base_url . "/v1/orders/" . $orderId . "/status", "GET", null);
     }
 
-    public function update_order_status($orderId, $orderStatus)
+    public function update_order_status($orderId, $orderStatus) // @codingStandardsIgnoreLine
     {
-        return $this->api_client->execute(
-            $this->base_url .
-                "/v1/orders/" .
-                $orderId .
-                "/status/" .
-                $orderStatus,
-            "PUT",
-            null
-        );
+        return $this->api_client->execute($this->base_url . "/v1/orders/" . $orderId . "/status/" . $orderStatus, "PUT", null);
+    }
+
+    public function get_payment_methods($amount, $currency) // @codingStandardsIgnoreLine
+    {
+        return $this->api_client->execute($this->base_url . "/v1/payment-methods?total_amount=" . $amount . "&currency=" . $currency, "GET", null);
     }
 }
