@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Wasa Kredit Checkout\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-21 09:50+0000\n"
-"PO-Revision-Date: 2018-06-21 09:53+0000\n"
+"PO-Revision-Date: 2018-06-27 13:57+0000\n"
 "Last-Translator: admin <ehandel@wasakredit.se>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -127,7 +127,7 @@ msgstr "Finansiera ditt köp med Wasa Kredit hyra"
 #: includes/class-wasa-kredit-checkout-payment-gateway.php:278
 #, php-format
 msgid " for %s months."
-msgstr "i %s månader."
+msgstr " i %s månader."
 
 #: includes/class-wasa-kredit-checkout-payment-gateway.php:283
 msgid "Proceed to select your monthly cost."
