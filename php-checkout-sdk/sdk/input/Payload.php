@@ -23,6 +23,6 @@ class Payload
             $this->$property = $value;
         }
 
-        return $this
+        return $this;
     }
 }

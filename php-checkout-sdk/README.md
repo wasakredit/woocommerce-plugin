@@ -1,4 +1,4 @@
-# Wasa Kredit Client PHP SDK v2.3
+# Wasa Kredit Client PHP SDK v2.4
 
 **Table of Content**
 
@@ -16,6 +16,10 @@
 * [Handling the Response](#handling_the_response)
 
 ## <a name="change_log"></a>Change log
+
+### What's new in 2.4
+
+Minor update with respect to a missing semicolon.
 
 ### What's new in 2.3
 
