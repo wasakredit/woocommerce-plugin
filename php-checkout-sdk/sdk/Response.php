@@ -1,4 +1,5 @@
 <?php
+
 namespace Sdk;
 
 /**
@@ -11,6 +12,7 @@ namespace Sdk;
  */
 class Response
 {
+
     private $statusCode = '';
     private $data = '';
     private $error = '';
@@ -34,14 +36,14 @@ class Response
     public function __get($property)
     {
         if (property_exists($this, $property)) {
-            return $this->{$property};
+            return $this->$property;
         }
     }
 
     public function __set($property, $value)
     {
         if (property_exists($this, $property)) {
-            $this->{$property} = $value;
+            $this->$property = $value;
         }
 
         return $this;
