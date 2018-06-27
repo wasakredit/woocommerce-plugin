@@ -55,6 +55,7 @@ Or
 = 1.1 =
 * The plugin is based on Wasa Kredit PHP SDK v2.3 
 * Description now displays possible financing options.
+* Added integration for WooCommerce product Add-Ons.
 
 == Upgrade Notice ==
 
