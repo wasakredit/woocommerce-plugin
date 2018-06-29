@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wasa Kredit Checkout\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-29 06:41+0000\n"
+"POT-Creation-Date: 2018-06-29 11:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -14,6 +14,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/"
 
+#: wasa-kredit-checkout.php:92
+msgid "Settings"
+msgstr ""
+
 #: includes/class-wasa-kredit-checkout-product-widget.php:44
 #: includes/class-wasa-kredit-checkout-list-widget.php:60
 #: includes/class-wasa-kredit-checkout-payment-gateway.php:240
@@ -23,6 +27,10 @@ msgstr ""
 
 #: includes/class-wasa-kredit-checkout-api.php:107
 msgid "Wasa Kredit Checkout API change order status callback to"
+msgstr ""
+
+#: includes/class-wasa-kredit-checkout-api.php:152
+msgid "Error: You changed order status to "
 msgstr ""
 
 #: includes/class-wasa-kredit-checkout-api.php:165
