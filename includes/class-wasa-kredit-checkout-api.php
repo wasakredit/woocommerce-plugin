@@ -104,7 +104,7 @@ class Wasa_Kredit_Checkout_API {
 
 			$order->update_status(
 				$approved_statuses[ $status ],
-				__( 'Wasa Kredit Checkout API change order status callback to' ) . ' ' . $status
+				__( 'Wasa Kredit Checkout API change order status callback to', 'wasa-kredit-checkout' ) . ' ' . $status
 			);
 
 			//If status ready_to_ship Wasa Kredit has apprived the financing. Complete payment of order
