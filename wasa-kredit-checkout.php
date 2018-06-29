@@ -89,7 +89,7 @@ run_wasa_kredit_checkout();
  * @since    1.0.0
  */
 function plugin_add_settings_link( $links ) {
-	$settings_link = '<a href="admin.php?page=wc-settings&tab=checkout&section=wasa_kredit">' . __( 'Settings' ) . '</a>';
+	$settings_link = '<a href="admin.php?page=wc-settings&tab=checkout&section=wasa_kredit">' . __( 'Settings', 'wasa-kredit-checkout' ) . '</a>';
 	array_unshift( $links, $settings_link );
 	return $links;
 }

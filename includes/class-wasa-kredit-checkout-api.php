@@ -149,7 +149,7 @@ class Wasa_Kredit_Checkout_API {
 		$response = $this->_client->update_order_status( $transaction_id, $order_status );
 
 		if ( 200 !== $response->statusCode ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
-			$note = __( 'Error: You changed order status to ' ) . $order_status . __( ' but the order could not be changed at Wasa Kredit.' );
+			$note = __( 'Error: You changed order status to ', 'wasa-kredit-checkout' ) . $order_status . __( ' but the order could not be changed at Wasa Kredit.' );
 			$order->add_order_note( $note );
 			$order->save();
 		}
