@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wasa Kredit Checkout\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-29 11:28+0000\n"
-"PO-Revision-Date: 2018-06-29 11:29+0000\n"
+"POT-Creation-Date: 2018-06-29 11:35+0000\n"
+"PO-Revision-Date: 2018-06-29 11:37+0000\n"
 "Last-Translator: admin <ehandel@wasakredit.se>\n"
 "Language-Team: Svenska\n"
 "Language: sv_SE\n"
@@ -31,6 +31,10 @@ msgstr "Wasa Kredit Checkout API bytte orderstatus till"
 #: includes/class-wasa-kredit-checkout-api.php:152
 msgid "Error: You changed order status to "
 msgstr "Fel: Du ändrade orderstatus till"
+
+#: includes/class-wasa-kredit-checkout-api.php:152
+msgid " but the order could not be changed at Wasa Kredit."
+msgstr "men ordern kunde inte ändras hos Wasa Kredit."
 
 #: includes/class-wasa-kredit-checkout-api.php:165
 msgid "Wasa Kredit Checkout:"
