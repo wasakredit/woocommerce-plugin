@@ -119,7 +119,7 @@ function init_wasa_kredit_gateway() {
 				),
 				'client_secret'             => array(
 					'title'       => __( 'Client secret', 'wasa-kredit-checkout' ),
-					'type'        => 'text',
+					'type'        => 'password',
 					'description' => __(
 						'Client Secret is issued by Wasa Kredit.',
 						'wasa-kredit-checkout'
