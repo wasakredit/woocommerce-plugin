@@ -6,12 +6,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once plugin_dir_path( __FILE__ ) . '../php-checkout-sdk/Wasa.php';
 
 add_action( 'plugins_loaded', 'init_wasa_kredit_gateway' );
+add_action( 'woocommerce_before_checkout_form', 'create_redirect_to_standard_checkout_view', 10, 1 );
 add_filter( 'woocommerce_payment_gateways', 'add_wasa_kredit_gateway' );
 
 function add_wasa_kredit_gateway( $methods ) {
 	$methods[] = 'Wasa_Kredit_Checkout_Payment_Gateway';
 
 	return $methods;
+}
+
+function create_redirect_to_standard_checkout_view() {
+	include plugin_dir_path( __FILE__ ) . '../templates/redirect-to-standard-checkout.php';
 }
 
 function init_wasa_kredit_gateway() {
