@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin Name:       Wasa Kredit Checkout
  * Plugin URI:        https://github.com/wasakredit/woocommerse-plugin
  * Description:       Wasa Kredit Checkout offers financing as a payment method for B2B.
- * Version:           1.2.0
+ * Version:           1.2.1
  * Author:            Wasa Kredit
  * Author URI:        https://developer.wasakredit.se
  * License:           GPL-2.0+
@@ -37,7 +37,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'WASA_KREDIT_CHECKOUT_VERSION', '1.2.0' );
+define( 'WASA_KREDIT_CHECKOUT_VERSION', '1.2.1' );
 
 /**
  * The code that runs during plugin activation.
@@ -89,7 +89,7 @@ run_wasa_kredit_checkout();
  * @since    1.0.0
  */
 function plugin_add_settings_link( $links ) {
-	$settings_link = '<a href="admin.php?page=wc-settings&tab=checkout&section=wasa_kredit">' . __( 'Settings' ) . '</a>';
+	$settings_link = '<a href="admin.php?page=wc-settings&tab=checkout&section=wasa_kredit">' . __( 'Settings', 'wasa-kredit-checkout' ) . '</a>';
 	array_unshift( $links, $settings_link );
 	return $links;
 }

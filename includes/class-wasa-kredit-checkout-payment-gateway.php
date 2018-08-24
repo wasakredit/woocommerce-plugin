@@ -124,7 +124,7 @@ function init_wasa_kredit_gateway() {
 				),
 				'client_secret'             => array(
 					'title'       => __( 'Client secret', 'wasa-kredit-checkout' ),
-					'type'        => 'text',
+					'type'        => 'password',
 					'description' => __(
 						'Client Secret is issued by Wasa Kredit.',
 						'wasa-kredit-checkout'
@@ -249,43 +249,43 @@ function init_wasa_kredit_gateway() {
 			return __( 'Financing with Wasa Kredit Checkout', 'wasa-kredit-checkout' );
 		}
 
-		public function get_description() {	
-			//Set custom description to display in checkout	
+		public function get_description() {
+			//Set custom description to display in checkout
 			if ( isset( WC()->cart ) ) {
 
 				$cart_totals = WC()->cart->get_totals();
-				$cart_total = $cart_totals['subtotal'] + ( $cart_totals['shipping_total'] - $cart_totals['shipping_tax'] );
+				$cart_total  = $cart_totals['subtotal'] + ( $cart_totals['shipping_total'] - $cart_totals['shipping_tax'] );
 
-				$response2 = $this->_client->get_payment_methods($cart_total, 'SEK');
+				$response2 = $this->_client->get_payment_methods( $cart_total, 'SEK' );
 
-				  
-				if ( isset( $response2 ) && 200 === $response2->statusCode ) { 
+				if ( isset( $response2 ) && 200 === $response2->statusCode ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
 
-					foreach ($response2->data['payment_methods'] as $key => $value) {
-						if ('leasing' === $value['id'] || 'rental' === $value['id']) {
+					foreach ( $response2->data['payment_methods'] as $key => $value ) {
+						if ( 'leasing' === $value['id'] || 'rental' === $value['id'] ) {
 
-							$desc = '<p><b>' . __('Finance your purchase with Wasa Kredit','wasa-kredit-checkout') . '</b><br>';
-							if ('leasing' === $value['id']) {
-								$desc = '<p><b>' . __('Finance your purchase with Wasa Kredit leasing','wasa-kredit-checkout') . '</b><br>';
+							$desc = '<p><b>' . __( 'Finance your purchase with Wasa Kredit', 'wasa-kredit-checkout' ) . '</b><br>';
+							if ( 'leasing' === $value['id'] ) {
+								$desc = '<p><b>' . __( 'Finance your purchase with Wasa Kredit leasing', 'wasa-kredit-checkout' ) . '</b><br>';
 							}
-							if ('rental' === $value['id']) {
-								$desc = '<p><b>' . __('Finance your purchase with Wasa Kredit rental','wasa-kredit-checkout') . '</b><br>';
+							if ( 'rental' === $value['id'] ) {
+								$desc = '<p><b>' . __( 'Finance your purchase with Wasa Kredit rental', 'wasa-kredit-checkout' ) . '</b><br>';
 							}
 							$desc .= '<br>';
 
-							$options = $value['options'];
-							$contract_lengths = $options['contract_lengths']; 
+							$options          = $value['options'];
+							$contract_lengths = $options['contract_lengths'];
 
-							foreach ($contract_lengths as $key3 => $value3) {
+							foreach ( $contract_lengths as $key3 => $value3 ) {
 								$months = $value3['contract_length'];
 								$amount = $value3['monthly_cost']['amount'];
-						
-								$desc_months = sprintf( __(' for %s months.', 'wasa-kredit-checkout'), $months );
-								$desc_item = '<br>' . wc_price( $amount, array( 'decimals' => 0 ) ) . __( '/month', 'wasa-kredit-checkout' ) . $desc_months;
-								$desc .= $desc_item;
+
+								// translators: %s placeholder is a number to display number of months
+								$desc_months = sprintf( __( ' for %s months.', 'wasa-kredit-checkout' ), $months );
+								$desc_item   = '<br>' . wc_price( $amount, array( 'decimals' => 0 ) ) . __( '/month', 'wasa-kredit-checkout' ) . $desc_months;
+								$desc       .= $desc_item;
 							}
 							$desc .= '<br><br>';
-							$desc .= __('Proceed to select your monthly cost.','wasa-kredit-checkout');
+							$desc .= __( 'Proceed to select your monthly cost.', 'wasa-kredit-checkout' );
 						}
 					}
 					$desc .= '</p>';

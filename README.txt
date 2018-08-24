@@ -5,7 +5,7 @@ Tags: woocommerce, ecommerce, e-commerce, checkout
 Requires at least: 3.0.1
 Tested up to: 4.9.6
 Requires PHP: 5.7
-Stable tag: 1.2
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,12 +53,16 @@ Or
 * The plugin is based on Wasa Kredit PHP SDK v2.2.
 
 = 1.1 =
-* The plugin is based on Wasa Kredit PHP SDK v2.3. 
+* The plugin is based on Wasa Kredit PHP SDK v2.3.
 * Description now displays possible financing options.
 * Added integration for WooCommerce product Add-Ons.
 
 = 1.2 =
-* The plugin is based on Wasa Kredit PHP SDK v2.4. 
+* The plugin is based on Wasa Kredit PHP SDK v2.4.
+
+= 1.2.1 =
+* The client_secret field is now able to contain special characters in the database
+* Added missing domain to translation texts
 
 == Upgrade Notice ==
 
