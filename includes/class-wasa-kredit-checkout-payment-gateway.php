@@ -141,6 +141,26 @@ function init_wasa_kredit_gateway() {
 						'wasa-kredit-checkout'
 					),
 				),
+				'add_redirect_to_standard_checkout_widget' => array(
+					'title'       => __( 'Advanced', 'wasa-kredit-checkout'),
+					'type'        => 'checkbox',
+					'label'       => __( 'Enable redirect to standard checkout widget', 'wasa-kredit-checkout' ),
+					'default'     => 'no',
+					'description' => __(
+						'This is an advanced setting that is not needed for most integrations. Enable it if you have replaced the standard woocommerce checkout page with another checkout page. It will present a widget where the user can navigate to the standard checkout and use Wasa Kredit as a payment method.',
+						'wasa-kredit-checkout'
+					),
+				),
+				'standard_checkout_page_route' => array(
+					'title'       => __( 'Advanced', 'wasa-kredit-checkout'),
+					'type'        => 'text',
+					'label'       => __( 'Standard checkout page route', 'wasa-kredit-checkout' ),
+					'default'     => '',
+					'description' => __(
+						'This is an advanced setting that is not needed for most integrations. If the setting redirect to standard checkout widget above is enabled, this setting is the route of the standard checkout page the user will be redirected to.',
+						'wasa-kredit-checkout'
+					),
+				),
 			);
 		}
 
