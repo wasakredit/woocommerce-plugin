@@ -15,8 +15,6 @@ require_once plugin_dir_path( __FILE__ ) . '../php-checkout-sdk/Wasa.php';
 
 $settings = get_option( 'wasa_kredit_settings' );
 
-
-
 $enable_redirect_widget = $settings['add_redirect_to_standard_checkout_widget'];
 $redirect_route = $settings['standard_checkout_page_route'];
 $current_route = end(array_filter(explode('/', get_permalink())));
@@ -50,18 +48,18 @@ if ( isset( WC()->cart ) ) {
 ?>
 
 <?php if ( isset( $payment_methods_response ) && 200 === $payment_methods_response->statusCode ) {  ?>
-<div style="border:1px solid #efefef;padding:15px;margin-bottom:40px;background-color:#fbfbfb">
-    <span style="display:block"><strong>Finansiering</strong></span>
-    <a href="<?php echo $redirect_url ?>" style="display:inline-block;float:right;color:#fff;background-color:#ad1015;padding:10px 20px">
-        <span><strong>Byt betalsätt</strong></span></br>
-        <span>Finansiera med Wasa Kredit</span>
-    </a>
-    <ul style="list-style:none;margin:0px">
+<div class="wasa-kredit-redirect-widget-container">
+    <span class="wasa-kredit-redirect-widget-title"><strong>Finansiering</strong></span>
+    <ul class="wasa-kredit-redirect-widget-monthly-cost-list">
         <?php 
             foreach ($payment_methods_response->data['payment_methods'][0]['options']['contract_lengths'] as $key => $value) { 
                 echo "<li>".$value['monthly_cost']['amount']." kr/mån i ".$value['contract_length']." månader</li>";
              } ?>
     </ul>
-    <div style="clear:both"></div>
+    <a href="<?php echo $redirect_url ?>" class="wasa-kredit-redirect-widget-button">
+        <span class="wasa-kredit-redirect-widget-button-title"><strong>Byt betalsätt</strong></span></br>
+        <span class="wasa-kredit-redirect-widget-button-description">Finansiera med Wasa Kredit</span>
+    </a>
+    <div class="wasa-kredit-redirect-widget-clear"></div>
 </div>
 <?php } ?>
