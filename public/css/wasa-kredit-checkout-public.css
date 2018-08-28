@@ -6,3 +6,53 @@
  .wasa-kredit-product-widget-container {
      margin-bottom: 1em;
  }
+
+ .wasa-kredit-redirect-widget-container {
+     border:1px solid #efefef;
+     padding:15px;
+     margin-bottom:40px;
+     background-color:#fbfbfb"
+ }
+
+ .wasa-kredit-redirect-widget-title {
+    display:block
+}
+
+.wasa-kredit-redirect-widget-button {
+    display:inline-block;
+    float:right;
+    color:#fff;
+    background-color:#ad1015;
+    padding:10px 20px;
+    line-height: 1.3em;
+}
+
+.wasa-kredit-redirect-widget-button-title {
+    font-size: 18px;
+}
+
+.wasa-kredit-redirect-widget-button-description {
+    font-size: 14px;
+}
+
+.wasa-kredit-redirect-widget-monthly-cost-list {
+    list-style:none;
+    margin:0px;
+    float:left;
+}
+
+.wasa-kredit-redirect-widget-clear {
+    clear:both;
+}
+
+@media (max-width: 530px) {
+
+    .wasa-kredit-redirect-widget-button {
+        float:none;
+    }
+
+    .wasa-kredit-redirect-widget-monthly-cost-list {
+        float:none;
+        margin-bottom: 10px;
+    }
+}
