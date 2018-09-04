@@ -21,10 +21,10 @@ class Wasa_Kredit_Checkout_Product_Widget {
 			'wasa_kredit_product_widget',
 		));
 
-		add_action( 'woocommerce_before_add_to_cart_button', array(
+		add_action( 'woocommerce_single_product_summary', array(
 			$this,
 			'add_product_widget_to_product_page',
-		));
+		), 15);
 
 		add_filter( 'woocommerce_product_addons_option_price', function ( $default_formatted_price, $options ) {
 			if ( $options['price'] ) {
