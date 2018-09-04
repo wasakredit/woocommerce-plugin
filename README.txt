@@ -5,7 +5,7 @@ Tags: woocommerce, ecommerce, e-commerce, checkout
 Requires at least: 3.0.1
 Tested up to: 4.9.6
 Requires PHP: 5.7
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -66,7 +66,10 @@ Or
 
 = 1.2.2 =
 * Added redirect to standard checkout widget
-* Added admin settings for new redirect widget 
+* Added admin settings for new redirect widget
+
+= 1.2.3 =
+* Replace Monthly cost widget with updated look and feel
 
 == Upgrade Notice ==
 
