@@ -1,4 +1,4 @@
-# Wasa Kredit Client PHP SDK v2.4
+# Wasa Kredit Client PHP SDK v2.5
 
 **Table of Content**
 
@@ -7,7 +7,7 @@
   * [Calculate Monthly Cost](#calculate_monthly_cost)
   * [Create Checkout](#create_checkout)
   * [Validate Financed Amount](#validate_financed_amount)
-  * [Create Product Widget](#create_product_widget)
+  * [Get Monthly Cost Widget](#get_monthly_cost_widget)
   * [Get Order](#get_order)  
   * [Get Order status](#get_order_status)
   * [Update Order status](#update_order_status)
@@ -16,6 +16,10 @@
 * [Handling the Response](#handling_the_response)
 
 ## <a name="change_log"></a>Change log
+
+### What's new in 2.5
+
+The *Create Product Widget* has got a replacement function called *Get Monthly Cost Widget*, which will result in a more clean and simple look that is easier to style to your needs.
 
 ### What's new in 2.4
 
@@ -276,9 +280,9 @@ $payload = array(
     'amount' => '448.00',
     'currency' => 'SEK'
   ),
-  'request_domain' => 'https://www.wasakredit.se/',
-  'confirmation_callback_url' => 'https://www.wasakredit.se/payment-callback/',
-  'ping_url' => 'https://www.wasakredit.se/ping-callback/'
+  'request_domain' => 'https://YOUR-BASE-DOMAIN/',
+  'confirmation_callback_url' => 'https://YOUR-BASE-DOMAIN/payment-callback/',
+  'ping_url' => 'https://YOUR-BASE-DOMAIN/ping-callback/'
 );           
 
 $response = $this->_client->create_checkout($payload);
@@ -367,40 +371,24 @@ $response->data
 }
 ```
 
-### <a name="create_product_widget"></a>Create Product Widget
+### <a name="get_monthly_cost_widget"></a>Get Monthly Cost Widget
 
-To inform the customer about Wasa Kredit financing as a Payment Method the Product Widget should be displayed close to the price information on the product detail page.
+To inform the customer about Wasa Kredit financing as a Payment Method the Monthly Cost Widget should be displayed close to the price information on the product details page.
 
 ```
-public function create_product_widget($payload)
+public function get_monthly_cost_widget($amount)
 ```
 
 #### Parameters
 
 | Name | Type | Description |
 |---|---|---|
-| financial_product | *string* (required) | The amount to be validated |
-| price_ex_vat | *Price* (required) | Price object excluding VAT |
-
-##### Price
-
-| Name | Type | Description |
-|---|---|---|
 | amount | *string* (required) | A string value that will be parsed to a decimal, e.g. 199 is '199.00' |
-| currency | *string* (required) | The currency |
 
 #### Example usage:
 
 ```
-$payload = array(
-              'financial_product' => 'leasing',
-              'price_ex_vat' => array(
-                'amount': '14995.50',
-                'currency': 'SEK'  
-              )
-           );
-
-$response = $this->_client->create_product_widget($payload);
+$response = $this->_client->get_monthly_cost_widget('10275.00');
 ```
 
 #### Response

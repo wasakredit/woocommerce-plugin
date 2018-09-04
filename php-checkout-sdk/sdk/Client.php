@@ -105,9 +105,18 @@ class Client
         return $this->api_client->execute($this->base_url . "/v1/validate-financed-amount?amount=" . $amount, "GET", null);
     }
 
+    /**
+    * @deprecated
+    */
     public function create_product_widget($productPrice) // @codingStandardsIgnoreLine
     {
+        // Method create_product_widget is deprecated, use get_monthly_cost_widget instead.
         return $this->api_client->execute($this->base_url . "/v1/checkouts/widget", "POST", $productPrice);
+    }
+
+    public function get_monthly_cost_widget($amount) //@codingStandardsIgnoreLine
+    {
+      return $this->api_client->execute($this->base_url . "/v2/widgets/monthly-cost?amount=".$amount."&currency=SEK", "GET", null);
     }
 
     public function add_order_reference($orderId, $orderReferences) // @codingStandardsIgnoreLine
