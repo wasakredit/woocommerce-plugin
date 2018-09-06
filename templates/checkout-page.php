@@ -51,14 +51,22 @@ foreach ( $cart_items as $cart_item_key => $cart_item ) {
 		$cart_item_key
 	);
 
-	$id              = $cart_item['product_id'];
-	$name            = $product->get_name();
-	$price_inc_vat   = wc_get_price_including_tax( $product );
-	$price_ex_vat    = wc_get_price_excluding_tax( $product );
-	$vat_percentage  = ( $price_inc_vat > 0 ? ( $price_ex_vat / $price_inc_vat ) * 100 : 0 );
-	$price_vat       = $price_inc_vat - $price_ex_vat;
-	$shipping_ex_vat = $shipping_cost - $shipping_tax;
-	$quantity        = $cart_item['quantity'];
+  $tax_rates = WC_Tax::get_rates( $product->get_tax_class() );
+
+  if ( !empty( $tax_rates ) ) {
+    $tax_rate = reset( $tax_rates )['rate'];
+  } else {
+    $tax_rate = "0";
+  }
+
+  $id              = $cart_item['product_id'];
+  $name            = $product->get_name();
+  $price_inc_vat   = wc_get_price_including_tax( $product );
+  $price_ex_vat    = wc_get_price_excluding_tax( $product );
+  $vat_percentage  = round($tax_rate);
+  $price_vat       = $price_inc_vat - $price_ex_vat;
+  $shipping_ex_vat = $shipping_cost - $shipping_tax;
+  $quantity        = $cart_item['quantity'];
 
 	$wasa_cart_items[] = array(
 		'product_id'     => $id,

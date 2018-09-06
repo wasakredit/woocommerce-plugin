@@ -68,6 +68,10 @@ Or
 * Added redirect to standard checkout widget
 * Added admin settings for new redirect widget
 
+= 1.2.2.1 =
+* Fixed issue with TAX not being fetched properly
+* Fixed Php-notice when using new redirect widget
+
 = 1.2.3 =
 * Replace Monthly cost widget with updated look and feel
 
