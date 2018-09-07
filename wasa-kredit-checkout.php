@@ -19,8 +19,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin Name:       Wasa Kredit Checkout
  * Plugin URI:        https://github.com/wasakredit/woocommerse-plugin
  * Description:       Wasa Kredit Checkout offers financing as a payment method for B2B.
- * Version:           1.2.2.1
  * Author:            Wasa Kredit
+ * Version:           1.2.3
  * Author URI:        https://developer.wasakredit.se
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
@@ -37,7 +37,8 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'WASA_KREDIT_CHECKOUT_VERSION', '1.2.2.1' );
+
+define( 'WASA_KREDIT_CHECKOUT_VERSION', '1.2.3' );
 
 /**
  * The code that runs during plugin activation.

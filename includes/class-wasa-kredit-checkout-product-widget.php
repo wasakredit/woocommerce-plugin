@@ -21,10 +21,10 @@ class Wasa_Kredit_Checkout_Product_Widget {
 			'wasa_kredit_product_widget',
 		));
 
-		add_action( 'woocommerce_before_add_to_cart_button', array(
+		add_action( 'woocommerce_single_product_summary', array(
 			$this,
 			'add_product_widget_to_product_page',
-		));
+		), 15);
 
 		add_filter( 'woocommerce_product_addons_option_price', function ( $default_formatted_price, $options ) {
 			if ( $options['price'] ) {
@@ -72,19 +72,9 @@ class Wasa_Kredit_Checkout_Product_Widget {
 		}
 
 		$price    = $product->get_price();
-		$currency = get_woocommerce_currency();
+		$response = $this->_client->get_monthly_cost_widget( $price );
 
-		$payload = array(
-			'financial_product' => 'leasing',
-			'price_ex_vat'      => array(
-				'amount'   => $price,
-				'currency' => $currency,
-			),
-		);
-
-		$response = $this->_client->create_product_widget( $payload );
-
-		if ( isset( $response ) && 201 === $response->statusCode ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
+		if ( isset( $response ) && 200 === $response->statusCode ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
 			return '<div class="wasa-kredit-product-widget-container">' . $response->data . '</div>';
 		}
 
