@@ -65,7 +65,7 @@ class Wasa_Kredit_Checkout_Product_Widget {
 	}
 
 	private function get_product_widget() {
-		global $product;
+		$product = wc_get_product();
 
 		if ( ! $product ) {
 			return;
