@@ -80,6 +80,7 @@ Or
 
 = 1.2.5 =
 * Fix a rounding issue with product list widget, when sending to many decimals to the api
+* Fix a possible rounding issue in checkout by preventing to many decimals in api call when displaying possible financing options
 
 == Upgrade Notice ==
 
