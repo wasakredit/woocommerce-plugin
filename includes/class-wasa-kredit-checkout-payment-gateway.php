@@ -276,7 +276,7 @@ function init_wasa_kredit_gateway() {
 				$cart_totals = WC()->cart->get_totals();
 				$cart_total  = $cart_totals['subtotal'] + ( $cart_totals['shipping_total'] - $cart_totals['shipping_tax'] );
 
-				$response2 = $this->_client->get_payment_methods( $cart_total, 'SEK' );
+				$response2 = $this->_client->get_payment_methods( round($cart_total, 2), 'SEK' );
 
 				if ( isset( $response2 ) && 200 === $response2->statusCode ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
 
@@ -309,8 +309,8 @@ function init_wasa_kredit_gateway() {
 						}
 					}
 					$desc .= '</p>';
+          return $desc;
 				}
-				return $desc;
 			}
 			return __( 'Financing with Wasa Kredit Checkout', 'wasa-kredit-checkout' );
 		}
