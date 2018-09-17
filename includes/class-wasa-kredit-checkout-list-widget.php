@@ -101,7 +101,7 @@ class Wasa_Kredit_Checkout_List_Widget {
 			// Add this product to payload
 			$payload['items'][] = array(
 				'financed_price' => array(
-					'amount'   => $product->get_price(),
+					'amount'   => round($product->get_price(), 2),
 					'currency' => $current_currency,
 				),
 				'product_id'     => $product->get_id(),
