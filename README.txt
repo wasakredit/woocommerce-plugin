@@ -84,6 +84,7 @@ Or
 
 = 1.2.6 =
 * Fix problem with null reference when navigating certain admin pages
+* Secure possible rounding issue when create_checkout is called with to many decimals
 
 == Upgrade Notice ==
 
