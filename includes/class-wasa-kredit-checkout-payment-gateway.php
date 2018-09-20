@@ -197,8 +197,9 @@ function init_wasa_kredit_gateway() {
 			// If payment gateway should be available for customers
 
 			$enabled = $this->get_option( 'enabled' );
+      
 			// Plugin is enabled
-			if ( 'yes' !== $enabled ) {
+			if ( 'yes' !== $enabled || is_null(WC()->cart)) {
 				return false;
 			}
 

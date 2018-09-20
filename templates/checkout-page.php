@@ -61,11 +61,11 @@ foreach ( $cart_items as $cart_item_key => $cart_item ) {
 
   $id              = $cart_item['product_id'];
   $name            = $product->get_name();
-  $price_inc_vat   = wc_get_price_including_tax( $product );
-  $price_ex_vat    = wc_get_price_excluding_tax( $product );
+  $price_inc_vat   = round(wc_get_price_including_tax( $product ), 2);
+  $price_ex_vat    = round(wc_get_price_excluding_tax( $product ), 2);
   $vat_percentage  = round($tax_rate);
-  $price_vat       = $price_inc_vat - $price_ex_vat;
-  $shipping_ex_vat = $shipping_cost - $shipping_tax;
+  $price_vat       = round(($price_inc_vat - $price_ex_vat), 2);
+  $shipping_ex_vat = round(($shipping_cost - $shipping_tax), 2);
   $quantity        = $cart_item['quantity'];
 
 	$wasa_cart_items[] = array(

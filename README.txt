@@ -5,7 +5,7 @@ Tags: woocommerce, ecommerce, e-commerce, checkout
 Requires at least: 3.0.1
 Tested up to: 4.9.6
 Requires PHP: 5.7
-Stable tag: 1.2.5
+Stable tag: 1.2.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,10 @@ Or
 = 1.2.5 =
 * Fix a rounding issue with product list widget, when sending to many decimals to the api
 * Fix a possible rounding issue in checkout by preventing to many decimals in api call when displaying possible financing options
+
+= 1.2.6 =
+* Fix problem with null reference when navigating certain admin pages
+* Secure possible rounding issue when create_checkout is called with to many decimals
 
 == Upgrade Notice ==
 
