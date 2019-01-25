@@ -39,7 +39,6 @@ if ( ! $order ) {
 $order_data      = $order->get_data();
 $currency        = get_woocommerce_currency();
 $shipping_cost   = $order_data['shipping_total'];
-$shipping_tax    = $order_data['shipping_tax'];
 $cart_items      = WC()->cart->get_cart();
 $wasa_cart_items = array();
 
@@ -57,7 +56,7 @@ foreach ( $cart_items as $cart_item_key => $cart_item ) {
 	$price_ex_vat    = wc_get_price_excluding_tax( $product );
 	$vat_percentage  = ( $price_inc_vat > 0 ? ( $price_ex_vat / $price_inc_vat ) * 100 : 0 );
 	$price_vat       = $price_inc_vat - $price_ex_vat;
-	$shipping_ex_vat = $shipping_cost - $shipping_tax;
+	$shipping_ex_vat = $shipping_cost;
 	$quantity        = $cart_item['quantity'];
 
 	$wasa_cart_items[] = array(

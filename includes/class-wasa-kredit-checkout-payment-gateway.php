@@ -178,7 +178,7 @@ function init_wasa_kredit_gateway() {
 			}
 
 			$cart_totals            = WC()->cart->get_totals();
-			$cart_total             = $cart_totals['subtotal'] + ( $cart_totals['shipping_total'] - $cart_totals['shipping_tax'] );
+			$cart_total             = $cart_totals['subtotal'] + $cart_totals['shipping_total'];
 			$financed_amount_status = $this->_client->validate_financed_amount( $cart_total );
 
 			// Cart value is within partner limits
@@ -222,7 +222,7 @@ function init_wasa_kredit_gateway() {
 			if ( isset( WC()->cart ) ) {
 				$cart_totals = WC()->cart->get_totals();
 
-				$total_costs = $cart_totals['subtotal'] + ( $cart_totals['shipping_total'] - $cart_totals['shipping_tax'] );
+				$total_costs = $cart_totals['subtotal'] + $cart_totals['shipping_total'];
 
 				$payload['items'][] = array(
 					'financed_price' => array(
@@ -249,7 +249,8 @@ function init_wasa_kredit_gateway() {
 			if ( isset( WC()->cart ) ) {
 
 				$cart_totals = WC()->cart->get_totals();
-				$cart_total = $cart_totals['subtotal'] + ( $cart_totals['shipping_total'] - $cart_totals['shipping_tax'] );
+
+				$cart_total = $cart_totals['subtotal'] + $cart_totals['shipping_total'];
 
 				$response2 = $this->_client->get_payment_methods($cart_total, 'SEK');
 
