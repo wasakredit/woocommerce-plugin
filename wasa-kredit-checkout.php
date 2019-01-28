@@ -38,7 +38,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Rename this for your plugin and update it as you release new versions.
  */
 
-define( 'WASA_KREDIT_CHECKOUT_VERSION', '1.2.6' );
+define( 'WASA_KREDIT_CHECKOUT_VERSION', '1.2.7' ); 
 
 /**
  * The code that runs during plugin activation.
