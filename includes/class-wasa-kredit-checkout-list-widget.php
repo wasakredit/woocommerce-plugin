@@ -75,23 +75,8 @@ class Wasa_Kredit_Checkout_List_Widget {
 		$current_currency = get_woocommerce_currency();
 		$page_info        = get_queried_object();
 
-		// Get all products from woocommerce
-		$args = array(
-			'post_type'      => 'product',
-			'posts_per_page' => 1000,
-		);
-
-		if ( isset( $page_info->term_id ) ) {
-			// Only include products in the currenct category, if a category is chosen
-			$args['tax_query'][] = array(
-				'taxonomy' => 'product_cat',
-				'field'    => 'term_id',
-				'terms'    => $page_info->term_id,
-				'operator' => 'IN',
-			);
-		}
-
-		$loop = new WP_Query( $args );
+		global $wp_query;		
+		$loop =  $wp_query;	
 
 		// Loop through all products
 		while ( $loop->have_posts() ) :
@@ -107,8 +92,6 @@ class Wasa_Kredit_Checkout_List_Widget {
 				'product_id'     => $product->get_id(),
 			);
 		endwhile;
-
-		wp_reset_query();
 
 		// Get resposne from API with all products defined in $payload
 		$response      = $this->_client->calculate_monthly_cost( $payload );
