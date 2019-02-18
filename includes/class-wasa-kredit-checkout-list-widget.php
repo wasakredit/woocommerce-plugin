@@ -73,7 +73,6 @@ class Wasa_Kredit_Checkout_List_Widget {
 		$payload['items'] = [];
 		// Payload will contain all products with price, currency and id
 		$current_currency = get_woocommerce_currency();
-		$page_info        = get_queried_object();
 
 		global $wp_query;		
 		$loop =  $wp_query;	
