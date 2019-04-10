@@ -45,45 +45,48 @@ class Wasa_Kredit_Checkout_API {
 		 * It will complete the payment, decrease stock, set it to status Processing.
 		 * Ie: domain/wc-api/wasa-order-payment-complete?key=wc_order_6543116e&wasa_kredit_order_id=6e-9f2e-4b4a-a25f-004068e9d210
 		 */
-
-		if ( ! isset( $_GET['key'] ) ) { //input var okay
+		if ( ! isset( $_GET['key'] ) ) { //Input is ok
 			return;
 		}
 
-		$order_key = sanitize_text_field( wp_unslash( $_GET['key'] ) ); //input var okay
-		// Wasa ID
-		$order_id = wc_get_order_id_by_order_key( $order_key );
+		// WooCommerce OrderKey
+		$order_key = sanitize_text_field( wp_unslash( $_GET['key'] ) ); 
 		// WooCommerce ID
+		$order_id = wc_get_order_id_by_order_key( $order_key );
+		// WooCommerce Order
 		$order = wc_get_order( $order_id );
 
 		if ( ! $order ) {
 			return;
 		}
 
-		if ( ! empty( (string) $_GET['wasa_kredit_order_id'] ) ) { //input var okay
-			// Add transaction ID to order, which is the WASA ID
+		if ( ! empty( (string) $_GET['wasa_kredit_order_id'] ) ) { //Input is ok
+			// Add transaction ID to order, which is the Wasa order-id
 			update_post_meta( $order->get_id(), '_transaction_id', sanitize_text_field( wp_unslash( (string) $_GET['wasa_kredit_order_id'] ) ) );
 		}
 	}
 
 	public function order_update_status( WP_REST_Request $request ) {
 		/**
-		 * Updates the order status from WASA order ID
-		 * Ie: domain/wc-api/wasa-order-update-status?id=6e-9f2e-4b4a-a25f-004068e9d210&status=processing
+		 * Updates the order status from Wasa order-id
+		 * Ie: domain/wc-api/wasa-order-update-status?order_id=7002f7b1-9dff-4a60-8e54-3933cc1d1205&order_status=ready_to_ship
 		 */
+
 		$order_id     = $request->get_param( 'order_id' );
 		$order_status = $request->get_param( 'order_status' );
 
-		if ( ! isset( $order_id ) || ! isset( $order_status ) ) { //input var okay
+		// Check input parameters
+		if ( ! isset( $order_id ) || ! isset( $order_status ) ) { 
 			return;
 		}
 
-		// Find the woo order with the correct WASA ID
+		// Find the Woo order with the correct Wasa order-id
 		$orders = wc_get_orders( array(
 			'limit'           => 1,
-			'_transaction_id' => $order_status, //input var okay
+			'transaction_id' => $order_id, //input var okay
 		));
 
+		// Make sure we have an order
 		if ( ! $orders || count( $orders ) < 1 ) {
 			return;
 		}
@@ -98,16 +101,16 @@ class Wasa_Kredit_Checkout_API {
 			'canceled'      => 'cancelled',
 		);
 
-		if ( array_key_exists( wp_unslash( $order_status ), $approved_statuses ) ) { //input var okay
+		if ( array_key_exists( wp_unslash( $order_status ), $approved_statuses ) ) { //Input is ok
 			// Set order status if valid status
-			$status = sanitize_text_field( wp_unslash( $order_status ) ); //input var okay
+			$status = sanitize_text_field( wp_unslash( $order_status ) ); //Input is ok
 
 			$order->update_status(
 				$approved_statuses[ $status ],
 				__( 'Wasa Kredit Checkout API change order status callback to', 'wasa-kredit-checkout' ) . ' ' . $status
 			);
 
-			//If status ready_to_ship Wasa Kredit has apprived the financing. Complete payment of order
+			//If status ready_to_ship Wasa Kredit has approved the financing. Complete payment of order
 			if ( 'ready_to_ship' === $order_status ) {
 				$order->payment_complete();
 			}
