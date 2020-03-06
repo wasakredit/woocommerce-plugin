@@ -96,7 +96,7 @@ Or
 * Fixed incorrect order status-pingback handling. 
 
 = 1.2.10 =
-* Fix for product bundles extension. Under special circumstances it generates negative price for bundled product.
+* Fix for product bundles extension. Under special circumstances it generates negative price for budled product.
 
 == Upgrade Notice ==
 
