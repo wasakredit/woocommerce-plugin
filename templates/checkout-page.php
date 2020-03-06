@@ -67,10 +67,6 @@ foreach ( $cart_items as $cart_item_key => $cart_item ) {
   $shipping_ex_vat = round($shipping_cost, 2);
   $quantity        = $cart_item['quantity'];
 
-	//product bundles extension can generate negative price for one of the bundle products, here is how to fix it
-	if ($price_ex_vat < 0) { $price_ex_vat = 0;}
-	if ($price_vat < 0) { $price_vat = 0;}
-
 	$wasa_cart_items[] = array(
 		'product_id'     => $id,
 		'product_name'   => $name,
