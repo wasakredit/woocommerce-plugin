@@ -3,7 +3,8 @@ Contributors: aos06wasakredit
 Donate link: https://developer.wasakredit.se
 Tags: woocommerce, ecommerce, e-commerce, checkout
 Requires at least: 3.0.1
-Tested up to: 4.9.6
+Wordpress tested up to: 5.4
+Woocommerce tested up to: 4.0.1
 Requires PHP: 5.7
 Stable tag: 1.2.9
 License: GPLv2 or later
