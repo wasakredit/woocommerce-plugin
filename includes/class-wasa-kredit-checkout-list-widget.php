@@ -36,7 +36,7 @@ class Wasa_Kredit_Checkout_List_Widget {
 	}
 
 	public function display_leasing_price_per_product() {
-		// Adds financing info betweeen price and Add to cart button
+		// Adds financing info betweeen price and Add to cart button in category and [products] woocommerce shortcode
 		global $product;
 
 		$settings = get_option( 'wasa_kredit_settings' );
@@ -45,20 +45,26 @@ class Wasa_Kredit_Checkout_List_Widget {
 			return;
 		}
 
-		$monthly_cost = 0;
+		$current_currency = get_woocommerce_currency();
 
-		if ( isset( $GLOBALS['product_leasing_prices'] ) ) {
-			$monthly_cost = $GLOBALS['product_leasing_prices'][ $product->get_id() ];
+		$payload['items'][] = array(
+			'financed_price' => array(
+				'amount'   => round($product->price, 0),
+				'currency' => $current_currency,
+			),
+			'product_id'     => $product->id,
+		);
+
+		$response = $this->_client->calculate_monthly_cost($payload);
+
+		if ( isset( $response ) && 200 === $response->statusCode ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
+			$amount = $response->data['monthly_costs'][0]['monthly_cost']['amount'];
+
+			echo '<p>' .
+				__( 'Financing', 'wasa-kredit-checkout' ) . ' <span style="white-space:nowrap;">' .
+				wc_price( $amount, array( 'decimals' => 0 ) ) . __( '/month', 'wasa-kredit-checkout' ) .
+				'</span></p>';
 		}
-
-		if ( $monthly_cost < 1 ) {
-			return;
-		}
-
-		echo '<p>' .
-			__( 'Financing', 'wasa-kredit-checkout' ) . ' <span style="white-space:nowrap;">' .
-			wc_price( $monthly_cost, array( 'decimals' => 0 ) ) . __( '/month', 'wasa-kredit-checkout' ) .
-			'</span></p>';
 	}
 
 	public function save_product_prices() {
