@@ -5,7 +5,7 @@ Tags: woocommerce, ecommerce, e-commerce, checkout
 Requires at least: 3.0.1
 Tested up to: 5.3.2
 Requires PHP: 5.7
-Stable tag: 1.2.9
+Stable tag: 1.2.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -94,6 +94,9 @@ Or
 
 = 1.2.9 =
 * Fixed incorrect order status-pingback handling. 
+
+= 1.2.10 =
+* Fixed missing leasing price in woocommerce shortcode [products]
 
 == Upgrade Notice ==
 
