@@ -153,6 +153,14 @@ msgstr ""
 msgid "Financing with Wasa Kredit Checkout"
 msgstr ""
 
+#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:259
+msgid "Financing with Wasa Kredit Invoice Checkout"
+msgstr ""
+
+#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:255
+msgid "Invoice"
+msgstr ""
+
 #: includes/class-wasa-kredit-checkout-payment-gateway.php:286
 msgid "Finance your purchase with Wasa Kredit"
 msgstr ""

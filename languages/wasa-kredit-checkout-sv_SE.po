@@ -23,11 +23,11 @@ msgstr "Wasa Kredit Checkout API bytte orderstatus till"
 
 #: includes/class-wasa-kredit-checkout-api.php:152
 msgid "Error: You changed order status to "
-msgstr "Fel: Du ändrade orderstatus till"
+msgstr "Fel: Du ändrade orderstatus till "
 
 #: includes/class-wasa-kredit-checkout-api.php:152
 msgid " but the order could not be changed at Wasa Kredit."
-msgstr "men ordern kunde inte ändras hos Wasa Kredit."
+msgstr " men ordern kunde inte ändras hos Wasa Kredit."
 
 #: includes/class-wasa-kredit-checkout-api.php:165
 msgid "Wasa Kredit Checkout:"
@@ -165,6 +165,16 @@ msgstr ""
 #: includes/class-wasa-kredit-checkout-payment-gateway.php:315
 msgid "Financing with Wasa Kredit Checkout"
 msgstr "Finansiering med Wasa Kredit Checkout"
+
+
+#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:259
+msgid "Financing with Wasa Kredit Invoice Checkout"
+msgstr "Finansiering med Wasa Kredit Faktura"
+
+#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:255
+msgid "Invoice"
+msgstr "Faktura"
+
 
 #: includes/class-wasa-kredit-checkout-payment-gateway.php:286
 msgid "Finance your purchase with Wasa Kredit"

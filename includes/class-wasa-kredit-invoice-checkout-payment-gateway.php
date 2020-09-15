@@ -84,32 +84,6 @@ function init_wasa_kredit_invoice_gateway() {
 					),
 					'default' => 'yes',
 				),
-				'widget_on_product_list'    => array(
-					'title'       => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
-					'type'        => 'checkbox',
-					'label'       => __(
-						'Show monthly cost in product list',
-						'wasa-kredit-checkout'
-					),
-					'description' => __(
-						'Will be shown under the price in product listings. You can also use the shortcode [wasa_kredit_list_widget]',
-						'wasa-kredit-checkout'
-					),
-					'default'     => 'yes',
-				),
-				'widget_on_product_details' => array(
-					'title'       => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
-					'type'        => 'checkbox',
-					'label'       => __(
-						'Show monthly cost in product details',
-						'wasa-kredit-checkout'
-					),
-					'description' => __(
-						'Will be shown between the price and the add to cart button. You can also use the shortcode [wasa_kredit_product_widget] whereever you want.',
-						'wasa-kredit-checkout'
-					),
-					'default'     => 'yes',
-				),
 				'partner_id'                => array(
 					'title'       => __( 'Partner ID', 'wasa-kredit-checkout' ),
 					'type'        => 'text',
@@ -146,7 +120,7 @@ function init_wasa_kredit_invoice_gateway() {
                     ),
                     'default'     => '',
                 ),
-				'test_mode'                 => array(
+				'test_mode' => array(
 					'title'       => __( 'Test mode', 'wasa-kredit-checkout' ),
 					'type'        => 'checkbox',
 					'label'       => __( 'Enable test mode', 'wasa-kredit-checkout' ),
@@ -218,6 +192,9 @@ function init_wasa_kredit_invoice_gateway() {
 				return false;
 			}
 
+			//todo implement validate_financed_amount for invoice
+            return true;
+
 			$cart_totals            = WC()->cart->get_totals();
 			$cart_total             = $cart_totals['subtotal'] + $cart_totals['shipping_total'];
 			$financed_amount_status = $this->_client->validate_financed_amount( $cart_total );
@@ -255,37 +232,34 @@ function init_wasa_kredit_invoice_gateway() {
 
 		public function get_return_url( $order = null ) {
 			// Add order key to custom endpoint route as query param
-			return add_query_arg( 'wasa_kredit_checkout', $order->get_order_key(), get_site_url() );
+			return add_query_arg(
+			    array(
+			        'wasa_kredit_checkout' => $order->get_order_key(),
+                    'wasa_kredit_payment_method' => 'invoice'),
+                get_site_url());
 		}
 
 		public function get_title() {
 			//Set custom title to payment to display in checkout
 			if ( isset( WC()->cart ) ) {
+
 				$cart_totals = WC()->cart->get_totals();
 
-				$total_costs = $cart_totals['subtotal'] + $cart_totals['shipping_total'];
+				$total_costs =
+                    $cart_totals['subtotal'] +
+                    $cart_totals['shipping_total'] +
+                    $cart_totals['fee_total'];
 
-				$payload['items'][] = array(
-					'financed_price' => array(
-						'amount'   => $total_costs,
-						'currency' => 'SEK',
-					),
-					'product_id'     => 'CART_VALUE',
-				);
+                return __( 'Invoice', 'wasa-kredit-checkout' ) . ' ' . wc_price( $total_costs, array( 'decimals' => 0 ) );
 
-				$monthly_cost_response = $this->_client->calculate_monthly_cost( $payload );
-
-				if ( isset( $monthly_cost_response ) && 200 === $monthly_cost_response->statusCode ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
-					$monthly_cost = $monthly_cost_response->data['monthly_costs'][0]['monthly_cost']['amount'];
-
-					return __( 'Financing', 'wasa-kredit-checkout' ) . ' ' . wc_price( $monthly_cost, array( 'decimals' => 0 ) ) . __( '/month', 'wasa-kredit-checkout' );
-				}
 			}
 
-			return __( 'Financing with Wasa Kredit Checkout', 'wasa-kredit-checkout' );
+			return __( 'Financing with Wasa Kredit Invoice Checkout', 'wasa-kredit-checkout' );
 		}
 
 		public function get_description() {
+
+		    /*
 			//Set custom description to display in checkout
 			if ( isset( WC()->cart ) ) {
 
@@ -327,7 +301,7 @@ function init_wasa_kredit_invoice_gateway() {
 					$desc .= '</p>';
           return $desc;
 				}
-			}
+			} */
 			return __( 'Financing with Wasa Kredit Checkout', 'wasa-kredit-checkout' );
 		}
 	}

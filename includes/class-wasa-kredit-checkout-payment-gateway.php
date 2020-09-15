@@ -254,7 +254,11 @@ function init_wasa_kredit_gateway() {
 
 		public function get_return_url( $order = null ) {
 			// Add order key to custom endpoint route as query param
-			return add_query_arg( 'wasa_kredit_checkout', $order->get_order_key(), get_site_url() );
+            return add_query_arg(
+                array(
+                    'wasa_kredit_checkout' => $order->get_order_key(),
+                    'wasa_kredit_payment_method' => 'leasing'),
+                get_site_url());
 		}
 
 		public function get_title() {
