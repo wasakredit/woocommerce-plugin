@@ -20,6 +20,10 @@ class Wasa_Kredit_Checkout_API {
 					$this,
 					'order_update_status',
 				),
+                'permission_callback' => array(
+                    $this,
+                    'order_update_stats_authorize'
+                )
 			) );
 		} );
 
@@ -46,6 +50,7 @@ class Wasa_Kredit_Checkout_API {
 		 * Ie: domain/wc-api/wasa-order-payment-complete?key=wc_order_6543116e&wasa_kredit_order_id=6e-9f2e-4b4a-a25f-004068e9d210
 		 */
 		if ( ! isset( $_GET['key'] ) ) { //Input is ok
+	        error_log("key is not set!");
 			return;
 		}
 
@@ -57,6 +62,7 @@ class Wasa_Kredit_Checkout_API {
 		$order = wc_get_order( $order_id );
 
 		if ( ! $order ) {
+		    error_log("no order found!");
 			return;
 		}
 
@@ -65,6 +71,10 @@ class Wasa_Kredit_Checkout_API {
 			update_post_meta( $order->get_id(), '_transaction_id', sanitize_text_field( wp_unslash( (string) $_GET['wasa_kredit_order_id'] ) ) );
 		}
 	}
+
+	public function order_update_stats_authorize(WP_REST_Request $request) {
+	    return true;
+    }
 
 	public function order_update_status( WP_REST_Request $request ) {
 		/**
@@ -76,7 +86,8 @@ class Wasa_Kredit_Checkout_API {
 		$order_status = $request->get_param( 'order_status' );
 
 		// Check input parameters
-		if ( ! isset( $order_id ) || ! isset( $order_status ) ) { 
+		if ( ! isset( $order_id ) || ! isset( $order_status ) ) {
+		    error_log("no order id or status set!");
 			return;
 		}
 
@@ -88,6 +99,7 @@ class Wasa_Kredit_Checkout_API {
 
 		// Make sure we have an order
 		if ( ! $orders || count( $orders ) < 1 ) {
+		    error_log("no order found with id = \"" . $order_id ."\"");
 			return;
 		}
 
@@ -140,14 +152,9 @@ class Wasa_Kredit_Checkout_API {
 			return;
 		}
 
-		$settings = get_option( 'wasa_kredit_settings' );
-
 		// Connect to WASA PHP SDK
-		$this->_client = new Sdk\Client(
-			$settings['partner_id'],
-			$settings['client_secret'],
-			'yes' === $settings['test_mode'] ? true : false
-		);
+
+		$this->_client = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
 
 		$response = $this->_client->update_order_status( $transaction_id, $order_status );
 

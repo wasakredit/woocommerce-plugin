@@ -22,9 +22,9 @@ class Api
     private $version;
     private $plugin;
 
-    public function __construct($partnerId, $clientSecret, $testMode)
+    public function __construct($token_client, $testMode)
     {
-        $this->token_client = new AccessToken($partnerId, $clientSecret, $testMode);
+        $this->token_client = $token_client;
         $this->_test_mode = $testMode;
         $this->version = wasa_config('version');
         $this->plugin = wasa_config('plugin');

@@ -1,6 +1,17 @@
 <?php
 namespace Sdk;
 
+class ClientFactory {
+    public static function CreateClient($clientId, $clientSecret, $testMode = true) {
+        if($testMode != true) {
+            return new Client($clientId, $clientSecret, 'base_url', 'access_token_url', false);
+        }
+        else {
+            return new Client($clientId, $clientSecret, 'test_base_url', 'test_access_token_url', true);
+        }
+    }
+}
+
 /**
  * Client
  *
@@ -10,14 +21,9 @@ namespace Sdk;
  *
  * @package    Client PHP SDK
  */
-
 class Client
 {
     private $base_url;
-    private $token_client;
-    private $client_id;
-    private $client_secret;
-    private $test_mode;
     private $api_client;
     private $codes = array(
         '100' => 'Continue',
@@ -56,11 +62,11 @@ class Client
         '503' => 'Service Unavailable'
     );
 
-    public function __construct($clientId, $clientSecret, $testMode = true)
+    public function __construct($clientId, $clientSecret, $base_url_config, $access_token_url_config, $testMode)
     {
-        $this->base_url = wasa_config('base_url');
-        $this->token_client = new AccessToken($clientId, $clientSecret, $testMode);
-        $this->api_client = new Api($clientId, $clientSecret, $testMode);
+        $this->base_url = wasa_config($base_url_config);
+        $token_client = new AccessToken($clientId, $clientSecret, $access_token_url_config, $testMode);
+        $this->api_client = new Api($token_client, $testMode);
     }
 
     /**
@@ -89,6 +95,11 @@ class Client
     public function create_checkout($createCheckoutBody) // @codingStandardsIgnoreLine
     {
         return $this->api_client->execute($this->base_url . "/v2/checkouts", "POST", $createCheckoutBody);
+    }
+
+    public function create_invoice_checkout($createCheckoutBody) // @codingStandardsIgnoreLine
+    {
+        return $this->api_client->execute($this->base_url . "/v1/invoiceCheckouts", "POST", $createCheckoutBody);
     }
 
     /**

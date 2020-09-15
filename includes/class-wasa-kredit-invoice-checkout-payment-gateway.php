@@ -5,35 +5,36 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once plugin_dir_path( __FILE__ ) . '../php-checkout-sdk/Wasa.php';
 
-add_action( 'plugins_loaded', 'init_wasa_kredit_gateway' );
+add_action( 'plugins_loaded', 'init_wasa_kredit_invoice_gateway' );
 add_action( 'woocommerce_before_checkout_form', 'create_redirect_to_standard_checkout_view', 10, 1 );
-add_filter( 'woocommerce_payment_gateways', 'add_wasa_kredit_gateway' );
+add_filter( 'woocommerce_payment_gateways', 'add_wasa_kredit_invoice_gateway' );
 
-function add_wasa_kredit_gateway( $methods ) {
-	$methods[] = 'Wasa_Kredit_Checkout_Payment_Gateway';
+function add_wasa_kredit_invoice_gateway( $methods ) {
+	$methods[] = 'Wasa_Kredit_InvoiceCheckout_Payment_Gateway';
 
 	return $methods;
 }
 
+/*
 function create_redirect_to_standard_checkout_view() {
 	include plugin_dir_path( __FILE__ ) . '../templates/redirect-to-standard-checkout.php';
-}
+}*/
 
-function init_wasa_kredit_gateway() {
+function init_wasa_kredit_invoice_gateway() {
 	if ( ! class_exists( 'WC_Payment_Gateway' ) ) {
 		return;
 	}
 
-	class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
+	class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 		public function __construct() {
 			// Setup payment gateway properties
-			$this->id                 = 'wasa_kredit';
-			$this->plugin_id          = 'wasa_kredit';
-			$this->name               = 'Wasa Kredit';
-			$this->title              = 'Wasa Kredit Leasing';
-			$this->method_title       = 'Wasa Kredit Leasing';
-			$this->description        = 'Use to pay with Wasa Kredit Leasing Checkout.';
-			$this->method_description = 'Use to pay with Wasa Kredit Leasing Checkout.';
+			$this->id                 = 'wasa_kredit_invoice';
+			$this->plugin_id          = 'wasa_kredit_invoice';
+			$this->name               = 'Wasa Kredit Faktura';
+			$this->title              = 'Wasa Kredit Faktura';
+			$this->method_title       = 'Wasa Kredit Faktura';
+			$this->description        = 'Use to pay with Wasa Kredit Faktura Checkout.';
+			$this->method_description = 'Use to pay with Wasa Kredit Faktura Checkout.';
 			$this->order_button_text  = __( 'Proceed', 'wasa-kredit-checkout' );
 			$this->selected_currency  = get_woocommerce_currency();
 			// Where to store settings in DB
@@ -43,8 +44,8 @@ function init_wasa_kredit_gateway() {
 			$this->init_settings();
 
 			// Setup dynamic gateway properties
-			if ( $this->settings['enabled'] ) {
-				$this->enabled = $this->settings['enabled'];
+			if ( $this->settings['invoice_enabled'] ) {
+				$this->enabled = $this->settings['invoice_enabled'];
 			}
 
 			// Connect to WASA PHP SDK
@@ -74,7 +75,7 @@ function init_wasa_kredit_gateway() {
 		public function init_form_fields() {
 			// Defines settings fields on WooCommerce > Settings > Checkout > Wasa Kredit
 			return array(
-				'enabled'                   => array(
+				'invoice_enabled'                   => array(
 					'title'   => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
 					'type'    => 'checkbox',
 					'label'   => __(
@@ -210,7 +211,7 @@ function init_wasa_kredit_gateway() {
 		public function is_available() {
 			// If payment gateway should be available for customers
 
-			$enabled = $this->get_option( 'enabled' );
+			$enabled = $this->get_option( 'invoice_enabled' );
       
 			// Plugin is enabled
 			if ( 'yes' !== $enabled || is_null(WC()->cart)) {

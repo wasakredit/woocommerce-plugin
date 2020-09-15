@@ -9,11 +9,7 @@ class Wasa_Kredit_Checkout_Product_Widget {
 	public function __construct() {
 		$this->settings = get_option( 'wasa_kredit_settings' );
 
-		$this->_client = new Sdk\Client(
-			$this->settings['partner_id'],
-			$this->settings['client_secret'],
-			'yes' === $this->settings['test_mode'] ? true : false
-		);
+        $this->_client = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
 
 		// Hooks
 		add_shortcode( 'wasa_kredit_product_widget', array(

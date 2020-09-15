@@ -12,7 +12,10 @@
       "email": "conrad.ohlsson@starrepublic.com"
     }
   ],
-  "require": {},
+  "require": {
+    "ext-curl": "*",
+    "ext-json": "*"
+  },
   "require-dev": {
     "phpdocumentor/phpdocumentor": "2.*",
     "phpunit/phpunit": "^5.7"

@@ -10,11 +10,7 @@ class Wasa_Kredit_Checkout_List_Widget {
 		$settings = get_option( 'wasa_kredit_settings' );
 
 		// Connect to WASA PHP SDK
-		$this->_client = new Sdk\Client(
-			$settings['partner_id'],
-			$settings['client_secret'],
-			'yes' === $settings['test_mode'] ? true : false
-		);
+        $this->_client = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
 
 		// Hooks
 		add_action(

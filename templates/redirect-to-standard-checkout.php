@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-require_once plugin_dir_path( __FILE__ ) . '../php-checkout-sdk/Wasa.php';
+require_once plugin_dir_path( __FILE__ ) . '../includes/class-wasa-kredit-checkout-sdk-helper.php';
 
 $settings = get_option( 'wasa_kredit_settings' );
 
@@ -36,11 +36,7 @@ if ( ! isset( $redirect_route )
     return;
 }
 // Connect WASA SDK client
-$client = new Sdk\Client(
-	$settings['partner_id'],
-	$settings['client_secret'],
-	'yes' === $settings['test_mode'] ? true : false
-);
+$client = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
 
 // Get payment methods from API
 if ( isset( WC()->cart ) ) {
