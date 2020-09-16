@@ -54,7 +54,8 @@ class Wasa_Kredit_Checkout_List_Widget {
 
 		$monthly_cost = 0;
 
-		if ( isset( $GLOBALS['product_leasing_prices'] ) ) {
+		if (isset( $GLOBALS['product_leasing_prices'] ) &&
+            isset( $GLOBALS['product_leasing_prices'][ $product->get_id() ])) {
 			$monthly_cost = $GLOBALS['product_leasing_prices'][ $product->get_id() ];
 		}
 
