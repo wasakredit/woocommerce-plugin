@@ -79,7 +79,7 @@ function init_wasa_kredit_invoice_gateway() {
 					'title'   => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
 					'type'    => 'checkbox',
 					'label'   => __(
-						'Enable Wasa Kredit Checkout',
+						'Enable Wasa Kredit Invoice Checkout',
 						'wasa-kredit-checkout'
 					),
 					'default' => 'yes',

@@ -70,6 +70,12 @@ msgstr ""
 msgid "Enable Wasa Kredit Checkout"
 msgstr ""
 
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:84
+msgid "Enable Wasa Kredit Invoice Checkout"
+msgstr ""
+
+
+
 #: includes/class-wasa-kredit-checkout-payment-gateway.php:93
 msgid "Show monthly cost in product list"
 msgstr ""
