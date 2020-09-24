@@ -192,12 +192,9 @@ function init_wasa_kredit_invoice_gateway() {
 				return false;
 			}
 
-			//todo implement validate_financed_amount for invoice
-            return true;
-
 			$cart_totals            = WC()->cart->get_totals();
 			$cart_total             = $cart_totals['subtotal'] + $cart_totals['shipping_total'];
-			$financed_amount_status = $this->_client->validate_financed_amount( $cart_total );
+			$financed_amount_status = $this->_client->validate_financed_invoice_amount( $cart_total );
 
 			// Cart value is within partner limits
 			if ( ! isset( $financed_amount_status )
