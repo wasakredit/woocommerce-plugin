@@ -91,7 +91,7 @@ $shipping_total_vat = apply_currency($shipping_vat);
 
 array_push($wasa_cart_items, array(
     'product_id' => "-",
-    'product_name' => $order->get_shipping_method(), // TODO: Localization
+    'product_name' => $order->get_shipping_method(),
     'price_ex_vat' => $shipping_total_ex_vat,
     'price_incl_vat' => $shipping_total,
     'quantity' => 1,
