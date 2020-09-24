@@ -116,6 +116,12 @@ class Client
         return $this->api_client->execute($this->base_url . "/v1/validate-financed-amount?amount=" . $amount, "GET", null);
     }
 
+    public function validate_financed_invoice_amount($amount) // @codingStandardsIgnoreLine
+    {
+        return $this->api_client->execute($this->base_url . "/v4/invoice/validate-financed-amount?amount=" . $amount, "GET", null);
+    }
+
+
     /**
     * @deprecated
     */
