@@ -44,7 +44,7 @@ if ( isset( WC()->cart ) ) {
     $cart_totals = WC()->cart->get_totals();
     $cart_total = $cart_totals['subtotal'] + $cart_totals['shipping_total'];
 
-    $payment_methods_response = $client->get_payment_methods( $cart_total, 'SEK' );
+    $payment_methods_response = $client->get_payment_methods( $cart_total );
 }
 ?>
 

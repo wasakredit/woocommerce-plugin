@@ -12,8 +12,8 @@ class Wasa_Kredit_Checkout_SdkHelper
 
         return Sdk\ClientFactory::CreateClient(
             'yes' === $settings['test_mode'] ? $settings['test_partner_id'] : $settings['partner_id'],
-            'yes' === $settings['test_mode'] ? $settings['test_client_secret'] : $settings['client_secret'],
-            'yes' === $settings['test_mode']
+            'yes' === $settings['test_mode'] ? $settings['test_client_secret'] : $settings['client_secret']
+            
         );
 
     }

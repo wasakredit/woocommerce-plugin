@@ -295,7 +295,7 @@ function init_wasa_kredit_gateway() {
 				$cart_totals = WC()->cart->get_totals();
 				$cart_total  = $cart_totals['subtotal'] + $cart_totals['shipping_total'];
 
-				$response2 = $this->_client->get_payment_methods( round($cart_total, 2), 'SEK' );
+				$response2 = $this->_client->get_payment_methods( round($cart_total, 2) );
 
 				if ( isset( $response2 ) && 200 === $response2->statusCode ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
 

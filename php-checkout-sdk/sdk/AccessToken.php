@@ -23,19 +23,15 @@ if (!isset($_SESSION)) {
 class AccessToken
 {
     private $_token_url;
-    private $token;
-    private $expires_at;
 
     private $client_id;
     private $client_secret;
-    private $test_mode;
-
-    public function __construct($client_id, $client_secret, $token_url, $test_mode)
+ 
+    public function __construct($client_id, $client_secret)
     {
-        $this->_token_url = wasa_config($token_url);
+        $this->_token_url = wasa_config('access_token_url');
         $this->client_id = $client_id;
         $this->client_secret = $client_secret;
-        $this->test_mode = $test_mode;
     }
 
     private function has_expired() // @codingStandardsIgnoreLine
@@ -74,9 +70,6 @@ class AccessToken
         $headers = array();
         $headers[] = "content-type: application/x-www-form-urlencoded";
 
-        if ($this->test_mode) {
-            $headers[] = "x-test-mode: true";
-        }
 
         curl_setopt_array($curl, array(
           CURLOPT_URL             => $this->_token_url,

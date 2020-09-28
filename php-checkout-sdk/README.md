@@ -601,7 +601,6 @@ Get information from Wasa Kredit about the different payment options available i
 | Name | Type | Description |
 |---|---|---|
 | total_amount   | *string* (required) | A string value that will be parsed to a decimal, e.g. 19999 is '19999.00' |
-| currency | *string* (required) | The currency |
 
 #### Example usage:
 
@@ -609,7 +608,7 @@ Get information from Wasa Kredit about the different payment options available i
 $total_amount = "10000.00";
 $currency = "SEK";
 
-$response = $this->_client->get_payment_methods($total_amount, $currency);
+$response = $this->_client->get_payment_methods($total_amount);
 ```
 
 #### Response

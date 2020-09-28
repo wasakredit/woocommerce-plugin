@@ -18,14 +18,12 @@ class Api
     public static $DELETE = "DELETE";
 
     private $token_client;
-    private $_test_mode;
     private $version;
     private $plugin;
 
-    public function __construct($token_client, $testMode)
+    public function __construct($partnerId, $clientSecret)
     {
-        $this->token_client = $token_client;
-        $this->_test_mode = $testMode;
+        $this->token_client = new AccessToken($partnerId, $clientSecret);
         $this->version = wasa_config('version');
         $this->plugin = wasa_config('plugin');
     }
@@ -39,10 +37,6 @@ class Api
         $headers = array();
         $headers[] = "Authorization: Bearer " . $this->token_client->get_token();
         $headers[] = "Content-Type: application/json";
-
-        if ($this->_test_mode) {
-            $headers[] = "x-test-mode: true";
-        }
 
         $headers[] = "x-sdk-version: " . $this->version;
         $headers[] = "x-plugin-version: " . $this->plugin;
