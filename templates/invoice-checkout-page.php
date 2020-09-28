@@ -84,23 +84,45 @@ foreach ($cart_items as $cart_item_key => $cart_item) {
     ));
 }
 
-// Add shipping cost
-$shipping_total = apply_currency($shipping_ex_vat + $shipping_vat);
-$shipping_total_ex_vat = apply_currency($shipping_ex_vat);
-$shipping_total_vat = apply_currency($shipping_vat);
+// Create an array of all tax rates
+$all_tax_rates = array_replace(WC_Tax::get_rates(), ...array_map(function ($tc) {
+    return WC_Tax::get_rates($tc);
+}, WC_Tax::get_tax_classes()));
 
-array_push($wasa_cart_items, array(
-    'product_id' => "-",
-    'product_name' => $order->get_shipping_method(),
-    'price_ex_vat' => $shipping_total_ex_vat,
-    'price_incl_vat' => $shipping_total,
-    'quantity' => 1,
-    'vat_percentage' => 25,
-    'vat_amount' => $shipping_total_vat,
-    'total_price_incl_vat' => $shipping_total,
-    'total_price_ex_vat' => $shipping_total_ex_vat,
-    'total_vat' => $shipping_total_vat
-));
+// Add shipping cost for all shipping lines
+foreach ($order->get_data()['shipping_lines'] as $shipping_key => $line) {
+    $ex_vat = $line['total'];
+    $vat = $line['total_tax'];
+    $total = apply_currency($ex_vat + $vat);
+    $total_ex_vat = apply_currency($ex_vat);
+    $total_vat = apply_currency($vat);
+
+    $shipping_vat_rate = 0;
+    // Check if taxes are set for shipping line
+    if (isset($line['taxes']) &&
+        array_key_exists('total', $line['taxes']) &&
+        !empty($line['taxes']['total'])) {
+
+        // Check to find tax rate, set if found
+        $tax = $all_tax_rates[array_key_first($line['taxes']['total'])];
+        if (!empty($tax)) {
+            $shipping_vat_rate = intval($tax['rate']);
+        }
+    }
+
+    array_push($wasa_cart_items, array(
+        'product_id' => "-",
+        'product_name' => $line['name'],
+        'price_ex_vat' => $total_ex_vat,
+        'price_incl_vat' => $total,
+        'quantity' => 1,
+        'vat_percentage' => $shipping_vat_rate,
+        'vat_amount' => $total_vat,
+        'total_price_incl_vat' => $total,
+        'total_price_ex_vat' => $total_ex_vat,
+        'total_vat' => $total_vat
+    ));
+}
 
 // Create payload from collected data
 $payload = array(
