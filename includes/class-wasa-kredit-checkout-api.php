@@ -105,6 +105,9 @@ class Wasa_Kredit_Checkout_API {
 
 		$order = $orders[0];
 
+
+		$order->add_order_note( 'Wasa Kredit uppdaterade orderstatus till ' . $order_status );
+
 		$approved_statuses = array(
 			'initialized'   => 'pending',
 			'pending'       => 'pending',
@@ -116,7 +119,7 @@ class Wasa_Kredit_Checkout_API {
 		if ( array_key_exists( wp_unslash( $order_status ), $approved_statuses ) ) { //Input is ok
 			// Set order status if valid status
 			$status = sanitize_text_field( wp_unslash( $order_status ) ); //Input is ok
-
+			
 			$order->update_status(
 				$approved_statuses[ $status ],
 				__( 'Wasa Kredit Checkout API change order status callback to', 'wasa-kredit-checkout' ) . ' ' . $status
@@ -155,8 +158,13 @@ class Wasa_Kredit_Checkout_API {
 		// Connect to WASA PHP SDK
 
 		$this->_client = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
+		if( $order_status==='shipped'){
+			$response = $this->_client->ship_order( $transaction_id);
 
-		$response = $this->_client->update_order_status( $transaction_id, $order_status );
+		}
+		if($order_status ==='canceled'){
+			$response = $this->_client->cancel_order( $transaction_id);
+		}
 
 		if ( 200 !== $response->statusCode ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
 			$note = __( 'Error: You changed order status to ', 'wasa-kredit-checkout' ) . $order_status . __( ' but the order could not be changed at Wasa Kredit.', 'wasa-kredit-checkout' );
