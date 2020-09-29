@@ -91,8 +91,8 @@ $all_tax_rates = array_replace(WC_Tax::get_rates(), ...array_map(function ($tc) 
 
 // Add shipping cost for all shipping lines
 foreach ($order->get_data()['shipping_lines'] as $shipping_key => $line) {
-    $ex_vat = $line['total'];
-    $vat = $line['total_tax'];
+    $ex_vat = intval($line['total']);
+    $vat = intval($line['total_tax']);
     $total = apply_currency($ex_vat + $vat);
     $total_ex_vat = apply_currency($ex_vat);
     $total_vat = apply_currency($vat);
