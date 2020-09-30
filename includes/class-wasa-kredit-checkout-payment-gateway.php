@@ -296,13 +296,16 @@ function init_wasa_kredit_gateway() {
 				$cart_total  = $cart_totals['subtotal'] + $cart_totals['shipping_total'];
 
 				$response2 = $this->_client->get_payment_methods( round($cart_total, 2) );
+				$paymentOptionsResponse = $this-> _client->get_leasing_payment_options(round($cart_total, 2) );
+				if ( isset( $paymentOptionsResponse ) === false || 200 !== $paymentOptionsResponse->statusCode ) {
+					return;
+				}
 
 				if ( isset( $response2 ) && 200 === $response2->statusCode ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
 
 					foreach ( $response2->data['payment_methods'] as $key => $value ) {
 						if ( 'leasing' === $value['id'] || 'rental' === $value['id'] ) {
-
-							$desc = '<p><b>' . __( 'Finance your purchase with Wasa Kredit', 'wasa-kredit-checkout' ) . '</b><br>';
+							$desc ='';
 							if ( 'leasing' === $value['id'] ) {
 								$desc = '<p><b>' . __( 'Finance your purchase with Wasa Kredit leasing', 'wasa-kredit-checkout' ) . '</b><br>';
 							}
@@ -311,8 +314,7 @@ function init_wasa_kredit_gateway() {
 							}
 							$desc .= '<br>';
 
-							$options          = $value['options'];
-							$contract_lengths = $options['contract_lengths'];
+							$contract_lengths = $paymentOptionsResponse->data['contract_lengths'];
 
 							foreach ( $contract_lengths as $key3 => $value3 ) {
 								$months = $value3['contract_length'];
@@ -323,6 +325,7 @@ function init_wasa_kredit_gateway() {
 								$desc_item   = '<br>' . wc_price( $amount, array( 'decimals' => 0 ) ) . __( '/month', 'wasa-kredit-checkout' ) . $desc_months;
 								$desc       .= $desc_item;
 							}
+
 							$desc .= '<br><br>';
 							$desc .= __( 'Proceed to select your monthly cost.', 'wasa-kredit-checkout' );
 						}
