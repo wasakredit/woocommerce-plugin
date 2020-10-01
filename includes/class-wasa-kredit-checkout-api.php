@@ -75,7 +75,7 @@ class Wasa_Kredit_Checkout_API
         ));
 
         // Make sure we have an order
-        if ($order_status === 'initialized' || !$orders || count($orders) < 1) {
+        if (!$orders || count($orders) < 1) {
             $client = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
             $wasa_order = $client->get_order($wasa_order_id);
             foreach ($wasa_order->data['order_references'] as $item) {
@@ -91,8 +91,12 @@ class Wasa_Kredit_Checkout_API
 
             $woo_order_id = wc_get_order_id_by_order_key($woo_order_key);
             $order = wc_get_order($woo_order_id);
-            if(!$order->has_status('pending')) {
-                $order->add_order_note('Wasa Kredit sent order update for id ' . $wasa_order_id . " but order was in state " . $order->get_status() . ", ignoring update.");
+            // Only allow changing wasa order associations as long as the order is in status pending,
+            //   meaning that no payment has been completed on wasa. This is because one order on woocommerce
+            //   can in rare scenarios be associated with multiple orders in wasa.
+            if (!$order->has_status('pending')) {
+                $order->add_order_note('Wasa Kredit sent order update for id ' . $wasa_order_id . " -> " .
+                    $order_status . " but order was in state " . $order->get_status() . ", ignoring update.");
                 return;
             }
 
