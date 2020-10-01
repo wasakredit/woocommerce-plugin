@@ -80,15 +80,16 @@ class Wasa_Kredit_Checkout_API
             $wasa_order = $client->get_order($wasa_order_id);
             foreach ($wasa_order->data['order_references'] as $item) {
                 if ($item['key'] === 'wasa_kredit_woocommerce_order_key') {
-                    $woo_order_id = $item['value'];
+                    $woo_order_key = $item['value'];
                     break;
                 }
             }
-            if (!isset($woo_order_id)) {
+            if (!isset($woo_order_key)) {
                 error_log("No order found to update with id = \"" . $wasa_order_id . "\"");
                 return;
             }
 
+            $woo_order_id = wc_get_order_id_by_order_key($woo_order_key);
             $order = wc_get_order($woo_order_id);
             update_post_meta($order->get_id(), '_transaction_id', $wasa_order_id);
             $order->add_order_note(__('Woocommerce associated order with wasa kredit id "', 'wasa-kredit-checkout') . ' ' . $order_status . '"');
