@@ -92,7 +92,7 @@ class Wasa_Kredit_Checkout_API
             $woo_order_id = wc_get_order_id_by_order_key($woo_order_key);
             $order = wc_get_order($woo_order_id);
             update_post_meta($order->get_id(), '_transaction_id', $wasa_order_id);
-            $order->add_order_note(__('Woocommerce associated order with wasa kredit id "', 'wasa-kredit-checkout') . ' ' . $order_status . '"');
+            $order->add_order_note(__('Woocommerce associated order with wasa kredit id', 'wasa-kredit-checkout') . ' "' . $wasa_order_id . '"');
         } else {
             $order = $orders[0];
         }
@@ -111,7 +111,7 @@ class Wasa_Kredit_Checkout_API
                 $order->payment_complete();
             }
         } else {
-            $order->add_order_note(__('Failed to find a mapping for Wasa Kredit status "', 'wasa-kredit-checkout') . ' ' . $order_status . '"');
+            $order->add_order_note(__('Failed to find a mapping for Wasa Kredit status', 'wasa-kredit-checkout') . ' "' . $order_status . '"');
         }
     }
 
