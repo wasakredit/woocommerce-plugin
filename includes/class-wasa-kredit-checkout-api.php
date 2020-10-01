@@ -91,6 +91,11 @@ class Wasa_Kredit_Checkout_API
 
             $woo_order_id = wc_get_order_id_by_order_key($woo_order_key);
             $order = wc_get_order($woo_order_id);
+            if(!$order->has_status('pending')) {
+                $order->add_order_note('Wasa Kredit sent order update for id ' . $wasa_order_id . " but order was in state " . $order->get_status() . ", ignoring update.");
+                return;
+            }
+
             update_post_meta($order->get_id(), '_transaction_id', $wasa_order_id);
             $order->add_order_note(__('Woocommerce associated order with wasa kredit id', 'wasa-kredit-checkout') . ' "' . $wasa_order_id . '"');
         } else {
