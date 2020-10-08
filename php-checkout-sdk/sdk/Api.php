@@ -21,9 +21,9 @@ class Api
     private $version;
     private $plugin;
 
-    public function __construct($partnerId, $clientSecret)
+    public function __construct($partnerId, $clientSecret, $auth_url)
     {
-        $this->token_client = new AccessToken($partnerId, $clientSecret);
+        $this->token_client = new AccessToken($partnerId, $clientSecret, $auth_url);
         $this->version = wasa_config('version');
         $this->plugin = wasa_config('plugin');
     }

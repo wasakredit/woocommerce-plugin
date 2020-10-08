@@ -13,10 +13,11 @@ namespace Sdk;
 class ClientFactory {
     public static function CreateClient($clientId, $clientSecret, $testMode = true) {
         if($testMode != true) {
-            return new Client($clientId, $clientSecret, 'base_url', 'access_token_url', false);
+            
+            return new Client($clientId, $clientSecret, wasa_config('base_url'), wasa_config('access_token_url'));
         }
         else {
-            return new Client($clientId, $clientSecret, 'test_base_url', 'test_access_token_url', true);
+            return new Client($clientId, $clientSecret, wasa_config('test_base_url'), wasa_config('test_access_token_url'));
         }
     }
 }
@@ -27,7 +28,6 @@ class Client
     private $token_client;
     private $client_id;
     private $client_secret;
-    private $test_mode;
     private $api_client;
     private $codes = array(
         '100' => 'Continue',
@@ -66,11 +66,11 @@ class Client
         '503' => 'Service Unavailable'
     );
 
-    public function __construct($clientId, $clientSecret)
+    public function __construct($clientId, $clientSecret, $base_url,$auth_url )
     {
-        $this->base_url = wasa_config('base_url');
-        $this->token_client = new AccessToken($clientId, $clientSecret);
-        $this->api_client = new Api($clientId, $clientSecret);
+        $this->base_url = $base_url;
+        $this->token_client = new AccessToken($clientId, $clientSecret, $auth_url);
+        $this->api_client = new Api($clientId, $clientSecret, $auth_url);
     }
 
    

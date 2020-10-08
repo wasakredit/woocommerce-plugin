@@ -1,12 +1,13 @@
-# Wasa Kredit Client PHP SDK v2.5
+# Wasa Kredit Client PHP SDK v3.0
 
 **Table of Content**
 
 * [Change log](#change_log)
 * [Available methods](#available_methods)
   * [Calculate Monthly Cost](#calculate_monthly_cost)
+  * [Create Checkout](#create_checkout)
+  * [Create Leasing Checkout](#create_leasing_checkout)
   * [Create Invoice Checkout](#create_invoice_checkout)
-  * [Create Leasing Checkout](#create_checkout)
   * [Validate Financed Amount](#validate_financed_amount)
   * [Get Monthly Cost Widget](#get_monthly_cost_widget)
   * [Get Order](#get_order)  
@@ -14,9 +15,20 @@
   * [Update Order status](#update_order_status)
   * [Add Order Reference](#add_order_reference)
   * [Get Payment Methods](#get_payment_methods)
+  * [Get Leasing Payment Options](#get_leasing_payment_options)
 * [Handling the Response](#handling_the_response)
 
 ## <a name="change_log"></a>Change log
+
+### What's new in 3.0
+Invoice added as entirely new payment method. 
+*Get Payment Methods* will return only the active payment methods i.e. Leasing, Rental. The added method *Get Leasing Payment Options* will deliver the payment options including the contract lengths (This only applies to leasing, since Invoice has no contract lengths).
+
+Create_checkout is set to deprecated since there are two new methods that replaces this method: create_invoice_checkout and create_leasing_checkout. 
+Create_checkout will still work as it simply wraps create_leasing_checkout, for backwards compatibility.
+
+**TestMode is removed** since we will no longer support test_mode header in the production environment. The consumer of this API will instead have to route their requests to a different URL when using test mode. To support this we have added a createClient factory method : ClientFactory.CreateClient() which has the testMode flag as a parameter. When passing testMode = true, this will set the test_base_url and test_access_token which will then be used when communicating with the test environment. 
+
 
 ### What's new in 2.5
 
@@ -61,11 +73,9 @@ This documentation is about the PHP SDK for communicating with Wasa Kredit check
 You can apply to receive Partner credentials by sending a mail to [ehandel@wasakredit.se](mailto:ehandel@wasakredit.se).
 
 ### Initialization
-Initialize the main *Client* class by calling the ClientFactory::Create(...) method passing in 
-your issued *Client ID* and *Client Secret*.
-You can optionally supply a *Test Mode* parameter which is by default is set to true which 
-indicates the target is our test environment, to target production environment set *Test Mode* to false. 
-The provided client id and secret must exists on the targeted environment.
+
+Initialize the main Client class by using the provided factory method ClientFactory.CreateClient and provide your issued
+*Client ID* and *Client Secret*. You can optionally supply a *Test Mode* parameter. It will be default set to True, so for production purposes you will need to set the *Test mode* parameter to False. You will be provided ClientId and ClientSecret for testing purposes as well, so when creating client for testing purposes, you will need to provide those values and set the *Test Mode* parameter to True.  
 
 ```
  /**
@@ -77,7 +87,7 @@ The provided client id and secret must exists on the targeted environment.
   * @return Client
   */  
 
-ClientFactory::Create({CLIENT ID}, {CLIENT SECRET}, {TEST MODE})
+new Client({CLIENT ID}, {CLIENT SECRET}, {TEST MODE})
 ```
 
 ### Client
@@ -87,7 +97,7 @@ Orchestrates the main flow. *Client* will fetch and store an access token upon a
 #### Example
 
 ```
-$this->_client = ClientFactory::Create(clientId, clientSecret, testMode);
+$this->_client = new Client(clientId, clientSecret);
 ```
 
 #### Parameters
@@ -96,7 +106,6 @@ $this->_client = ClientFactory::Create(clientId, clientSecret, testMode);
 |---|---|---|
 | clientId | *string* (required) | The client id that has been issued by Wasa Kredit |
 | clientSecret | *string* (required) | Your client secret issued by Wasa Kredit |
-| testMode | *boolean* | A boolean value if SDK should make requests in test mode or not |
 
 ## <a name="available_methods"></a>Available methods
 
@@ -185,24 +194,9 @@ $response->data
 }
 ```
 
+### <a name="create_checkout"></a>Create Checkout 
 
-
-### <a name="create_invoice_checkout"></a>Create Invoice Checkout
-
-The Checkout is inserted as a Payment Method in the checkout. It could be used either with or without input fields for address. Post the cart to Create Checkout to initiate the checkout.
-
-An alternative use case for the Checkout is as a complete checkout if there is no need for other payment methods.
-
-```
-public function create_invoice_checkout({CHECKOUT})
-```
-
-#### Parameters
-
-__Todo add documentation__
-
-### <a name="create_checkout"></a>Create Checkout
-
+*deprecated* Please use the new method Create Leasing Checkout for creating leasing Checkouts, and respectively Create Invoice Checkout for creating Invoice Checkouts.  
 The Checkout is inserted as a Payment Method in the checkout. It could be used either with or without input fields for address. Post the cart to Create Checkout to initiate the checkout.
 
 An alternative use case for the Checkout is as a complete checkout if there is no need for other payment methods.
@@ -354,9 +348,213 @@ orderReferences = [
 ];    
 ```
 
+### <a name="create_invoice_checkout"></a>Create Invoice Checkout 
+
+The Invoice Checkout is inserted as a Payment Method in the checkout. It could be used either with or without input fields for address. Post the cart to Create Invoice Checkout to initiate the checkout.
+
+
+```
+public function create_invoice_checkout({INVOICECHECKOUT})
+```
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| order_references | *array[OrderReference]* | The order references of the partner | A list containing order references. |
+| cart_items | *array[InvoiceCartItem]* (required) | An array of the items in the cart as Cart Item objects |
+| total_price_incl_vat | *Price* (required) | Price object containing the total price of the cart including VAT |
+| total_price_ex_vat | *Price* (required) | Price object containing the total price of the cart excluding VAT |
+| total_vat | *Price* (required) | Price object containing the total VAT of the cart |
+| customer_organization_number | *string* | Optional customer organization number |
+| purchaser_name | *string* | Optional name of the purchaser |
+| purchaser_email | *string* | Optional e-mail of the purchaser |
+| purchaser_phone | *string* | Optional phone number of the purchaser |
+| partner_reference | *string* | Optional reference to be included in the invoice as reference, could be a sales person reference for example|
+| billing_details | *BillingDetails* | Optional BillingDetails object containing billing reference and billing tag|
+| recipient_name | *string* | Optional name of the recipient |
+| recipient_phone | *string* | Optional phone number of the recipient |
+| request_domain | *string* (required)| The domain of the partner, used to allow CORS |
+| confirmation_callback_url | *string* (required) | Url to the partner's confirmation page |
+| ping_url | *string* (required) | Receiver url for order status changes notifications |
+
+
+
+##### Invoice Cart Item
+
+| Name | Type | Description |
+|---|---|---|
+| product_id | *string* (required) | Id of the Product |
+| product_name | *string* (required) | Name of the product |
+| price_ex_vat | *Price* (required) | Price object containing the price of the product excluding VAT |
+| price_incl_vat | *Price* (required) | Price object containing the price of the product including VAT |
+| quantity | *int* (required) | Quantity of the product |
+| vat_percentage | *string* (required) | VAT percentage as a parsable string, e.g. '25' is 25%  |
+| vat_amount | *Price* (required) | Price object containing the calculated VAT of the product |
+| total_price_incl_vat | *Price* (required) | Price object containing the calculated total prince including VAT of the product, e.g. quantity * price_incl_vat  |
+| total_price_ex_vat | *Price* (required) | Price object containing the calculated total prince excluding VAT of the product, e.g. quantity * price_ex_vat  |
+| total_vat | *Price* (required) | Price object containing the total calculated VAT of the product |
+
+##### Price
+
+| Name | Type | Description |
+|---|---|---|
+| amount | *string* (required) | A string value that will be parsed to a decimal, e.g. 199 is '199.00' |
+| currency | *string* (required) | The currency |
+
+
+
+#### Response
+
+The response will return a unique html snippet to be embedded in your checkout html.
+
+| Name | Type | Description |
+|---|---|---|
+| HtmlSnippet | *string* | The checkout snippet for embedding. |
+
+#### Example usage:
+
+```
+$payload = array(
+  'order_references' => array(
+    [0] => array(
+      'key' => 'magento_quote_id',
+      'value' => $orderId
+    )
+  ),  
+  'cart_items' => array(
+    array(
+      'product_id' => 'ez-3000b-1',
+      'product_name' =>'Kylskåp EZ3',
+      'price_ex_vat' => array(
+        'amount' => '800.00',
+        'currency' => 'SEK'
+      ),
+      'quantity' => 2,
+      'vat_percentage' => '25',
+      'vat_amount' => array(
+        'amount' => '200.00',
+        'currency' => 'SEK'
+      ),
+      'total_price_incl_vat' => array(
+        'amount' => '2000.00',
+        'currency' => 'SEK'
+      ),
+      'total_price_ex_vat' => array(
+        'amount' => '1800.00',
+        'currency' => 'SEK'
+      ),
+      'total_vat' => array(
+        'amount' => '400.00',
+        'currency' => 'SEK'
+      )
+
+    ),
+        array(
+      'product_id' => 'shipping_1234',
+      'product_name' =>'shipping',
+      'price_ex_vat' => array(
+        'amount' => '80.00',
+        'currency' => 'SEK'
+      ),
+      'quantity' => 1,
+      'vat_percentage' => '25',
+      'vat_amount' => array(
+        'amount' => '24.00',
+        'currency' => 'SEK'
+      ),
+      'total_price_incl_vat' => array(
+        'amount' => '99.00',
+        'currency' => 'SEK'
+      ),
+      'total_price_ex_vat' => array(
+        'amount' => '80.00',
+        'currency' => 'SEK'
+      ),
+      'total_vat' => array(
+        'amount' => '24.00',
+        'currency' => 'SEK'
+      )
+
+    )
+
+  ),
+  'total_price_incl_vat' => array(
+      'amount' => '5999.00',
+      'currency' => 'SEK'
+    ),
+    'total_price_ex_vat' => array(
+      'amount' => '4999.00',
+      'currency' => 'SEK'
+    ),
+    'total_vat' => array(
+      'amount' => '500.00',
+      'currency' => 'SEK'
+    ),
+  'billing_details => array(
+    'billing_reference':'furniture',
+    'billing_tag':'weekend deal'
+  ),
+  'request_domain' => 'https://YOUR-BASE-DOMAIN/',
+  'confirmation_callback_url' => 'https://YOUR-BASE-DOMAIN/payment-callback/',
+  'ping_url' => 'https://YOUR-BASE-DOMAIN/ping-callback/'
+);           
+
+$response = $this->_client->create_checkout($payload);
+```
+
+##### Initialize checkout
+
+After creating a Wasa Kredit Checkout by calling the `create_checkout` function and embedding the resulting html snippet in your web page, as described above, the checkout html snippet needs to be explicitly initialized through a javascript call to the global `window.wasaCheckout.init()` function. The `init` method call will populate the \<div\> contained in the html snippet and link it to an internal iframe.
+
+```javascript
+<script>
+    window.wasaCheckout.init();
+</script>
+```
+
+##### <a name="handle_custom_callbacks"></a>Handling custom checkout callbacks
+
+Optionally, you're able to pass an options object to the `init`-function. Use this if you want to manually handle the onComplete, onRedirect and onCancel events.
+
+```javascript
+<script>
+    var options = {
+      onComplete: function(orderReferences){
+        //[...]
+      },
+      onRedirect: function(orderReferences){
+        //[...]
+      },
+      onCancel: function(orderReferences){
+        //[...]
+      }
+    };   
+    window.wasaCheckout.init(options);
+</script>
+```
+
+The `onComplete` event will be raised when a User has completed the checkout process. We recommend that you convert your cart/checkout to an order here if you haven't done it already.
+
+The `onRedirect` event will be raised the user clicks the "back to store/proceed"-button. The default behaviour will redirect the user to the `confirmation_callback_url` passed into the `create_checkout`-function.
+
+The `onCancel` event will be raised if the checkout process is canceled by the user or Wasa Kredit.
+
+All callback functions will get the `orderReferences` parameter passed from the checkout. This parameter consists of an Array of `KeyValue` objects.
+These are the same values as the ones that was passed to the `create_checkout`-function as the `order_references` property.
+
+```javascript
+orderReferences = [
+  { key: "partner_checkout_id", value: "900123" },
+  { key: "partner_reserved_order_number", value: "123456" }
+];    
+```
+
+
+
 ### <a name="validate_financed_amount"></a>Validate Financed Amount
 
-Validates that the amount is within the min/max financing amount for the partner.
+Validates that the amount is within the min/max financing amount for the partner using Leasing as payment method.
 
 ```
 public function validate_financed_amount($amount)
@@ -389,6 +587,43 @@ $response->data
   "validation_result": true
 }
 ```
+
+### <a name="validate_financed_invoice_amount"></a>Validate Financed Invoice Amount
+
+Validates that the amount is within the min/max financing amount for the partner using Invoice as payment method.
+
+```
+public function validate_financed_invoice_amount($amount)
+```
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| amount | *string* (required) | The amount excluding VAT to be validated as a string, e.g. 199 is '199.00' |
+
+#### Example usage:
+
+```
+$amount = '14995.00';
+
+$response = $this->_client->validate_financed_amount($amount);
+```
+
+#### Response
+
+| Name | Type | Description |
+|---|---|---|
+| validation_result | *boolean* | Amount sent is between min/max limit for the partner |
+
+```
+$response->data
+
+{
+  "validation_result": true
+}
+```
+
 
 ### <a name="get_monthly_cost_widget"></a>Get Monthly Cost Widget
 
@@ -522,14 +757,9 @@ $response = $this->_client->get_order_status($orderId);
 ```
 
 
-### <a name="update_order_status"></a>Update Order Status
+### <a name="ship_order"></a>Ship order
 
-Changes the status of the Wasa Kredit order. This method should be used to update the Wasa Kredit order status if you have shipped or canceled the order. Thus it is only possible to set the status to "canceled" or "shipped". The status can only be set to "canceled" if it has not already been shipped or completed and to "shipped" if its current status is "ready_to_ship."
-
-##### Order statuses
-
-* canceled - The order has been canceled for some reason.
-* shipped - The order has been shipped to the customer.
+Changes the order status of the Wasa Kredit order to shipped.
 
 
 #### Parameters
@@ -537,23 +767,33 @@ Changes the status of the Wasa Kredit order. This method should be used to updat
 | Name | Type | Description |
 |---|---|---|
 | order_id | *string* (required) | The id of the order object          |
-| status   | *string* (required) | The status to update the order with |
 
 #### Example usage:
 
 ```
 $orderId = 'f404e318-7180-47ab-91db-fbb66addf577';
-$orderStatus = 'shipped';
-$response = $this->_client->update_order_status($orderId, $orderStatus);
+$this->_client->ship_order($orderId);
 ```
 
-#### Response
+### <a name="cancel_order"></a>Cancel order
+
+Changes the order status of the Wasa Kredit order to cancelled.
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| order_id | *string* (required) | The id of the order object          |
+
+#### Example usage:
 
 ```
-{
-  "status": "shipped"
-}
+$orderId = 'f404e318-7180-47ab-91db-fbb66addf577';
+$this->_client->cancel_order($orderId);
 ```
+
+
 
 ### <a name="add_order_reference"></a>Add Order Reference
 
@@ -595,12 +835,13 @@ $response = $this->_client->add_order_reference($orderId, $orderReference);
 ```
 ### <a name="get_payment_methods"></a>Get Payment Methods
 
-Get information from Wasa Kredit about the different payment options available in the checkout. This can be used to compose a description of which options are available in the checkout before it's loaded.
+Get information from Wasa Kredit about the different payment methods available in the checkout. This can be used to compose a description of which options are available in the checkout before it's loaded.
 
 #### Parameters
 | Name | Type | Description |
 |---|---|---|
 | total_amount   | *string* (required) | A string value that will be parsed to a decimal, e.g. 19999 is '19999.00' |
+| currency | *string* (required) | The currency |
 
 #### Example usage:
 
@@ -608,7 +849,7 @@ Get information from Wasa Kredit about the different payment options available i
 $total_amount = "10000.00";
 $currency = "SEK";
 
-$response = $this->_client->get_payment_methods($total_amount);
+$response = $this->_client->get_payment_methods($total_amount, $currency);
 ```
 
 #### Response
@@ -644,6 +885,56 @@ $response = $this->_client->get_payment_methods($total_amount);
             }
           }
         ]
+      }
+    }
+  ]
+}
+
+```
+### <a name="get_leasing_payment_options"></a>Get Leasing Payment Options
+
+Get information from Wasa Kredit about the  payment options available in the Leasing checkout. This can be used to compose a description of which options are available in the checkout before it's loaded.
+
+#### Parameters
+| Name | Type | Description |
+|---|---|---|
+| total_amount   | *string* (required) | A string value that will be parsed to a decimal, e.g. 19999 is '19999.00' |
+| currency | *string* (required) | The currency |
+
+#### Example usage:
+
+```
+$total_amount = "10000.00";
+$currency = "SEK";
+
+$response = $this->_client->get_leasing_payment_options($total_amount, $currency);
+```
+
+#### Response
+
+```
+{
+  "default_contract_length": 24,
+  "contract_lengths": [
+    {
+      "contract_length": 12,
+      "monthly_cost": {
+        "amount": "802",
+        "currency": "SEK"
+      }
+    },
+    {
+      "contract_length": 24,
+      "monthly_cost": {
+        "amount": "442",
+        "currency": "SEK"
+      }
+    },
+    {
+      "contract_length": 36,
+      "monthly_cost": {
+        "amount": "321",
+        "currency": "SEK"
       }
     }
   ]

@@ -27,9 +27,9 @@ class AccessToken
     private $client_id;
     private $client_secret;
  
-    public function __construct($client_id, $client_secret)
+    public function __construct($client_id, $client_secret, $auth_url)
     {
-        $this->_token_url = wasa_config('access_token_url');
+        $this->_token_url = $auth_url;
         $this->client_id = $client_id;
         $this->client_secret = $client_secret;
     }
