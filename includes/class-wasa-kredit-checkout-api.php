@@ -3,7 +3,7 @@ if (!defined('ABSPATH')) {
     exit();
 }
 
-require_once plugin_dir_path(__FILE__) . '../php-checkout-sdk/Wasa.php';
+require_once plugin_dir_path(__FILE__) . '../vendor/wasa/client-php-sdk/Wasa.php';
 
 class Wasa_Kredit_Checkout_API
 {
@@ -75,23 +75,33 @@ class Wasa_Kredit_Checkout_API
         ));
 
         // Make sure we have an order
-        if ($order_status === 'initialized' || !$orders || count($orders) < 1) {
+        if (!$orders || count($orders) < 1) {
             $client = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
             $wasa_order = $client->get_order($wasa_order_id);
             foreach ($wasa_order->data['order_references'] as $item) {
                 if ($item['key'] === 'wasa_kredit_woocommerce_order_key') {
-                    $woo_order_id = $item['value'];
+                    $woo_order_key = $item['value'];
                     break;
                 }
             }
-            if (!isset($woo_order_id)) {
+            if (!isset($woo_order_key)) {
                 error_log("No order found to update with id = \"" . $wasa_order_id . "\"");
                 return;
             }
 
+            $woo_order_id = wc_get_order_id_by_order_key($woo_order_key);
             $order = wc_get_order($woo_order_id);
+            // Only allow changing wasa order associations as long as the order is in status pending,
+            //   meaning that no payment has been completed on wasa. This is because one order on woocommerce
+            //   can in rare scenarios be associated with multiple orders in wasa.
+            if (!$order->has_status('pending')) {
+                $order->add_order_note('Wasa Kredit sent order update for id ' . $wasa_order_id . " -> " .
+                    $order_status . " but order was in state " . $order->get_status() . ", ignoring update.");
+                return;
+            }
+
             update_post_meta($order->get_id(), '_transaction_id', $wasa_order_id);
-            $order->add_order_note(__('Woocommerce associated order with wasa kredit id "', 'wasa-kredit-checkout') . ' ' . $order_status . '"');
+            $order->add_order_note(__('Woocommerce associated order with wasa kredit id', 'wasa-kredit-checkout') . ' "' . $wasa_order_id . '"');
         } else {
             $order = $orders[0];
         }
@@ -110,7 +120,7 @@ class Wasa_Kredit_Checkout_API
                 $order->payment_complete();
             }
         } else {
-            $order->add_order_note(__('Failed to find a mapping for Wasa Kredit status "', 'wasa-kredit-checkout') . ' ' . $order_status . '"');
+            $order->add_order_note(__('Failed to find a mapping for Wasa Kredit status', 'wasa-kredit-checkout') . ' "' . $order_status . '"');
         }
     }
 

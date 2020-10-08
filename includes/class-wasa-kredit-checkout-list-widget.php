@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-require_once plugin_dir_path( __FILE__ ) . '../php-checkout-sdk/Wasa.php';
+require_once plugin_dir_path( __FILE__ ) . '../vendor/wasa/client-php-sdk/Wasa.php';
 
 class Wasa_Kredit_Checkout_List_Widget {
 	public function __construct() {
