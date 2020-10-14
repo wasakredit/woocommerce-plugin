@@ -1,0 +1,13 @@
+{
+  "name": "wasa/woocommerce-plugin",
+  "description": "Demo shop for the wasa ecom platform",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/wasakredit/php-checkout-sdk.git"
+    } 
+  ],
+  "require": {
+    "wasa/client-php-sdk": "dev-5667-InvoiceAdditions"
+  }
+}

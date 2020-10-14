@@ -3,18 +3,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-require_once plugin_dir_path( __FILE__ ) . '../php-checkout-sdk/Wasa.php';
+require_once plugin_dir_path( __FILE__ ) . '../vendor/wasa/client-php-sdk/Wasa.php';
 
 class Wasa_Kredit_Checkout_List_Widget {
 	public function __construct() {
 		$settings = get_option( 'wasa_kredit_settings' );
 
 		// Connect to WASA PHP SDK
-		$this->_client = new Sdk\Client(
-			$settings['partner_id'],
-			$settings['client_secret'],
-			'yes' === $settings['test_mode'] ? true : false
-		);
+        $this->_client = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
 
 		// Hooks
 		add_action(
