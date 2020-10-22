@@ -158,10 +158,9 @@ $payload = array(
     'confirmation_callback_url' => $order->get_checkout_order_received_url(),
     'ping_url' => get_rest_url(null, 'wasa-kredit-checkout/v1/update_order_status'),
     'total_price_incl_vat' => apply_currency($order_data["total"]),
-    'total_price_ex_vat' => apply_currency($order_data["total"] - $order_data["total_tax"]),
+    'total_price_ex_vat' => apply_currency(number_format(($order_data["total"] - $order_data["total_tax"]), 2, '.', '') ),
     'total_vat' => apply_currency($order_data["total_tax"])
 );
-
 // Get answer from API
 $response = $client->create_invoice_checkout($payload);
 
