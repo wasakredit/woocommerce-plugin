@@ -247,8 +247,7 @@ function init_wasa_kredit_invoice_gateway() {
                     $cart_totals['shipping_total'] +
                     $cart_totals['fee_total'];
 
-                return __( 'Invoice', 'wasa-kredit-checkout' ) . ' ' . wc_price( $total_costs, array( 'decimals' => 0 ) );
-
+                return __( 'Invoice', 'wasa-kredit-checkout' );
 			}
 
 			return __( 'Financing with Wasa Kredit Invoice Checkout', 'wasa-kredit-checkout' );
