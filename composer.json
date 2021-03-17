@@ -8,6 +8,6 @@
     } 
   ],
   "require": {
-    "wasa/client-php-sdk": "dev-master"
+    "wasa/client-php-sdk": "dev-master#v3.0"
   }
 }
