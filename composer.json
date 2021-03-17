@@ -8,6 +8,6 @@
     } 
   ],
   "require": {
-    "wasa/client-php-sdk": "dev-5667-InvoiceAdditions"
+    "wasa/client-php-sdk": "dev-master#v3.0"
   }
 }
