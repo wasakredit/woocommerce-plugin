@@ -2,16 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wasa Kredit Checkout\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-27 11:53+0000\n"
-"PO-Revision-Date: 2018-08-27 12:06+0000\n"
-"Last-Translator: admin <ehandel@wasakredit.se>\n"
+"POT-Creation-Date: 2020-08-27 11:53+0000\n"
+"PO-Revision-Date: 2020-09-22 12:07+0000\n"
+"Last-Translator: \n"
 "Language-Team: Svenska\n"
 "Language: sv_SE\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Loco https://localise.biz/"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.4.3; wp-5.5.1"
 
 #: wasa-kredit-checkout.php:92
 msgid "Settings"
@@ -66,13 +67,14 @@ msgid "Enable/Disable"
 msgstr "Slå på/av"
 
 #: includes/class-wasa-kredit-checkout-payment-gateway.php:84
-msgid "Enable Wasa Kredit Invoice Checkout"
-msgstr "Slå på Wasa Kredit Faktura Checkout"
-
+msgid "Enable Wasa Kredit Leasing Checkout"
+msgstr "Slå på Wasa Kredit Leasing Checkout"
 
 #: includes/class-wasa-kredit-checkout-payment-gateway.php:84
-msgid "Enable Wasa Kredit Checkout"
-msgstr "Slå på Wasa Kredit Checkout"
+#, fuzzy
+#| msgid "Enable Wasa Kredit Invoice Checkout"
+msgid "Enable Wasa Kredit Invoice Checkout "
+msgstr "Slå på Wasa Kredit Faktura Checkout"
 
 #: includes/class-wasa-kredit-checkout-payment-gateway.php:93
 msgid "Show monthly cost in product list"
@@ -171,7 +173,6 @@ msgstr ""
 msgid "Financing with Wasa Kredit Checkout"
 msgstr "Finansiering med Wasa Kredit Checkout"
 
-
 #: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:259
 msgid "Financing with Wasa Kredit Invoice Checkout"
 msgstr "Finansiering med Wasa Kredit Faktura"
@@ -179,7 +180,6 @@ msgstr "Finansiering med Wasa Kredit Faktura"
 #: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:255
 msgid "Invoice"
 msgstr "Faktura"
-
 
 #: includes/class-wasa-kredit-checkout-payment-gateway.php:286
 msgid "Finance your purchase with Wasa Kredit"

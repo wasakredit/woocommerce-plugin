@@ -70,6 +70,12 @@ msgstr ""
 msgid "Enable Wasa Kredit Checkout"
 msgstr ""
 
+#: includes/class-wasa-kredit-checkout-payment-gateway.php:84
+msgid "Enable Wasa Kredit Invoice Checkout"
+msgstr ""
+
+
+
 #: includes/class-wasa-kredit-checkout-payment-gateway.php:93
 msgid "Show monthly cost in product list"
 msgstr ""
@@ -151,6 +157,14 @@ msgstr ""
 #: includes/class-wasa-kredit-checkout-payment-gateway.php:269
 #: includes/class-wasa-kredit-checkout-payment-gateway.php:315
 msgid "Financing with Wasa Kredit Checkout"
+msgstr ""
+
+#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:259
+msgid "Financing with Wasa Kredit Invoice Checkout"
+msgstr ""
+
+#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:255
+msgid "Invoice"
 msgstr ""
 
 #: includes/class-wasa-kredit-checkout-payment-gateway.php:286

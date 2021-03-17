@@ -5,7 +5,7 @@ Tags: woocommerce, ecommerce, e-commerce, checkout
 Requires at least: 3.0.1
 Tested up to: 5.5
 Requires PHP: 5.7
-Stable tag: 1.2.11
+Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -106,6 +106,11 @@ In the settings for Wasa's checkout, there are two new settings with the heading
 
 = 1.2.11 =
 * Fix stopped showing throwing error when leasing price cannot be displayed
+
+= 1.3 =
+* Support for new v4 api
+* Fixed an issue where status updates would fail to change status of woocommerce orders if received during checkout
+* Plugin now supports invoice payments
 
 == Upgrade Notice ==
 
