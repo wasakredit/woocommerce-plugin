@@ -9,42 +9,54 @@ class Wasa_Kredit_Checkout_Product_Widget {
 	public function __construct() {
 		$this->settings = get_option( 'wasa_kredit_settings' );
 
-        $this->_client = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
+		$this->_client = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
 
 		// Hooks
-		add_shortcode( 'wasa_kredit_product_widget', array(
-			$this,
+		add_shortcode(
 			'wasa_kredit_product_widget',
-		));
+			array(
+				$this,
+				'wasa_kredit_product_widget',
+			)
+		);
 
-		add_action( 'woocommerce_single_product_summary', array(
-			$this,
-			'add_product_widget_to_product_page',
-		), 15);
+		add_action(
+			'woocommerce_single_product_summary',
+			array(
+				$this,
+				'add_product_widget_to_product_page',
+			),
+			15
+		);
 
-		add_filter( 'woocommerce_product_addons_option_price', function ( $default_formatted_price, $options ) {
-			if ( $options['price'] ) {
-				$payload['items'][] = array(
-					'financed_price' => array(
-						'amount'   => $options['price'],
-						'currency' => 'SEK',
-					),
-					'product_id'     => 'ADDON_PRICE',
-				);
+		add_filter(
+			'woocommerce_product_addons_option_price',
+			function ( $default_formatted_price, $options ) {
+				if ( $options['price'] ) {
+					$payload['items'][] = array(
+						'financed_price' => array(
+							'amount'   => $options['price'],
+							'currency' => 'SEK',
+						),
+						'product_id'     => 'ADDON_PRICE',
+					);
 
-				$monthly_cost_response = $this->_client->calculate_monthly_cost( $payload );
+					$monthly_cost_response = $this->_client->calculate_monthly_cost( $payload );
 
-				if ( isset( $monthly_cost_response ) && 200 === $monthly_cost_response->statusCode ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
-					$monthly_cost = $monthly_cost_response->data['monthly_costs'][0]['monthly_cost']['amount'];
+					if ( isset( $monthly_cost_response ) && 200 === $monthly_cost_response->statusCode ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
+						$monthly_cost = $monthly_cost_response->data['monthly_costs'][0]['monthly_cost']['amount'];
 
-					$formatted_financing_price = wc_price( $monthly_cost, array( 'decimals' => 0 ) ) . __( '/month', 'wasa-kredit-checkout' );
+						$formatted_financing_price = wc_price( $monthly_cost, array( 'decimals' => 0 ) ) . __( '/month', 'wasa-kredit-checkout' );
 
-					return $default_formatted_price . ' (+ ' . $formatted_financing_price . ')';
+						return $default_formatted_price . ' (+ ' . $formatted_financing_price . ')';
+					}
 				}
-			}
 
-			return $default_formatted_price;
-		}, 10, 3);
+				return $default_formatted_price;
+			},
+			10,
+			3
+		);
 
 	}
 
