@@ -81,6 +81,12 @@ class Wasa_Kredit_Checkout_Product_Widget {
 
 		$price    = $product->get_price();
 		$response = $this->_client->get_monthly_cost_widget( $price );
+		$log      = Wasa_Kredit_Logger::format_log( '', 'GET', 'get_monthly_cost_widget', 'Price: ' . $price, '', stripslashes_deep( (array) $response ), $response->statusCode ); // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
+		$level    = 'info';
+		if ( 200 !== $response->statusCode ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
+			$level = 'error';
+		}
+		Wasa_Kredit_Logger::log( $log, $level, 'monthly_cost' );
 
 		if ( isset( $response ) && 200 === $response->statusCode ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
 			return '<div class="wasa-kredit-product-widget-container">' . $response->data . '</div>';
