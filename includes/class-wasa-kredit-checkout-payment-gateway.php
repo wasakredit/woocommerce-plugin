@@ -1,353 +1,343 @@
 <?php
-if (!defined('ABSPATH')) {
-    exit(); // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit(); // Exit if accessed directly
 }
 
-require_once plugin_dir_path(__FILE__) . '../vendor/wasa/client-php-sdk/Wasa.php';
+require_once plugin_dir_path( __FILE__ ) . '../vendor/wasa/client-php-sdk/Wasa.php';
 
-add_action('plugins_loaded', 'init_wasa_kredit_gateway');
-add_action('woocommerce_before_checkout_form', 'create_redirect_to_standard_checkout_view', 10, 1);
-add_filter('woocommerce_payment_gateways', 'add_wasa_kredit_gateway');
+add_action( 'plugins_loaded', 'init_wasa_kredit_gateway' );
+add_action( 'woocommerce_before_checkout_form', 'create_redirect_to_standard_checkout_view', 10, 1 );
+add_filter( 'woocommerce_payment_gateways', 'add_wasa_kredit_gateway' );
 
-function add_wasa_kredit_gateway($methods)
-{
-    $methods[] = 'Wasa_Kredit_Checkout_Payment_Gateway';
+function add_wasa_kredit_gateway( $methods ) {
+	$methods[] = 'Wasa_Kredit_Checkout_Payment_Gateway';
 
-    return $methods;
+	return $methods;
 }
 
-function create_redirect_to_standard_checkout_view()
-{
-    include plugin_dir_path(__FILE__) . '../templates/redirect-to-standard-checkout.php';
+function create_redirect_to_standard_checkout_view() {
+	include plugin_dir_path( __FILE__ ) . '../templates/redirect-to-standard-checkout.php';
 }
 
-function init_wasa_kredit_gateway()
-{
-    if (!class_exists('WC_Payment_Gateway')) {
-        return;
-    }
+function init_wasa_kredit_gateway() {
+	if ( ! class_exists( 'WC_Payment_Gateway' ) ) {
+		return;
+	}
 
-    class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway
-    {
-        public function __construct()
-        {
-            // Setup payment gateway properties
-            $this->id = 'wasa_kredit';
-            $this->plugin_id = 'wasa_kredit';
-            $this->name = 'Wasa Kredit';
-            $this->title = 'Wasa Kredit Leasing';
-            $this->method_title = 'Wasa Kredit Leasing';
-            $this->description = 'Use to pay with Wasa Kredit Leasing Checkout.';
-            $this->method_description = 'Use to pay with Wasa Kredit Leasing Checkout.';
-            $this->order_button_text = __('Proceed', 'wasa-kredit-checkout');
-            $this->selected_currency = get_woocommerce_currency();
-            // Where to store settings in DB
-            $this->options_key = 'wasa_kredit_settings';
+	class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 
-            $this->form_fields = $this->init_form_fields();
-            $this->init_settings();
+		public function __construct() {
+			// Setup payment gateway properties
+			$this->id                 = 'wasa_kredit';
+			$this->plugin_id          = 'wasa_kredit';
+			$this->name               = 'Wasa Kredit';
+			$this->title              = 'Wasa Kredit Leasing';
+			$this->method_title       = 'Wasa Kredit Leasing';
+			$this->description        = 'Use to pay with Wasa Kredit Leasing Checkout.';
+			$this->method_description = 'Use to pay with Wasa Kredit Leasing Checkout.';
+			$this->order_button_text  = __( 'Proceed', 'wasa-kredit-checkout' );
+			$this->selected_currency  = get_woocommerce_currency();
+			// Where to store settings in DB
+			$this->options_key = 'wasa_kredit_settings';
 
-            // Setup dynamic gateway properties
-            if ($this->settings['enabled']) {
-                $this->enabled = $this->settings['enabled'];
-            }
+			$this->form_fields = $this->init_form_fields();
+			$this->init_settings();
 
-            // Connect to WASA PHP SDK
-            $this->_client = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
+			// Setup dynamic gateway properties
+			if ( $this->settings['enabled'] ) {
+				$this->enabled = $this->settings['enabled'];
+			}
 
-            // Hooks
-            add_action(
-                'woocommerce_update_options_payment_gateways_' . $this->id,
-                array($this, 'process_admin_options')
-            );
-        }
+			// Connect to WASA PHP SDK
+			$this->_client = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
 
-        public function init_settings()
-        {
-            $this->settings = get_option($this->options_key, null);
+			// Hooks
+			add_action(
+				'woocommerce_update_options_payment_gateways_' . $this->id,
+				array( $this, 'process_admin_options' )
+			);
+		}
 
-            // If there are no settings defined, use defaults.
-            if (!is_array($this->settings)) {
-                $form_fields = $this->get_form_fields();
+		public function init_settings() {
+			$this->settings = get_option( $this->options_key, null );
 
-                $this->settings = array_merge(
-                    array_fill_keys(array_keys($form_fields), ''),
-                    wp_list_pluck($form_fields, 'default')
-                );
-            }
-        }
+			// If there are no settings defined, use defaults.
+			if ( ! is_array( $this->settings ) ) {
+				$form_fields = $this->get_form_fields();
 
-        public function init_form_fields()
-        {
-            // Defines settings fields on WooCommerce > Settings > Checkout > Wasa Kredit
-            return array(
-                'enabled' => array(
-                    'title' => __('Enable/Disable', 'wasa-kredit-checkout'),
-                    'type' => 'checkbox',
-                    'label' => __(
-                        'Enable Wasa Kredit Checkout',
-                        'wasa-kredit-checkout'
-                    ),
-                    'default' => 'yes',
-                ),
-                'widget_on_product_list' => array(
-                    'title' => __('Enable/Disable', 'wasa-kredit-checkout'),
-                    'type' => 'checkbox',
-                    'label' => __(
-                        'Show monthly cost in product list',
-                        'wasa-kredit-checkout'
-                    ),
-                    'description' => __(
-                        'Will be shown under the price in product listings. You can also use the shortcode [wasa_kredit_list_widget]',
-                        'wasa-kredit-checkout'
-                    ),
-                    'default' => 'yes',
-                ),
-                'widget_on_product_details' => array(
-                    'title' => __('Enable/Disable', 'wasa-kredit-checkout'),
-                    'type' => 'checkbox',
-                    'label' => __(
-                        'Show monthly cost in product details',
-                        'wasa-kredit-checkout'
-                    ),
-                    'description' => __(
-                        'Will be shown between the price and the add to cart button. You can also use the shortcode [wasa_kredit_product_widget] whereever you want.',
-                        'wasa-kredit-checkout'
-                    ),
-                    'default' => 'yes',
-                ),
-                'partner_id' => array(
-                    'title' => __('Partner ID', 'wasa-kredit-checkout'),
-                    'type' => 'text',
-                    'description' => __(
-                        'Partner ID is issued by Wasa Kredit.',
-                        'wasa-kredit-checkout'
-                    ),
-                    'default' => '',
-                ),
-                'client_secret' => array(
-                    'title' => __('Client secret', 'wasa-kredit-checkout'),
-                    'type' => 'password',
-                    'description' => __(
-                        'Client Secret is issued by Wasa Kredit.',
-                        'wasa-kredit-checkout'
-                    ),
-                    'default' => '',
-                ),
-                'test_partner_id' => array(
-                    'title' => __('Test Partner ID', 'wasa-kredit-checkout'),
-                    'type' => 'text',
-                    'description' => __(
-                        'Test Partner ID is issued by Wasa Kredit.',
-                        'wasa-kredit-checkout'
-                    ),
-                    'default' => '',
-                ),
-                'test_client_secret' => array(
-                    'title' => __('Test Client secret', 'wasa-kredit-checkout'),
-                    'type' => 'password',
-                    'description' => __(
-                        'Test Client Secret is issued by Wasa Kredit.',
-                        'wasa-kredit-checkout'
-                    ),
-                    'default' => '',
-                ),
-                'test_mode' => array(
-                    'title' => __('Test mode', 'wasa-kredit-checkout'),
-                    'type' => 'checkbox',
-                    'label' => __('Enable test mode', 'wasa-kredit-checkout'),
-                    'default' => 'yes',
-                    'description' => __(
-                        'This controls if the test API should be called or not. Do not use in production.',
-                        'wasa-kredit-checkout'
-                    ),
-                ),
-                'add_redirect_to_standard_checkout_widget' => array(
-                    'title' => __('Advanced', 'wasa-kredit-checkout'),
-                    'type' => 'checkbox',
-                    'label' => __('Enable redirect to standard checkout widget', 'wasa-kredit-checkout'),
-                    'default' => 'no',
-                    'description' => __(
-                        'This is an advanced setting that is not needed for most integrations. Enable it if you have replaced the standard woocommerce checkout page with another checkout page. It will present a widget where the user can navigate to the standard checkout and use Wasa Kredit as a payment method.',
-                        'wasa-kredit-checkout'
-                    ),
-                ),
-                'standard_checkout_page_route' => array(
-                    'title' => __('Advanced', 'wasa-kredit-checkout'),
-                    'type' => 'text',
-                    'label' => __('Standard checkout page route', 'wasa-kredit-checkout'),
-                    'default' => '',
-                    'description' => __(
-                        'This is an advanced setting that is not needed for most integrations. If the setting redirect to standard checkout widget above is enabled, this setting is the route of the standard checkout page the user will be redirected to.',
-                        'wasa-kredit-checkout'
-                    ),
-                ),
-            );
-        }
+				$this->settings = array_merge(
+					array_fill_keys( array_keys( $form_fields ), '' ),
+					wp_list_pluck( $form_fields, 'default' )
+				);
+			}
+		}
 
-        public function process_admin_options()
-        {
-            // On save in admin settings
-            $this->init_settings();
+		public function init_form_fields() {
+			// Defines settings fields on WooCommerce > Settings > Checkout > Wasa Kredit
+			return array(
+				'enabled'                                  => array(
+					'title'   => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
+					'type'    => 'checkbox',
+					'label'   => __(
+						'Enable Wasa Kredit Checkout',
+						'wasa-kredit-checkout'
+					),
+					'default' => 'yes',
+				),
+				'widget_on_product_list'                   => array(
+					'title'       => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
+					'type'        => 'checkbox',
+					'label'       => __(
+						'Show monthly cost in product list',
+						'wasa-kredit-checkout'
+					),
+					'description' => __(
+						'Will be shown under the price in product listings. You can also use the shortcode [wasa_kredit_list_widget]',
+						'wasa-kredit-checkout'
+					),
+					'default'     => 'yes',
+				),
+				'widget_on_product_details'                => array(
+					'title'       => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
+					'type'        => 'checkbox',
+					'label'       => __(
+						'Show monthly cost in product details',
+						'wasa-kredit-checkout'
+					),
+					'description' => __(
+						'Will be shown between the price and the add to cart button. You can also use the shortcode [wasa_kredit_product_widget] whereever you want.',
+						'wasa-kredit-checkout'
+					),
+					'default'     => 'yes',
+				),
+				'partner_id'                               => array(
+					'title'       => __( 'Partner ID', 'wasa-kredit-checkout' ),
+					'type'        => 'text',
+					'description' => __(
+						'Partner ID is issued by Wasa Kredit.',
+						'wasa-kredit-checkout'
+					),
+					'default'     => '',
+				),
+				'client_secret'                            => array(
+					'title'       => __( 'Client secret', 'wasa-kredit-checkout' ),
+					'type'        => 'password',
+					'description' => __(
+						'Client Secret is issued by Wasa Kredit.',
+						'wasa-kredit-checkout'
+					),
+					'default'     => '',
+				),
+				'test_partner_id'                          => array(
+					'title'       => __( 'Test Partner ID', 'wasa-kredit-checkout' ),
+					'type'        => 'text',
+					'description' => __(
+						'Test Partner ID is issued by Wasa Kredit.',
+						'wasa-kredit-checkout'
+					),
+					'default'     => '',
+				),
+				'test_client_secret'                       => array(
+					'title'       => __( 'Test Client secret', 'wasa-kredit-checkout' ),
+					'type'        => 'password',
+					'description' => __(
+						'Test Client Secret is issued by Wasa Kredit.',
+						'wasa-kredit-checkout'
+					),
+					'default'     => '',
+				),
+				'test_mode'                                => array(
+					'title'       => __( 'Test mode', 'wasa-kredit-checkout' ),
+					'type'        => 'checkbox',
+					'label'       => __( 'Enable test mode', 'wasa-kredit-checkout' ),
+					'default'     => 'yes',
+					'description' => __(
+						'This controls if the test API should be called or not. Do not use in production.',
+						'wasa-kredit-checkout'
+					),
+				),
+				'add_redirect_to_standard_checkout_widget' => array(
+					'title'       => __( 'Advanced', 'wasa-kredit-checkout' ),
+					'type'        => 'checkbox',
+					'label'       => __( 'Enable redirect to standard checkout widget', 'wasa-kredit-checkout' ),
+					'default'     => 'no',
+					'description' => __(
+						'This is an advanced setting that is not needed for most integrations. Enable it if you have replaced the standard woocommerce checkout page with another checkout page. It will present a widget where the user can navigate to the standard checkout and use Wasa Kredit as a payment method.',
+						'wasa-kredit-checkout'
+					),
+				),
+				'standard_checkout_page_route'             => array(
+					'title'       => __( 'Advanced', 'wasa-kredit-checkout' ),
+					'type'        => 'text',
+					'label'       => __( 'Standard checkout page route', 'wasa-kredit-checkout' ),
+					'default'     => '',
+					'description' => __(
+						'This is an advanced setting that is not needed for most integrations. If the setting redirect to standard checkout widget above is enabled, this setting is the route of the standard checkout page the user will be redirected to.',
+						'wasa-kredit-checkout'
+					),
+				),
+			);
+		}
 
-            $post_data = $this->get_post_data();
+		public function process_admin_options() {
+			// On save in admin settings
+			$this->init_settings();
 
-            foreach ($this->get_form_fields() as $key => $field) {
-                if ('title' !== $this->get_field_type($field)) {
-                    try {
-                        $this->settings[$key] = $this->get_field_value(
-                            $key,
-                            $field,
-                            $post_data
-                        );
-                    } catch (Exception $e) {
-                        $this->add_error($e->getMessage());
-                    }
-                }
-            }
+			$post_data = $this->get_post_data();
 
-            return update_option(
-                $this->options_key,
-                apply_filters(
-                    'woocommerce_settings_api_sanitized_fields_' . $this->id,
-                    $this->settings
-                )
-            );
-        }
+			foreach ( $this->get_form_fields() as $key => $field ) {
+				if ( 'title' !== $this->get_field_type( $field ) ) {
+					try {
+						$this->settings[ $key ] = $this->get_field_value(
+							$key,
+							$field,
+							$post_data
+						);
+					} catch ( Exception $e ) {
+						$this->add_error( $e->getMessage() );
+					}
+				}
+			}
 
-        public function is_available()
-        {
-            // If payment gateway should be available for customers
+			return update_option(
+				$this->options_key,
+				apply_filters(
+					'woocommerce_settings_api_sanitized_fields_' . $this->id,
+					$this->settings
+				)
+			);
+		}
 
-            $enabled = $this->get_option('enabled');
+		public function is_available() {
+			// If payment gateway should be available for customers
 
-            // Plugin is enabled
-            if ('yes' !== $enabled || is_null(WC()->cart)) {
-                return false;
-            }
+			$enabled = $this->get_option( 'enabled' );
 
-            $cart_totals = WC()->cart->get_totals();
-            $cart_total = $cart_totals['subtotal'] + $cart_totals['shipping_total'];
-            $financed_amount_status = $this->_client->validate_financed_amount($cart_total);
+			// Plugin is enabled
+			if ( 'yes' !== $enabled || is_null( WC()->cart ) ) {
+				return false;
+			}
 
-            // Cart value is within partner limits
-            if (!isset($financed_amount_status)
-                || (200 !== $financed_amount_status->statusCode // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
-                    || !$financed_amount_status->data['validation_result'])) {
-                // If total order value is too small or too large
-                return false;
-            }
+			$cart_totals            = WC()->cart->get_totals();
+			$cart_total             = $cart_totals['subtotal'] + $cart_totals['shipping_total'];
+			$financed_amount_status = $this->_client->validate_financed_amount( $cart_total );
 
-            $shipping_country = WC()->customer->get_billing_country();
-            $currency = get_woocommerce_currency();
+			// Cart value is within partner limits
+			if ( ! isset( $financed_amount_status )
+			|| (200 !== $financed_amount_status->statusCode // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
+				|| ! $financed_amount_status->data['validation_result'] ) ) {
+				// If total order value is too small or too large
+				return false;
+			}
 
-            // Country is Sweden and currency is Swedish krona
-            if ('SE' !== $shipping_country || 'SEK' !== $currency) {
-                return false;
-            }
+			$shipping_country = WC()->customer->get_billing_country();
+			$currency         = get_woocommerce_currency();
 
-            // Everything is fine, show payment method.
-            return true;
-        }
+			// Country is Sweden and currency is Swedish krona
+			if ( 'SE' !== $shipping_country || 'SEK' !== $currency ) {
+				return false;
+			}
 
-        public function process_payment($order_id)
-        {
-            // When clicking Proceed button, create a on-hold order
-            global $woocommerce;
-            $order = new WC_Order($order_id);
+			// Everything is fine, show payment method.
+			return true;
+		}
 
-            return array(
-                'result' => 'success',
-                'redirect' => $this->get_return_url($order),
-            );
-        }
+		public function process_payment( $order_id ) {
+			// When clicking Proceed button, create a on-hold order
+			global $woocommerce;
+			$order = new WC_Order( $order_id );
 
-        public function get_return_url($order = null)
-        {
-            // Add order key to custom endpoint route as query param
-            return add_query_arg(
-                array(
-                    'wasa_kredit_checkout' => $order->get_order_key(),
-                    'wasa_kredit_payment_method' => 'leasing'),
-                get_site_url());
-        }
+			return array(
+				'result'   => 'success',
+				'redirect' => $this->get_return_url( $order ),
+			);
+		}
 
-        public function get_title()
-        {
-            //Set custom title to payment to display in checkout
-            if (isset(WC()->cart)) {
-                $cart_totals = WC()->cart->get_totals();
+		public function get_return_url( $order = null ) {
+			// Add order key to custom endpoint route as query param
+			return add_query_arg(
+				array(
+					'wasa_kredit_checkout'       => $order->get_order_key(),
+					'wasa_kredit_payment_method' => 'leasing',
+				),
+				get_site_url()
+			);
+		}
 
-                $total_costs = $cart_totals['subtotal'] + $cart_totals['shipping_total'];
+		public function get_title() {
+			// Set custom title to payment to display in checkout
+			if ( isset( WC()->cart ) ) {
+				$cart_totals = WC()->cart->get_totals();
 
-                $payload['items'][] = array(
-                    'financed_price' => array(
-                        'amount' => $total_costs,
-                        'currency' => 'SEK',
-                    ),
-                    'product_id' => 'CART_VALUE',
-                );
+				$total_costs = $cart_totals['subtotal'] + $cart_totals['shipping_total'];
 
-                $monthly_cost_response = $this->_client->calculate_monthly_cost($payload);
+				$payload['items'][] = array(
+					'financed_price' => array(
+						'amount'   => $total_costs,
+						'currency' => 'SEK',
+					),
+					'product_id'     => 'CART_VALUE',
+				);
 
-                if (isset($monthly_cost_response) && 200 === $monthly_cost_response->statusCode) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
-                    $monthly_cost = $monthly_cost_response->data['monthly_costs'][0]['monthly_cost']['amount'];
+				$monthly_cost_response = $this->_client->calculate_monthly_cost( $payload );
 
-                    return __('Financing', 'wasa-kredit-checkout') . ' ' . wc_price($monthly_cost, array('decimals' => 0)) . __('/month', 'wasa-kredit-checkout');
-                }
-            }
+				if (isset($monthly_cost_response) && 200 === $monthly_cost_response->statusCode) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
+					$monthly_cost = $monthly_cost_response->data['monthly_costs'][0]['monthly_cost']['amount'];
 
-            return __('Financing with Wasa Kredit Checkout', 'wasa-kredit-checkout');
-        }
+					return __( 'Financing', 'wasa-kredit-checkout' ) . ' ' . wc_price( $monthly_cost, array( 'decimals' => 0 ) ) . __( '/month', 'wasa-kredit-checkout' );
+				}
+			}
 
-        public function get_description()
-        {
-            //Set custom description to display in checkout
-            if (isset(WC()->cart)) {
+			return __( 'Financing with Wasa Kredit Checkout', 'wasa-kredit-checkout' );
+		}
 
-                $cart_totals = WC()->cart->get_totals();
-                $cart_total = $cart_totals['subtotal'] + $cart_totals['shipping_total'];
+		public function get_description() {
+			// Set custom description to display in checkout
+			if ( isset( WC()->cart ) ) {
 
-                $response2 = $this->_client->get_payment_methods(round($cart_total, 2));
-				$paymentOptionsResponse = $this-> _client->get_leasing_payment_options(round($cart_total, 2) );
+				$cart_totals = WC()->cart->get_totals();
+				$cart_total  = $cart_totals['subtotal'] + $cart_totals['shipping_total'];
+
+				$response2              = $this->_client->get_payment_methods( round( $cart_total, 2 ) );
+				$paymentOptionsResponse = $this->_client->get_leasing_payment_options( round( $cart_total, 2 ) );
 				if ( isset( $paymentOptionsResponse ) === false || 200 !== $paymentOptionsResponse->statusCode ) {
 					return;
 				}
 
-                if (isset($response2) && 200 === $response2->statusCode) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
+				if (isset($response2) && 200 === $response2->statusCode) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
 
-                    foreach ($response2->data['payment_methods'] as $key => $value) {
-                        if ('leasing' === $value['id'] || 'rental' === $value['id']) {
-							$desc ='';
-                            if ('leasing' === $value['id']) {
-                                $desc = '<p><b>' . __('Finance your purchase with Wasa Kredit leasing', 'wasa-kredit-checkout') . '</b><br>';
-                            }
-                            if ('rental' === $value['id']) {
-                                $desc = '<p><b>' . __('Finance your purchase with Wasa Kredit rental', 'wasa-kredit-checkout') . '</b><br>';
-                            }
-                            $desc .= '<br>';
+					foreach ( $response2->data['payment_methods'] as $key => $value ) {
+						if ( 'leasing' === $value['id'] || 'rental' === $value['id'] ) {
+							$desc = '';
+							if ( 'leasing' === $value['id'] ) {
+								$desc = '<p><b>' . __( 'Finance your purchase with Wasa Kredit leasing', 'wasa-kredit-checkout' ) . '</b><br>';
+							}
+							if ( 'rental' === $value['id'] ) {
+								$desc = '<p><b>' . __( 'Finance your purchase with Wasa Kredit rental', 'wasa-kredit-checkout' ) . '</b><br>';
+							}
+							$desc .= '<br>';
 
 							$contract_lengths = $paymentOptionsResponse->data['contract_lengths'];
 
-                            foreach ($contract_lengths as $key3 => $value3) {
-                                $months = $value3['contract_length'];
-                                $amount = $value3['monthly_cost']['amount'];
+							foreach ( $contract_lengths as $key3 => $value3 ) {
+								$months = $value3['contract_length'];
+								$amount = $value3['monthly_cost']['amount'];
 
-                                // translators: %s placeholder is a number to display number of months
-                                $desc_months = sprintf(__(' for %s months.', 'wasa-kredit-checkout'), $months);
-                                $desc_item = '<br>' . wc_price($amount, array('decimals' => 0)) . __('/month', 'wasa-kredit-checkout') . $desc_months;
-                                $desc .= $desc_item;
-                            }
+								// translators: %s placeholder is a number to display number of months
+								$desc_months = sprintf( __( ' for %s months.', 'wasa-kredit-checkout' ), $months );
+								$desc_item   = '<br>' . wc_price( $amount, array( 'decimals' => 0 ) ) . __( '/month', 'wasa-kredit-checkout' ) . $desc_months;
+								$desc       .= $desc_item;
+							}
 
-                            $desc .= '<br><br>';
-                            $desc .= __('Proceed to select your monthly cost.', 'wasa-kredit-checkout');
-                        }
-                    }
-                    $desc .= '</p>';
-                    return $desc;
-                }
-            }
-            return __('Financing with Wasa Kredit Checkout', 'wasa-kredit-checkout');
-        }
-    }
+							$desc .= '<br><br>';
+							$desc .= __( 'Proceed to select your monthly cost.', 'wasa-kredit-checkout' );
+						}
+					}
+					$desc .= '</p>';
+					return $desc;
+				}
+			}
+			return __( 'Financing with Wasa Kredit Checkout', 'wasa-kredit-checkout' );
+		}
+	}
 }
