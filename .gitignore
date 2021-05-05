@@ -17,3 +17,4 @@ npm_debug.log
 wp-cli.yml
 wp-tests-config.php
 .DS_Store
+*.log
