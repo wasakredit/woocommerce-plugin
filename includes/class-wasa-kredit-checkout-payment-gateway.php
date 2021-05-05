@@ -156,6 +156,18 @@ function init_wasa_kredit_gateway() {
 						'wasa-kredit-checkout'
 					),
 				),
+				'logging'                                  => array(
+					'title'       => __( 'Logging', 'wasa-kredit-checkout' ),
+					'type'        => 'select',
+					'label'       => __( 'Enable logging', 'wasa-kredit-checkout' ),
+					'default'     => 'checkout',
+					'description' => __( 'Save request data to the WooCommerce System Status log.', 'wasa-kredit-checkout' ),
+					'options'     => array(
+						'monthly_cost' => __( 'Log monthly cost requests', 'wasa-kredit-checkout' ),
+						'checkout'     => __( 'Log checkout requests', 'wasa-kredit-checkout' ),
+						'all'          => __( 'Log both monthly cost & checkout requests', 'wasa-kredit-checkout' ),
+					),
+				),
 				'add_redirect_to_standard_checkout_widget' => array(
 					'title'       => __( 'Advanced', 'wasa-kredit-checkout' ),
 					'type'        => 'checkbox',

@@ -76,6 +76,9 @@ class Wasa_Kredit_Checkout {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) .
 			'includes/class-wasa-kredit-checkout-sdk-helper.php';
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) .
+			'includes/class-wasa-kredit-logger.php';
+
 		$this->loader = new Wasa_Kredit_Checkout_Loader();
 	}
 
