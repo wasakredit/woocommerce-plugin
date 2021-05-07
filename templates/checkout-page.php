@@ -119,6 +119,14 @@ $payload = array(
 // Get answer from API
 $response = $client->create_checkout( $payload );
 
+// Logging.
+$log      = Wasa_Kredit_Logger::format_log( '', 'POST', 'create_checkout', $payload, '', stripslashes_deep( (array) $response ), $response->statusCode ); // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
+$level = 'info';
+if ( $response->statusCode < 200 || $response->statusCode > 299 ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
+	$level = 'error';
+}
+Wasa_Kredit_Logger::log( $log, $level, 'checkout' );
+
 get_header();
 ?>
 

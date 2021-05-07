@@ -163,6 +163,7 @@ function init_wasa_kredit_gateway() {
 					'default'     => 'checkout',
 					'description' => __( 'Save request data to the WooCommerce System Status log.', 'wasa-kredit-checkout' ),
 					'options'     => array(
+						'no'           => __( 'Do not log requests (except errors)', 'wasa-kredit-checkout' ),
 						'monthly_cost' => __( 'Log monthly cost requests', 'wasa-kredit-checkout' ),
 						'checkout'     => __( 'Log checkout requests', 'wasa-kredit-checkout' ),
 						'all'          => __( 'Log both monthly cost & checkout requests', 'wasa-kredit-checkout' ),

@@ -25,9 +25,9 @@ class Wasa_Kredit_Logger {
 	 *
 	 * @param string $data The data string.
 	 */
-	public static function log( $data, $level = 'info', $type = 'checkout' ) {
+	public static function log( $data, $level = 'info', $log_type = 'checkout' ) {
 		$wasa_kredit_settings = get_option( 'wasa_kredit_settings' );
-		if ( ( 'all' === $wasa_kredit_settings['logging'] || $type === $wasa_kredit_settings['logging'] ) || 'error' === $level ) {
+		if ( ( 'all' === $wasa_kredit_settings['logging'] || $log_type === $wasa_kredit_settings['logging'] ) || 'error' === $level ) {
 			$message = self::format_data( $data );
 			if ( empty( self::$log ) ) {
 				self::$log = new WC_Logger();
