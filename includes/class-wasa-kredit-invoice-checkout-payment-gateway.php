@@ -27,7 +27,7 @@ function init_wasa_kredit_invoice_gateway() {
 
 	class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 		public function __construct() {
-			// Setup payment gateway properties
+			// Setup payment gateway properties.
 			$this->id                 = 'wasa_kredit_invoice';
 			$this->plugin_id          = 'wasa_kredit_invoice';
 			$this->name               = 'Wasa Kredit Faktura';
@@ -37,21 +37,19 @@ function init_wasa_kredit_invoice_gateway() {
 			$this->method_description = 'Use to pay with Wasa Kredit Faktura Checkout.';
 			$this->order_button_text  = __( 'Proceed', 'wasa-kredit-checkout' );
 			$this->selected_currency  = get_woocommerce_currency();
-			// Where to store settings in DB
+			// Where to store settings in DB.
 			$this->options_key = 'wasa_kredit_settings';
 
 			$this->form_fields = $this->init_form_fields();
 			$this->init_settings();
 
-			// Setup dynamic gateway properties
-			if ( $this->settings['invoice_enabled'] ) {
-				$this->enabled = $this->settings['invoice_enabled'];
-			}
+			// Setup dynamic gateway properties.
+			$this->enabled = isset( $this->settings['invoice_enabled'] ) ? $this->settings['invoice_enabled'] : 'no';
 
-			// Connect to WASA PHP SDK
+			// Connect to WASA PHP SDK.
 			$this->_client = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
 
-			// Hooks
+			// Hooks.
 			add_action(
 				'woocommerce_update_options_payment_gateways_' . $this->id,
 				array( $this, 'process_admin_options' )
@@ -82,7 +80,7 @@ function init_wasa_kredit_invoice_gateway() {
 						'Enable Wasa Kredit Invoice Checkout',
 						'wasa-kredit-checkout'
 					),
-					'default' => 'yes',
+					'default' => 'no',
 				),
 				'partner_id'                               => array(
 					'title'       => __( 'Partner ID', 'wasa-kredit-checkout' ),
