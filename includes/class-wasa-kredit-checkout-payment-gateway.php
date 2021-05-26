@@ -278,29 +278,6 @@ function init_wasa_kredit_gateway() {
 		}
 
 		public function get_title() {
-			// Set custom title to payment to display in checkout
-			if ( isset( WC()->cart ) ) {
-				$cart_totals = WC()->cart->get_totals();
-
-				$total_costs = $cart_totals['subtotal'] + $cart_totals['shipping_total'];
-
-				$payload['items'][] = array(
-					'financed_price' => array(
-						'amount'   => $total_costs,
-						'currency' => 'SEK',
-					),
-					'product_id'     => 'CART_VALUE',
-				);
-
-				$monthly_cost_response = $this->_client->calculate_monthly_cost( $payload );
-
-				if (isset($monthly_cost_response) && 200 === $monthly_cost_response->statusCode) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
-					$monthly_cost = $monthly_cost_response->data['monthly_costs'][0]['monthly_cost']['amount'];
-
-					return __( 'Financing', 'wasa-kredit-checkout' ) . ' ' . wc_price( $monthly_cost, array( 'decimals' => 0 ) ) . __( '/month', 'wasa-kredit-checkout' );
-				}
-			}
-
 			return __( 'Financing with Wasa Kredit Checkout', 'wasa-kredit-checkout' );
 		}
 
