@@ -1,0 +1,15 @@
+/.wordpress-org
+/.git
+/.github
+/.vscode
+/node_modules
+.distignore
+.gitignore
+composer.json
+composer.lock
+LICENSE
+readme.md
+README.md
+gulpfile.js
+package.json
+package-lock.json
