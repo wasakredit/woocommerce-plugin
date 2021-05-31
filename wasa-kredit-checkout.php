@@ -40,6 +40,7 @@ if ( ! defined( 'WPINC' ) ) {
  */
 
 define( 'WASA_KREDIT_CHECKOUT_VERSION', '1.3.0' );
+define( 'WASA_KREDIT_CHECKOUT_PLUGIN_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 
 /**
  * The code that runs during plugin activation.
