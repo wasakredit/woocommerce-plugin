@@ -79,7 +79,13 @@ class Wasa_Kredit_Checkout_Product_Widget {
 			return;
 		}
 
-		$price    = $product->get_price();
+		// $price    = $product->get_price();
+		if ( $product->is_type( 'variable' ) ) {
+			$price = $product->get_variation_price( 'min' );
+		} else {
+			$price = wc_get_price_to_display( $product );
+		}
+
 		$response = $this->_client->get_monthly_cost_widget( $price );
 		$log      = Wasa_Kredit_Logger::format_log( '', 'GET', 'get_monthly_cost_widget', 'Price: ' . $price, '', stripslashes_deep( (array) $response ), $response->statusCode ); // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
 		$level    = 'info';
