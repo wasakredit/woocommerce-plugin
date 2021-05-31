@@ -1,0 +1,50 @@
+{
+    "packages": [
+        {
+            "name": "wasa/client-php-sdk",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wasakredit/php-checkout-sdk.git",
+                "reference": "5e36a430694e7f1d3d73c72968ee5d960744b306"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wasakredit/php-checkout-sdk/zipball/5e36a430694e7f1d3d73c72968ee5d960744b306",
+                "reference": "5e36a430694e7f1d3d73c72968ee5d960744b306",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*"
+            },
+            "require-dev": {
+                "phpdocumentor/phpdocumentor": "2.*",
+                "phpunit/phpunit": "^5.7"
+            },
+            "time": "2021-03-17T11:58:38+00:00",
+            "default-branch": true,
+            "type": "library",
+            "installation-source": "source",
+            "authors": [
+                {
+                    "name": "Jim Skogman",
+                    "email": "jim.skogman@starrepublic.com"
+                },
+                {
+                    "name": "Conrad Ohlsson",
+                    "email": "conrad.ohlsson@starrepublic.com"
+                }
+            ],
+            "description": "PHP SDK for communicating with the Wasa Leasing API",
+            "support": {
+                "source": "https://github.com/wasakredit/php-checkout-sdk/tree/v3.0",
+                "issues": "https://github.com/wasakredit/php-checkout-sdk/issues"
+            },
+            "install-path": "../wasa/client-php-sdk"
+        }
+    ],
+    "dev": true,
+    "dev-package-names": []
+}
