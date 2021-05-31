@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit(); // Exit if accessed directly
 }
 
-require_once plugin_dir_path( __FILE__ ) . '../vendor/wasa/client-php-sdk/Wasa.php';
+require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/lib/client-php-sdk/Wasa.php';
 
 add_action( 'plugins_loaded', 'init_wasa_kredit_invoice_gateway' );
 add_action( 'woocommerce_before_checkout_form', 'create_redirect_to_standard_checkout_view', 10, 1 );
