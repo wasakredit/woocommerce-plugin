@@ -4,7 +4,6 @@
 /build/dist/
 /build/logs/
 /docs/_build/
-/vendor/
 /.settings/
 .project
 .buildpath
