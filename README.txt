@@ -2,10 +2,12 @@
 Contributors: aos06wasakredit
 Donate link: https://developer.wasakredit.se
 Tags: woocommerce, ecommerce, e-commerce, checkout
-Requires at least: 3.0.1
-Tested up to: 5.5
+Requires at least: 4.0.0
+Tested up to: 5.7.2
 Requires PHP: 5.7
-Stable tag: 1.3
+WC requires at least: 4.0.0
+WC tested up to: 5.3.0
+Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,7 +56,7 @@ In the settings for Wasa's checkout, there are two new settings with the heading
 
 == Changelog ==
 
-= 2021-05-31    - version 2.0.0 =
+= 2021-06-01    - version 2.0.0 =
 * Support for new v4 api.
 * Plugin now supports invoice payments.
 * Adds test environment endpoints + settings to add test mode merchant credentials.
