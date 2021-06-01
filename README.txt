@@ -2,10 +2,12 @@
 Contributors: aos06wasakredit
 Donate link: https://developer.wasakredit.se
 Tags: woocommerce, ecommerce, e-commerce, checkout
-Requires at least: 3.0.1
-Tested up to: 5.5
+Requires at least: 4.0.0
+Tested up to: 5.7.2
 Requires PHP: 5.7
-Stable tag: 1.3
+WC requires at least: 4.0.0
+WC tested up to: 5.3.0
+Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,63 +56,67 @@ In the settings for Wasa's checkout, there are two new settings with the heading
 
 == Changelog ==
 
-= 1.0 =
-* First version of the Wasa Kredit Checkout plugin.
-* The plugin is based on Wasa Kredit PHP SDK v2.2.
+= 2021-06-01    - version 2.0.0 =
+* Support for new v4 api.
+* Plugin now supports invoice payments.
+* Adds test environment endpoints + settings to add test mode merchant credentials.
+* Fixed an issue where status updates would fail to change status of woocommerce orders if received during checkout.
+* Removes monthly cost price printed together with payment method name in WooCommerce order.
+* Adds request logging via WooCommerce logger (plus setting to turn it on/off).
+
+= 1.2.11 =
+* Fix stopped showing throwing error when leasing price cannot be displayed
+
+= 1.2.10 =
+* Fixed missing leasing price in woocommerce shortcode [products]
+
+= 1.2.9 =
+* Fixed incorrect order status-pingback handling. 
+
+= 1.2.8 =
+* Improved product listing performance.
+
+= 1.2.7 =
+* Fix incorrect shipping cost calculations
+
+= 1.2.6 =
+* Fix problem with null reference when navigating certain admin pages
+* Secure possible rounding issue when create_checkout is called with to many decimals.
+
+= 1.2.5 =
+* Fix a rounding issue with product list widget, when sending to many decimals to the api
+* Fix a possible rounding issue in checkout by preventing to many decimals in api call when displaying possible financing options
+
+= 1.2.4 =
+* Fix of shortcode for product widget.
+
+= 1.2.3 =
+* Replace Monthly cost widget with updated look and feel
+
+= 1.2.2.1 =
+* Fixed issue with TAX not being fetched properly
+* Fixed Php-notice when using new redirect widget.
+
+= 1.2.2 =
+* Added redirect to standard checkout widget
+* Added admin settings for new redirect widget
+
+= 1.2.1 =
+* The client_secret field is now able to contain special characters in the database
+* Added missing domain to translation texts
+
+= 1.2 =
+* The plugin is based on Wasa Kredit PHP SDK v2.4.
 
 = 1.1 =
 * The plugin is based on Wasa Kredit PHP SDK v2.3.
 * Description now displays possible financing options.
 * Added integration for WooCommerce product Add-Ons.
 
-= 1.2 =
-* The plugin is based on Wasa Kredit PHP SDK v2.4.
+= 1.0 =
+* First version of the Wasa Kredit Checkout plugin.
+* The plugin is based on Wasa Kredit PHP SDK v2.2.
 
-= 1.2.1 =
-* The client_secret field is now able to contain special characters in the database
-* Added missing domain to translation texts
-
-= 1.2.2 =
-* Added redirect to standard checkout widget
-* Added admin settings for new redirect widget
-
-= 1.2.2.1 =
-* Fixed issue with TAX not being fetched properly
-* Fixed Php-notice when using new redirect widget
-
-= 1.2.3 =
-* Replace Monthly cost widget with updated look and feel
-
-= 1.2.4 =
-* Fix of shortcode for product widget
-
-= 1.2.5 =
-* Fix a rounding issue with product list widget, when sending to many decimals to the api
-* Fix a possible rounding issue in checkout by preventing to many decimals in api call when displaying possible financing options
-
-= 1.2.6 =
-* Fix problem with null reference when navigating certain admin pages
-* Secure possible rounding issue when create_checkout is called with to many decimals
-
-= 1.2.7 =
-* Fix incorrect shipping cost calculations
-
-= 1.2.8 =
-* Improved product listing performance.
-
-= 1.2.9 =
-* Fixed incorrect order status-pingback handling. 
-
-= 1.2.10 =
-* Fixed missing leasing price in woocommerce shortcode [products]
-
-= 1.2.11 =
-* Fix stopped showing throwing error when leasing price cannot be displayed
-
-= 1.3 =
-* Support for new v4 api
-* Fixed an issue where status updates would fail to change status of woocommerce orders if received during checkout
-* Plugin now supports invoice payments
 
 == Upgrade Notice ==
 

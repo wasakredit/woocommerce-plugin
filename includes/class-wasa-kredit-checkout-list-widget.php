@@ -3,14 +3,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-require_once plugin_dir_path( __FILE__ ) . '../vendor/wasa/client-php-sdk/Wasa.php';
+require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/lib/client-php-sdk/Wasa.php';
 
 class Wasa_Kredit_Checkout_List_Widget {
 	public function __construct() {
 		$settings = get_option( 'wasa_kredit_settings' );
 
 		// Connect to WASA PHP SDK
-        $this->_client = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
+		$this->_client = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
 
 		// Hooks
 		add_action(
@@ -31,10 +31,13 @@ class Wasa_Kredit_Checkout_List_Widget {
 			9
 		);
 
-		add_shortcode( 'wasa_kredit_list_widget', array(
-			$this,
-			'display_leasing_price_per_product',
-		));
+		add_shortcode(
+			'wasa_kredit_list_widget',
+			array(
+				$this,
+				'display_leasing_price_per_product',
+			)
+		);
 	}
 
 	public function display_leasing_price_per_product() {
@@ -50,8 +53,8 @@ class Wasa_Kredit_Checkout_List_Widget {
 
 		$monthly_cost = 0;
 
-		if (isset( $GLOBALS['product_leasing_prices'] ) &&
-            isset( $GLOBALS['product_leasing_prices'][ $product->get_id() ])) {
+		if ( isset( $GLOBALS['product_leasing_prices'] ) &&
+			isset( $GLOBALS['product_leasing_prices'][ $product->get_id() ] ) ) {
 			$monthly_cost = $GLOBALS['product_leasing_prices'][ $product->get_id() ];
 		}
 
@@ -75,12 +78,12 @@ class Wasa_Kredit_Checkout_List_Widget {
 			return;
 		}
 
-		$payload['items'] = [];
+		$payload['items'] = array();
 		// Payload will contain all products with price, currency and id
 		$current_currency = get_woocommerce_currency();
 
-		global $wp_query;		
-		$loop =  $wp_query;	
+		global $wp_query;
+		$loop = $wp_query;
 
 		// Loop through all products
 		while ( $loop->have_posts() ) :
@@ -90,7 +93,7 @@ class Wasa_Kredit_Checkout_List_Widget {
 			// Add this product to payload
 			$payload['items'][] = array(
 				'financed_price' => array(
-					'amount'   => round($product->get_price(), 2),
+					'amount'   => round( $product->get_price(), 2 ),
 					'currency' => $current_currency,
 				),
 				'product_id'     => $product->get_id(),
@@ -99,13 +102,11 @@ class Wasa_Kredit_Checkout_List_Widget {
 
 		// Get resposne from API with all products defined in $payload
 		$response      = $this->_client->calculate_monthly_cost( $payload );
-		$monthly_costs = [];
+		$monthly_costs = array();
 
 		if ( isset( $response ) && 200 === $response->statusCode ) {
 			foreach ( $response->data['monthly_costs'] as $current_product ) {
-				$monthly_costs[
-					$current_product['product_id']
-				] = $current_product['monthly_cost']['amount'];
+				$monthly_costs[ $current_product['product_id'] ] = $current_product['monthly_cost']['amount'];
 			}
 
 			// Save prices to global variable to access it from template
@@ -113,7 +114,7 @@ class Wasa_Kredit_Checkout_List_Widget {
 		}
 	}
 
-	public function save_product_prices_shortcodes($args) {
+	public function save_product_prices_shortcodes( $args ) {
 		// Collects all financing costs for all shown products
 		// Store as global variable to be accessed in display_leasing_price_per_product()
 		$settings = get_option( 'wasa_kredit_settings' );
@@ -122,30 +123,30 @@ class Wasa_Kredit_Checkout_List_Widget {
 			return;
 		}
 
-		$payload['items'] = [];
+		$payload['items'] = array();
 		// Payload will contain all products with price, currency and id
 		$current_currency = get_woocommerce_currency();
 
 		$args = array(
-		    'post_type' => 'product',
-		    'cat' => $args['category'],
-		    'page' => $args['page'],
-		    'orderby' => $args['orderby'],
-		    'order' => $args['order'],
-		    'posts_per_page' => $args['limit'],
-		    'tag' => $args['tag'],
+			'post_type'      => 'product',
+			'cat'            => $args['category'],
+			'page'           => $args['page'],
+			'orderby'        => $args['orderby'],
+			'order'          => $args['order'],
+			'posts_per_page' => $args['limit'],
+			'tag'            => $args['tag'],
 		);
 
-		if ( $args['page'] > 1 && $args['limit'] != -1) {
+		if ( $args['page'] > 1 && $args['limit'] != -1 ) {
 			$args['paged'] = true;
 		}
 
-		if (!empty($args['ids'])) {
-			$args['post__in'] = array_map( 'trim', explode( ',', $args['ids'] ) );	
+		if ( ! empty( $args['ids'] ) ) {
+			$args['post__in'] = array_map( 'trim', explode( ',', $args['ids'] ) );
 		}
 
 		$wp_query = new WP_Query( $args );
-		$loop =  $wp_query;	
+		$loop     = $wp_query;
 
 		// Loop through all products
 		while ( $loop->have_posts() ) :
@@ -155,7 +156,7 @@ class Wasa_Kredit_Checkout_List_Widget {
 			// Add this product to payload
 			$payload['items'][] = array(
 				'financed_price' => array(
-					'amount'   => round($product->get_price(), 2),
+					'amount'   => round( $product->get_price(), 2 ),
 					'currency' => $current_currency,
 				),
 				'product_id'     => $product->get_id(),
@@ -166,13 +167,11 @@ class Wasa_Kredit_Checkout_List_Widget {
 
 		// Get resposne from API with all products defined in $payload
 		$response      = $this->_client->calculate_monthly_cost( $payload );
-		$monthly_costs = [];
+		$monthly_costs = array();
 
 		if ( isset( $response ) && 200 === $response->statusCode ) {
 			foreach ( $response->data['monthly_costs'] as $current_product ) {
-				$monthly_costs[
-					$current_product['product_id']
-				] = $current_product['monthly_cost']['amount'];
+				$monthly_costs[ $current_product['product_id'] ] = $current_product['monthly_cost']['amount'];
 			}
 
 			// Save prices to global variable to access it from template

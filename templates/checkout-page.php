@@ -46,22 +46,22 @@ foreach ( $cart_items as $cart_item_key => $cart_item ) {
 		$cart_item_key
 	);
 
-  $tax_rates = WC_Tax::get_rates( $product->get_tax_class() );
+	$tax_rates = WC_Tax::get_rates( $product->get_tax_class() );
 
-  if ( !empty( $tax_rates ) ) {
-    $tax_rate = reset( $tax_rates )['rate'];
-  } else {
-    $tax_rate = "0";
-  }
+	if ( ! empty( $tax_rates ) ) {
+		$tax_rate = reset( $tax_rates )['rate'];
+	} else {
+		$tax_rate = '0';
+	}
 
-  $id              = $cart_item['product_id'];
-  $name            = $product->get_name();
-  $price_inc_vat   = round(wc_get_price_including_tax( $product ), 2);
-  $price_ex_vat    = round(wc_get_price_excluding_tax( $product ), 2);
-  $vat_percentage  = round($tax_rate);
-  $price_vat       = round(($price_inc_vat - $price_ex_vat), 2);
-  $shipping_ex_vat = round($shipping_cost, 2);
-  $quantity        = $cart_item['quantity'];
+	$id              = $cart_item['product_id'];
+	$name            = $product->get_name();
+	$price_inc_vat   = round( wc_get_price_including_tax( $product ), 2 );
+	$price_ex_vat    = round( wc_get_price_excluding_tax( $product ), 2 );
+	$vat_percentage  = round( $tax_rate );
+	$price_vat       = round( ( $price_inc_vat - $price_ex_vat ), 2 );
+	$shipping_ex_vat = round( $shipping_cost, 2 );
+	$quantity        = $cart_item['quantity'];
 
 	$wasa_cart_items[] = array(
 		'product_id'     => $id,
@@ -118,6 +118,14 @@ $payload = array(
 
 // Get answer from API
 $response = $client->create_checkout( $payload );
+
+// Logging.
+$log      = Wasa_Kredit_Logger::format_log( '', 'POST', 'create_checkout', $payload, '', stripslashes_deep( (array) $response ), $response->statusCode ); // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
+$level = 'info';
+if ( $response->statusCode < 200 || $response->statusCode > 299 ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
+	$level = 'error';
+}
+Wasa_Kredit_Logger::log( $log, $level, 'checkout' );
 
 get_header();
 ?>
