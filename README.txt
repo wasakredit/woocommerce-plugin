@@ -4,7 +4,7 @@ Donate link: https://developer.wasakredit.se
 Tags: woocommerce, ecommerce, e-commerce, checkout
 Requires at least: 4.0.0
 Tested up to: 5.7.2
-Requires PHP: 5.7
+Requires PHP: 7.0
 WC requires at least: 4.0.0
 WC tested up to: 5.3.0
 Stable tag: trunk
