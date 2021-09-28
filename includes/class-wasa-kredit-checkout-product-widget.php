@@ -69,7 +69,7 @@ class Wasa_Kredit_Checkout_Product_Widget {
 	}
 
 	public function wasa_kredit_product_widget() {
-		echo $this->get_product_widget(); // @codingStandardsIgnoreLine - Should output html from our Backend
+		return $this->get_product_widget(); // @codingStandardsIgnoreLine - Should output html from our Backend
 	}
 
 	private function get_product_widget() {
