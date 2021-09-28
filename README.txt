@@ -3,10 +3,10 @@ Contributors: aos06wasakredit
 Donate link: https://developer.wasakredit.se
 Tags: woocommerce, ecommerce, e-commerce, checkout
 Requires at least: 4.0.0
-Tested up to: 5.7.2
+Tested up to: 5.8.1
 Requires PHP: 7.0
 WC requires at least: 4.0.0
-WC tested up to: 5.3.0
+WC tested up to: 5.7.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -55,6 +55,12 @@ In the settings for Wasa's checkout, there are two new settings with the heading
 2. In the text field below, enter the path to the default checkout. For example, in my checkout, it is the "checkout". If it is not the same for you, you can easily get it by activating the standard checkout and copying the uri. Dy activates it at Settings> Advanced> Page Settings> Checkout Page> "Checkout".
 
 == Changelog ==
+
+= 2021-09-28    - version 2.0.1 =
+* Tweak         - Adds logging to cancel_order & ship_order requests.
+* Tweak         - Bumped required PHP version to 7.0.
+* Fixed         - Use return instead of echo when printing wasa_kredit_product_widget shortcode.
+
 
 = 2021-06-01    - version 2.0.0 =
 * Support for new v4 api.
