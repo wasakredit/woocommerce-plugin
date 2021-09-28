@@ -175,9 +175,25 @@ class Wasa_Kredit_Checkout_API {
 		if ( $order_status === 'shipped' ) {
 			$response = $client->ship_order( $transaction_id );
 
+			// Logging.
+			$log      = Wasa_Kredit_Logger::format_log( $transaction_id, 'POST', 'ship_order', $order_id, '', stripslashes_deep( (array) $response ), $response->statusCode ); // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
+			$level = 'info';
+			if ( $response->statusCode < 200 || $response->statusCode > 299 ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
+				$level = 'error';
+			}
+			Wasa_Kredit_Logger::log( $log, $level, 'checkout' );
+
 		}
 		if ( $order_status === 'canceled' ) {
 			$response = $client->cancel_order( $transaction_id );
+
+			// Logging.
+			$log      = Wasa_Kredit_Logger::format_log( $transaction_id, 'POST', 'cancel_order', $order_id, '', stripslashes_deep( (array) $response ), $response->statusCode ); // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
+			$level = 'info';
+			if ( $response->statusCode < 200 || $response->statusCode > 299 ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
+				$level = 'error';
+			}
+			Wasa_Kredit_Logger::log( $log, $level, 'checkout' );
 		}
 
         if (200 !== $response->statusCode) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
