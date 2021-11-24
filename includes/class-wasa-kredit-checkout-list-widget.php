@@ -93,7 +93,7 @@ class Wasa_Kredit_Checkout_List_Widget {
 			// Add this product to payload
 			$payload['items'][] = array(
 				'financed_price' => array(
-					'amount'   => round( $product->get_price(), 2 ),
+					'amount'   => number_format( $product->get_price(), 2, '.', '' ),
 					'currency' => $current_currency,
 				),
 				'product_id'     => $product->get_id(),
@@ -156,7 +156,7 @@ class Wasa_Kredit_Checkout_List_Widget {
 			// Add this product to payload
 			$payload['items'][] = array(
 				'financed_price' => array(
-					'amount'   => round( $product->get_price(), 2 ),
+					'amount'   => number_format( $product->get_price(), 2, '.', '' ),
 					'currency' => $current_currency,
 				),
 				'product_id'     => $product->get_id(),

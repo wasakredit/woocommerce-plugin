@@ -288,8 +288,8 @@ function init_wasa_kredit_gateway() {
 				$cart_totals = WC()->cart->get_totals();
 				$cart_total  = $cart_totals['subtotal'] + $cart_totals['shipping_total'];
 
-				$response2              = $this->_client->get_payment_methods( round( $cart_total, 2 ) );
-				$paymentOptionsResponse = $this->_client->get_leasing_payment_options( round( $cart_total, 2 ) );
+				$response2              = $this->_client->get_payment_methods( number_format( $cart_total, 2, '.', '' ) );
+				$paymentOptionsResponse = $this->_client->get_leasing_payment_options( number_format( $cart_total, 2, '.', '' ) );
 				if ( isset( $paymentOptionsResponse ) === false || 200 !== $paymentOptionsResponse->statusCode ) {
 					return;
 				}

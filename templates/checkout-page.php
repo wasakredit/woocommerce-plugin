@@ -54,13 +54,14 @@ foreach ( $cart_items as $cart_item_key => $cart_item ) {
 		$tax_rate = '0';
 	}
 
-	$id              = $cart_item['product_id'];
-	$name            = $product->get_name();
-	$price_inc_vat   = round( wc_get_price_including_tax( $product ), 2 );
-	$price_ex_vat    = round( wc_get_price_excluding_tax( $product ), 2 );
+	$id   = $cart_item['product_id'];
+	$name = $product->get_name();
+
+	$price_inc_vat   = number_format( wc_get_price_including_tax( $product ), 2, '.', '' );
+	$price_ex_vat    = number_format( wc_get_price_excluding_tax( $product ), 2, '.', '' );
 	$vat_percentage  = round( $tax_rate );
-	$price_vat       = round( ( $price_inc_vat - $price_ex_vat ), 2 );
-	$shipping_ex_vat = round( $shipping_cost, 2 );
+	$price_vat       = number_format( $price_inc_vat - $price_ex_vat, 2, '.', '' );
+	$shipping_ex_vat = number_format( $shipping_cost, 2, '.', '' );
 	$quantity        = $cart_item['quantity'];
 
 	$wasa_cart_items[] = array(
