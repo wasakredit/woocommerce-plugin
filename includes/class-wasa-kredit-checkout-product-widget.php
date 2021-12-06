@@ -7,7 +7,8 @@ require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/lib/client-php-sdk/Wasa.php';
 
 class Wasa_Kredit_Checkout_Product_Widget {
 	public function __construct() {
-		$this->settings = get_option( 'wasa_kredit_settings' );
+		$this->settings      = get_option( 'wasa_kredit_settings' );
+		$this->widget_format = isset( $this->settings['widget_format'] ) ? $this->settings['widget_format'] : 'small';
 
 		$this->_client = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
 
@@ -86,7 +87,7 @@ class Wasa_Kredit_Checkout_Product_Widget {
 			$price = wc_get_price_to_display( $product );
 		}
 
-		$response = $this->_client->get_monthly_cost_widget( $price );
+		$response = $this->_client->get_monthly_cost_widget( $price, $this->widget_format );
 		$log      = Wasa_Kredit_Logger::format_log( '', 'GET', 'get_monthly_cost_widget', 'Price: ' . $price, '', stripslashes_deep( (array) $response ), $response->statusCode ); // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
 		$level    = 'info';
 		if ( $response->statusCode < 200 || $response->statusCode > 299 ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing

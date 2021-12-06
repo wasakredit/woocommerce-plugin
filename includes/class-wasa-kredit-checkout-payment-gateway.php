@@ -110,6 +110,19 @@ function init_wasa_kredit_gateway() {
 					),
 					'default'     => 'yes',
 				),
+				'widget_format'                            => array(
+					'title'       => __( 'Widget format', 'wasa-kredit-checkout' ),
+					'type'        => 'select',
+					'label'       => __( 'The design of the montly cost widget', 'wasa-kredit-checkout' ),
+					'default'     => 'small',
+					'description' => __( 'Select the design of the monthly cost widget', 'wasa-kredit-checkout' ),
+					'options'     => array(
+						'small'         => __( 'Small', 'wasa-kredit-checkout' ),
+						'small-no-icon' => __( 'Small with no icons', 'wasa-kredit-checkout' ),
+						'large'         => __( 'Large', 'wasa-kredit-checkout' ),
+						'large-no-icon' => __( 'Large with no icons', 'wasa-kredit-checkout' ),
+					),
+				),
 				'partner_id'                               => array(
 					'title'       => __( 'Partner ID', 'wasa-kredit-checkout' ),
 					'type'        => 'text',
