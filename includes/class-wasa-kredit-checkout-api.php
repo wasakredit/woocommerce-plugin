@@ -158,14 +158,23 @@ class Wasa_Kredit_Checkout_API {
 			return;
 		}
 
+		// If this order wasn't created using Wasa payment methods, bail.
+		if ( ! in_array( $order->get_payment_method(), array( 'wasa_kredit', 'wasa_kredit_invoice' ), true ) ) {
+			return;
+		}
+
+		// Check if the order has been paid, otherwise bail.
+		if ( empty( $order->get_date_paid() ) ) {
+			return;
+		}
+
 		$transaction_id = $order->get_transaction_id();
 
 		if ( empty( $transaction_id ) ) {
 			return;
 		}
 
-		// Connect to WASA PHP SDK
-
+		// Connect to WASA PHP SDK.
 		$client      = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
 		$wasa_status = $client->get_order_status( $transaction_id );
 		if ( $order_status === $wasa_status->data['status'] ) {
