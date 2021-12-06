@@ -80,9 +80,9 @@ foreach ( $cart_items as $cart_item_key => $cart_item ) {
 			'quantity'             => $quantity,
 			'vat_percentage'       => $vat_percentage,
 			'vat_amount'           => apply_currency( $price_vat ),
-			'total_price_ex_vat'   => apply_currency( $price_ex_vat * $quantity ),
-			'total_price_incl_vat' => apply_currency( $price_inc_vat * $quantity ),
-			'total_vat'            => apply_currency( $price_vat * $quantity ),
+			'total_price_ex_vat'   => apply_currency( number_format( $price_ex_vat * $quantity, 2, '.', '' ) ),
+			'total_price_incl_vat' => apply_currency( number_format( $price_inc_vat * $quantity, 2, '.', '' ) ),
+			'total_vat'            => apply_currency( number_format( $price_vat * $quantity, 2, '.', '' ) ),
 		)
 	);
 }
@@ -171,7 +171,7 @@ $payload = array(
 	'ping_url'                  => get_rest_url( null, 'wasa-kredit-checkout/v1/update_order_status' ),
 	'total_price_incl_vat'      => apply_currency( $order_data['total'] ),
 	'total_price_ex_vat'        => apply_currency( number_format( ( $order_data['total'] - $order_data['total_tax'] ), 2, '.', '' ) ),
-	'total_vat'                 => apply_currency( $order_data['total_tax'] ),
+	'total_vat'                 => apply_currency( number_format( $order_data['total_tax'], 2, '.', '' ) ),
 );
 // Get answer from API
 $response = $client->create_invoice_checkout( $payload );
