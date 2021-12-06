@@ -123,6 +123,15 @@ function init_wasa_kredit_gateway() {
 						'large-no-icon' => __( 'Large with no icons', 'wasa-kredit-checkout' ),
 					),
 				),
+				'widget_lower_threshold'                   => array(
+					'title'       => __( 'Widget lower threshold', 'wasa-kredit-checkout' ),
+					'type'        => 'number',
+					'description' => __(
+						'Only display the monthly cost widget if the product price is higher thant the entered number. Leave blank to disable this feature.',
+						'wasa-kredit-checkout'
+					),
+					'default'     => '',
+				),
 				'partner_id'                               => array(
 					'title'       => __( 'Partner ID', 'wasa-kredit-checkout' ),
 					'type'        => 'text',

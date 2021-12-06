@@ -7,8 +7,9 @@ require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/lib/client-php-sdk/Wasa.php';
 
 class Wasa_Kredit_Checkout_Product_Widget {
 	public function __construct() {
-		$this->settings      = get_option( 'wasa_kredit_settings' );
-		$this->widget_format = isset( $this->settings['widget_format'] ) ? $this->settings['widget_format'] : 'small';
+		$this->settings               = get_option( 'wasa_kredit_settings' );
+		$this->widget_format          = isset( $this->settings['widget_format'] ) ? $this->settings['widget_format'] : 'small';
+		$this->widget_lower_threshold = isset( $this->settings['widget_lower_threshold'] ) ? $this->settings['widget_lower_threshold'] : '';
 
 		$this->_client = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
 
@@ -85,6 +86,15 @@ class Wasa_Kredit_Checkout_Product_Widget {
 			$price = $product->get_variation_price( 'min' );
 		} else {
 			$price = wc_get_price_to_display( $product );
+		}
+
+		// Don't display widget if price is lower thant lower threshold setting.
+		if ( ! empty( $this->widget_lower_threshold ) && $this->widget_lower_threshold > $price ) {
+			$log      = Wasa_Kredit_Logger::format_log( '', 'GET', 'Aborting get_monthly_cost_widget', 'Price: ' . $price . '. Lower threshold: ' . $this->widget_lower_threshold, '', '', '200' ); // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
+			$level = 'info';
+			Wasa_Kredit_Logger::log( $log, $level, 'monthly_cost' );
+
+			return;
 		}
 
 		$response = $this->_client->get_monthly_cost_widget( $price, $this->widget_format );
