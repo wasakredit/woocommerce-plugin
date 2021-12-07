@@ -90,7 +90,7 @@ class Wasa_Kredit_Checkout_List_Widget {
 
 			// Don't add product if price is lower thant lower threshold setting.
 			if ( ! empty( $this->widget_lower_threshold ) && $this->widget_lower_threshold > $product->get_price() ) {
-				return;
+				continue;
 			}
 
 			// Add this product to payload.
