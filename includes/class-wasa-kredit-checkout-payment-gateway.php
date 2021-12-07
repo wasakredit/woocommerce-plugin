@@ -79,54 +79,6 @@ function init_wasa_kredit_gateway() {
 					),
 					'default' => 'yes',
 				),
-				'widget_on_product_list'    => array(
-					'title'       => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
-					'type'        => 'checkbox',
-					'label'       => __(
-						'Show monthly cost in product list',
-						'wasa-kredit-checkout'
-					),
-					'description' => __(
-						'Will be shown under the price in product listings. You can also use the shortcode [wasa_kredit_list_widget]',
-						'wasa-kredit-checkout'
-					),
-					'default'     => 'yes',
-				),
-				'widget_on_product_details' => array(
-					'title'       => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
-					'type'        => 'checkbox',
-					'label'       => __(
-						'Show monthly cost in product details',
-						'wasa-kredit-checkout'
-					),
-					'description' => __(
-						'Will be shown between the price and the add to cart button. You can also use the shortcode [wasa_kredit_product_widget] whereever you want.',
-						'wasa-kredit-checkout'
-					),
-					'default'     => 'yes',
-				),
-				'widget_format'             => array(
-					'title'       => __( 'Widget format', 'wasa-kredit-checkout' ),
-					'type'        => 'select',
-					'label'       => __( 'The design of the montly cost widget', 'wasa-kredit-checkout' ),
-					'default'     => 'small',
-					'description' => __( 'Select the design of the monthly cost widget', 'wasa-kredit-checkout' ),
-					'options'     => array(
-						'small'         => __( 'Small', 'wasa-kredit-checkout' ),
-						'small-no-icon' => __( 'Small with no icons', 'wasa-kredit-checkout' ),
-						'large'         => __( 'Large', 'wasa-kredit-checkout' ),
-						'large-no-icon' => __( 'Large with no icons', 'wasa-kredit-checkout' ),
-					),
-				),
-				'widget_lower_threshold'    => array(
-					'title'       => __( 'Widget lower threshold', 'wasa-kredit-checkout' ),
-					'type'        => 'number',
-					'description' => __(
-						'Only display the monthly cost widget if the product price is higher thant the entered number. Leave blank to disable this feature.',
-						'wasa-kredit-checkout'
-					),
-					'default'     => '',
-				),
 				'partner_id'                => array(
 					'title'       => __( 'Partner ID', 'wasa-kredit-checkout' ),
 					'type'        => 'text',
@@ -185,6 +137,58 @@ function init_wasa_kredit_gateway() {
 						'checkout'     => __( 'Log checkout requests', 'wasa-kredit-checkout' ),
 						'all'          => __( 'Log both monthly cost & checkout requests', 'wasa-kredit-checkout' ),
 					),
+				),
+				'widget_section'            => array(
+					'title' => __( 'Monthly cost widget', 'wasa-kredit-checkout' ),
+					'type'  => 'title',
+				),
+				'widget_on_product_list'    => array(
+					'title'       => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
+					'type'        => 'checkbox',
+					'label'       => __(
+						'Show monthly cost in product list',
+						'wasa-kredit-checkout'
+					),
+					'description' => __(
+						'Will be shown under the price in product listings (added via the <i>woocommerce_after_shop_loop_item</i> hook).',
+						'wasa-kredit-checkout'
+					),
+					'default'     => 'yes',
+				),
+				'widget_on_product_details' => array(
+					'title'       => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
+					'type'        => 'checkbox',
+					'label'       => __(
+						'Show monthly cost in product details',
+						'wasa-kredit-checkout'
+					),
+					'description' => __(
+						'Will be shown between the price and the add to cart button. You can also use the shortcode [wasa_kredit_product_widget] if you want to add it manually on the product page.',
+						'wasa-kredit-checkout'
+					),
+					'default'     => 'yes',
+				),
+				'widget_format'             => array(
+					'title'       => __( 'Widget format', 'wasa-kredit-checkout' ),
+					'type'        => 'select',
+					'label'       => __( 'The design of the montly cost widget', 'wasa-kredit-checkout' ),
+					'default'     => 'small',
+					'description' => __( 'Select the design of the monthly cost widget', 'wasa-kredit-checkout' ),
+					'options'     => array(
+						'small'         => __( 'Small', 'wasa-kredit-checkout' ),
+						'small-no-icon' => __( 'Small with no icons', 'wasa-kredit-checkout' ),
+						'large'         => __( 'Large', 'wasa-kredit-checkout' ),
+						'large-no-icon' => __( 'Large with no icons', 'wasa-kredit-checkout' ),
+					),
+				),
+				'widget_lower_threshold'    => array(
+					'title'       => __( 'Widget lower threshold', 'wasa-kredit-checkout' ),
+					'type'        => 'number',
+					'description' => __(
+						'Only display the monthly cost widget if the product price is higher thant the entered number. Leave blank to disable this feature.',
+						'wasa-kredit-checkout'
+					),
+					'default'     => '',
 				),
 			);
 		}
