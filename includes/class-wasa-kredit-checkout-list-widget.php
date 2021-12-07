@@ -88,6 +88,11 @@ class Wasa_Kredit_Checkout_List_Widget {
 			$loop->the_post();
 			global $product;
 
+			// Don't add product if price is lower thant lower threshold setting.
+			if ( ! empty( $this->widget_lower_threshold ) && $this->widget_lower_threshold > $product->get_price() ) {
+				return;
+			}
+
 			// Add this product to payload.
 			$payload['items'][] = array(
 				'financed_price' => array(
