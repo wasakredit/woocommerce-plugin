@@ -6,17 +6,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/lib/client-php-sdk/Wasa.php';
 
 add_action( 'plugins_loaded', 'init_wasa_kredit_gateway' );
-add_action( 'woocommerce_before_checkout_form', 'create_redirect_to_standard_checkout_view', 10, 1 );
 add_filter( 'woocommerce_payment_gateways', 'add_wasa_kredit_gateway' );
 
 function add_wasa_kredit_gateway( $methods ) {
 	$methods[] = 'Wasa_Kredit_Checkout_Payment_Gateway';
 
 	return $methods;
-}
-
-function create_redirect_to_standard_checkout_view() {
-	include plugin_dir_path( __FILE__ ) . '../templates/redirect-to-standard-checkout.php';
 }
 
 function init_wasa_kredit_gateway() {
@@ -75,7 +70,7 @@ function init_wasa_kredit_gateway() {
 		public function init_form_fields() {
 			// Defines settings fields on WooCommerce > Settings > Checkout > Wasa Kredit
 			return array(
-				'enabled'                                  => array(
+				'enabled'                   => array(
 					'title'   => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
 					'type'    => 'checkbox',
 					'label'   => __(
@@ -84,33 +79,7 @@ function init_wasa_kredit_gateway() {
 					),
 					'default' => 'yes',
 				),
-				'widget_on_product_list'                   => array(
-					'title'       => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
-					'type'        => 'checkbox',
-					'label'       => __(
-						'Show monthly cost in product list',
-						'wasa-kredit-checkout'
-					),
-					'description' => __(
-						'Will be shown under the price in product listings. You can also use the shortcode [wasa_kredit_list_widget]',
-						'wasa-kredit-checkout'
-					),
-					'default'     => 'yes',
-				),
-				'widget_on_product_details'                => array(
-					'title'       => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
-					'type'        => 'checkbox',
-					'label'       => __(
-						'Show monthly cost in product details',
-						'wasa-kredit-checkout'
-					),
-					'description' => __(
-						'Will be shown between the price and the add to cart button. You can also use the shortcode [wasa_kredit_product_widget] whereever you want.',
-						'wasa-kredit-checkout'
-					),
-					'default'     => 'yes',
-				),
-				'partner_id'                               => array(
+				'partner_id'                => array(
 					'title'       => __( 'Partner ID', 'wasa-kredit-checkout' ),
 					'type'        => 'text',
 					'description' => __(
@@ -119,7 +88,7 @@ function init_wasa_kredit_gateway() {
 					),
 					'default'     => '',
 				),
-				'client_secret'                            => array(
+				'client_secret'             => array(
 					'title'       => __( 'Client secret', 'wasa-kredit-checkout' ),
 					'type'        => 'password',
 					'description' => __(
@@ -128,7 +97,7 @@ function init_wasa_kredit_gateway() {
 					),
 					'default'     => '',
 				),
-				'test_partner_id'                          => array(
+				'test_partner_id'           => array(
 					'title'       => __( 'Test Partner ID', 'wasa-kredit-checkout' ),
 					'type'        => 'text',
 					'description' => __(
@@ -137,7 +106,7 @@ function init_wasa_kredit_gateway() {
 					),
 					'default'     => '',
 				),
-				'test_client_secret'                       => array(
+				'test_client_secret'        => array(
 					'title'       => __( 'Test Client secret', 'wasa-kredit-checkout' ),
 					'type'        => 'password',
 					'description' => __(
@@ -146,7 +115,7 @@ function init_wasa_kredit_gateway() {
 					),
 					'default'     => '',
 				),
-				'test_mode'                                => array(
+				'test_mode'                 => array(
 					'title'       => __( 'Test mode', 'wasa-kredit-checkout' ),
 					'type'        => 'checkbox',
 					'label'       => __( 'Enable test mode', 'wasa-kredit-checkout' ),
@@ -156,7 +125,7 @@ function init_wasa_kredit_gateway() {
 						'wasa-kredit-checkout'
 					),
 				),
-				'logging'                                  => array(
+				'logging'                   => array(
 					'title'       => __( 'Logging', 'wasa-kredit-checkout' ),
 					'type'        => 'select',
 					'label'       => __( 'Enable logging', 'wasa-kredit-checkout' ),
@@ -169,25 +138,57 @@ function init_wasa_kredit_gateway() {
 						'all'          => __( 'Log both monthly cost & checkout requests', 'wasa-kredit-checkout' ),
 					),
 				),
-				'add_redirect_to_standard_checkout_widget' => array(
-					'title'       => __( 'Advanced', 'wasa-kredit-checkout' ),
+				'widget_section'            => array(
+					'title' => __( 'Monthly cost widget', 'wasa-kredit-checkout' ),
+					'type'  => 'title',
+				),
+				'widget_on_product_list'    => array(
+					'title'       => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
 					'type'        => 'checkbox',
-					'label'       => __( 'Enable redirect to standard checkout widget', 'wasa-kredit-checkout' ),
-					'default'     => 'no',
-					'description' => __(
-						'This is an advanced setting that is not needed for most integrations. Enable it if you have replaced the standard woocommerce checkout page with another checkout page. It will present a widget where the user can navigate to the standard checkout and use Wasa Kredit as a payment method.',
+					'label'       => __(
+						'Show monthly cost in product list',
 						'wasa-kredit-checkout'
+					),
+					'description' => __(
+						'Will be shown under the price in product listings (added via the <i>woocommerce_after_shop_loop_item</i> hook).',
+						'wasa-kredit-checkout'
+					),
+					'default'     => 'yes',
+				),
+				'widget_on_product_details' => array(
+					'title'       => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
+					'type'        => 'checkbox',
+					'label'       => __(
+						'Show monthly cost in product details',
+						'wasa-kredit-checkout'
+					),
+					'description' => __(
+						'Will be shown between the price and the add to cart button. You can also use the shortcode [wasa_kredit_product_widget] if you want to add it manually on the product page.',
+						'wasa-kredit-checkout'
+					),
+					'default'     => 'yes',
+				),
+				'widget_format'             => array(
+					'title'       => __( 'Widget format', 'wasa-kredit-checkout' ),
+					'type'        => 'select',
+					'label'       => __( 'The design of the montly cost widget', 'wasa-kredit-checkout' ),
+					'default'     => 'small',
+					'description' => __( 'Select the design of the monthly cost widget', 'wasa-kredit-checkout' ),
+					'options'     => array(
+						'small'         => __( 'Small', 'wasa-kredit-checkout' ),
+						'small-no-icon' => __( 'Small with no icons', 'wasa-kredit-checkout' ),
+						'large'         => __( 'Large', 'wasa-kredit-checkout' ),
+						'large-no-icon' => __( 'Large with no icons', 'wasa-kredit-checkout' ),
 					),
 				),
-				'standard_checkout_page_route'             => array(
-					'title'       => __( 'Advanced', 'wasa-kredit-checkout' ),
-					'type'        => 'text',
-					'label'       => __( 'Standard checkout page route', 'wasa-kredit-checkout' ),
-					'default'     => '',
+				'widget_lower_threshold'    => array(
+					'title'       => __( 'Widget lower threshold', 'wasa-kredit-checkout' ),
+					'type'        => 'number',
 					'description' => __(
-						'This is an advanced setting that is not needed for most integrations. If the setting redirect to standard checkout widget above is enabled, this setting is the route of the standard checkout page the user will be redirected to.',
+						'Only display the monthly cost widget if the product price is higher thant the entered number. Leave blank to disable this feature.',
 						'wasa-kredit-checkout'
 					),
+					'default'     => '',
 				),
 			);
 		}
@@ -288,8 +289,8 @@ function init_wasa_kredit_gateway() {
 				$cart_totals = WC()->cart->get_totals();
 				$cart_total  = $cart_totals['subtotal'] + $cart_totals['shipping_total'];
 
-				$response2              = $this->_client->get_payment_methods( round( $cart_total, 2 ) );
-				$paymentOptionsResponse = $this->_client->get_leasing_payment_options( round( $cart_total, 2 ) );
+				$response2              = $this->_client->get_payment_methods( number_format( $cart_total, 2, '.', '' ) );
+				$paymentOptionsResponse = $this->_client->get_leasing_payment_options( number_format( $cart_total, 2, '.', '' ) );
 				if ( isset( $paymentOptionsResponse ) === false || 200 !== $paymentOptionsResponse->statusCode ) {
 					return;
 				}

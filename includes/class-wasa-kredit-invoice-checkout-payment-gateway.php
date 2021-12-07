@@ -6,7 +6,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/lib/client-php-sdk/Wasa.php';
 
 add_action( 'plugins_loaded', 'init_wasa_kredit_invoice_gateway' );
-add_action( 'woocommerce_before_checkout_form', 'create_redirect_to_standard_checkout_view', 10, 1 );
 add_filter( 'woocommerce_payment_gateways', 'add_wasa_kredit_invoice_gateway' );
 
 function add_wasa_kredit_invoice_gateway( $methods ) {
@@ -14,11 +13,6 @@ function add_wasa_kredit_invoice_gateway( $methods ) {
 
 	return $methods;
 }
-
-/*
-function create_redirect_to_standard_checkout_view() {
-	include plugin_dir_path( __FILE__ ) . '../templates/redirect-to-standard-checkout.php';
-}*/
 
 function init_wasa_kredit_invoice_gateway() {
 	if ( ! class_exists( 'WC_Payment_Gateway' ) ) {
@@ -73,7 +67,7 @@ function init_wasa_kredit_invoice_gateway() {
 		public function init_form_fields() {
 			// Defines settings fields on WooCommerce > Settings > Checkout > Wasa Kredit
 			return array(
-				'invoice_enabled'                          => array(
+				'invoice_enabled'    => array(
 					'title'   => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
 					'type'    => 'checkbox',
 					'label'   => __(
@@ -82,7 +76,7 @@ function init_wasa_kredit_invoice_gateway() {
 					),
 					'default' => 'no',
 				),
-				'partner_id'                               => array(
+				'partner_id'         => array(
 					'title'       => __( 'Partner ID', 'wasa-kredit-checkout' ),
 					'type'        => 'text',
 					'description' => __(
@@ -91,7 +85,7 @@ function init_wasa_kredit_invoice_gateway() {
 					),
 					'default'     => '',
 				),
-				'client_secret'                            => array(
+				'client_secret'      => array(
 					'title'       => __( 'Client secret', 'wasa-kredit-checkout' ),
 					'type'        => 'password',
 					'description' => __(
@@ -100,7 +94,7 @@ function init_wasa_kredit_invoice_gateway() {
 					),
 					'default'     => '',
 				),
-				'test_partner_id'                          => array(
+				'test_partner_id'    => array(
 					'title'       => __( 'Test Partner ID', 'wasa-kredit-checkout' ),
 					'type'        => 'text',
 					'description' => __(
@@ -109,7 +103,7 @@ function init_wasa_kredit_invoice_gateway() {
 					),
 					'default'     => '',
 				),
-				'test_client_secret'                       => array(
+				'test_client_secret' => array(
 					'title'       => __( 'Test Client secret', 'wasa-kredit-checkout' ),
 					'type'        => 'password',
 					'description' => __(
@@ -118,7 +112,7 @@ function init_wasa_kredit_invoice_gateway() {
 					),
 					'default'     => '',
 				),
-				'test_mode'                                => array(
+				'test_mode'          => array(
 					'title'       => __( 'Test mode', 'wasa-kredit-checkout' ),
 					'type'        => 'checkbox',
 					'label'       => __( 'Enable test mode', 'wasa-kredit-checkout' ),
@@ -128,7 +122,7 @@ function init_wasa_kredit_invoice_gateway() {
 						'wasa-kredit-checkout'
 					),
 				),
-				'logging'                                  => array(
+				'logging'            => array(
 					'title'       => __( 'Logging', 'wasa-kredit-checkout' ),
 					'type'        => 'select',
 					'label'       => __( 'Enable logging', 'wasa-kredit-checkout' ),
@@ -138,26 +132,6 @@ function init_wasa_kredit_invoice_gateway() {
 						'monthly_cost' => __( 'Log monthly cost requests', 'wasa-kredit-checkout' ),
 						'checkout'     => __( 'Log checkout requests', 'wasa-kredit-checkout' ),
 						'all'          => __( 'Log both monthly cost & checkout requests', 'wasa-kredit-checkout' ),
-					),
-				),
-				'add_redirect_to_standard_checkout_widget' => array(
-					'title'       => __( 'Advanced', 'wasa-kredit-checkout' ),
-					'type'        => 'checkbox',
-					'label'       => __( 'Enable redirect to standard checkout widget', 'wasa-kredit-checkout' ),
-					'default'     => 'no',
-					'description' => __(
-						'This is an advanced setting that is not needed for most integrations. Enable it if you have replaced the standard woocommerce checkout page with another checkout page. It will present a widget where the user can navigate to the standard checkout and use Wasa Kredit as a payment method.',
-						'wasa-kredit-checkout'
-					),
-				),
-				'standard_checkout_page_route'             => array(
-					'title'       => __( 'Advanced', 'wasa-kredit-checkout' ),
-					'type'        => 'text',
-					'label'       => __( 'Standard checkout page route', 'wasa-kredit-checkout' ),
-					'default'     => '',
-					'description' => __(
-						'This is an advanced setting that is not needed for most integrations. If the setting redirect to standard checkout widget above is enabled, this setting is the route of the standard checkout page the user will be redirected to.',
-						'wasa-kredit-checkout'
 					),
 				),
 			);

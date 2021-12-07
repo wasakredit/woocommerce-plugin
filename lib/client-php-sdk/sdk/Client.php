@@ -101,9 +101,8 @@ class Client {
 		return $this->api_client->execute( $this->base_url . '/v4/invoice/validate-financed-amount?amount=' . $amount, 'GET', null, 2 );
 	}
 
-
-    public function get_monthly_cost_widget($amount) { //@codingStandardsIgnoreLine
-		return $this->api_client->execute( $this->base_url . '/v4/leasing/widgets/monthly-cost?amount=' . $amount . '&currency=SEK', 'GET', null, 2 );
+    public function get_monthly_cost_widget($amount, $format = 'small') { //@codingStandardsIgnoreLine
+		return $this->api_client->execute( $this->base_url . '/v4/leasing/widgets/monthly-cost?amount=' . $amount . '&currency=SEK&format=' . $format, 'GET', null, 2 );
 	}
 
     public function add_order_reference($orderId, $orderReferences) { // @codingStandardsIgnoreLine

@@ -7,7 +7,8 @@ require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/lib/client-php-sdk/Wasa.php';
 
 class Wasa_Kredit_Checkout_List_Widget {
 	public function __construct() {
-		$settings = get_option( 'wasa_kredit_settings' );
+		$this->settings               = get_option( 'wasa_kredit_settings' );
+		$this->widget_lower_threshold = isset( $this->settings['widget_lower_threshold'] ) ? $this->settings['widget_lower_threshold'] : '';
 
 		// Connect to WASA PHP SDK
 		$this->_client = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
@@ -45,9 +46,7 @@ class Wasa_Kredit_Checkout_List_Widget {
 		// Adds financing info betweeen price and Add to cart button
 		global $product;
 
-		$settings = get_option( 'wasa_kredit_settings' );
-
-		if ( 'yes' !== $settings['widget_on_product_list'] ) {
+		if ( 'yes' !== $this->settings['widget_on_product_list'] ) {
 			return;
 		}
 
@@ -72,9 +71,8 @@ class Wasa_Kredit_Checkout_List_Widget {
 	public function save_product_prices() {
 		// Collects all financing costs for all shown products
 		// Store as global variable to be accessed in display_leasing_price_per_product()
-		$settings = get_option( 'wasa_kredit_settings' );
 
-		if ( 'yes' !== $settings['widget_on_product_list'] ) {
+		if ( 'yes' !== $this->settings['widget_on_product_list'] ) {
 			return;
 		}
 
@@ -90,10 +88,21 @@ class Wasa_Kredit_Checkout_List_Widget {
 			$loop->the_post();
 			global $product;
 
-			// Add this product to payload
+			if ( $product->is_type( 'variable' ) ) {
+				$price = $product->get_variation_price( 'min' );
+			} else {
+				$price = wc_get_price_to_display( $product );
+			}
+
+			// Don't add product if price is lower thant lower threshold setting.
+			if ( ! empty( $this->widget_lower_threshold ) && $this->widget_lower_threshold > $price ) {
+				continue;
+			}
+
+			// Add this product to payload.
 			$payload['items'][] = array(
 				'financed_price' => array(
-					'amount'   => round( $product->get_price(), 2 ),
+					'amount'   => number_format( $price, 2, '.', '' ),
 					'currency' => $current_currency,
 				),
 				'product_id'     => $product->get_id(),
@@ -117,9 +126,8 @@ class Wasa_Kredit_Checkout_List_Widget {
 	public function save_product_prices_shortcodes( $args ) {
 		// Collects all financing costs for all shown products
 		// Store as global variable to be accessed in display_leasing_price_per_product()
-		$settings = get_option( 'wasa_kredit_settings' );
 
-		if ( 'yes' !== $settings['widget_on_product_list'] ) {
+		if ( 'yes' !== $this->settings['widget_on_product_list'] ) {
 			return;
 		}
 
@@ -156,7 +164,7 @@ class Wasa_Kredit_Checkout_List_Widget {
 			// Add this product to payload
 			$payload['items'][] = array(
 				'financed_price' => array(
-					'amount'   => round( $product->get_price(), 2 ),
+					'amount'   => number_format( $product->get_price(), 2, '.', '' ),
 					'currency' => $current_currency,
 				),
 				'product_id'     => $product->get_id(),
