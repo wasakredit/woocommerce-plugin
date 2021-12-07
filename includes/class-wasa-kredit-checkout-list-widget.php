@@ -88,15 +88,21 @@ class Wasa_Kredit_Checkout_List_Widget {
 			$loop->the_post();
 			global $product;
 
+			if ( $product->is_type( 'variable' ) ) {
+				$price = $product->get_variation_price( 'min' );
+			} else {
+				$price = wc_get_price_to_display( $product );
+			}
+
 			// Don't add product if price is lower thant lower threshold setting.
-			if ( ! empty( $this->widget_lower_threshold ) && $this->widget_lower_threshold > $product->get_price() ) {
+			if ( ! empty( $this->widget_lower_threshold ) && $this->widget_lower_threshold > $price ) {
 				continue;
 			}
 
 			// Add this product to payload.
 			$payload['items'][] = array(
 				'financed_price' => array(
-					'amount'   => number_format( $product->get_price(), 2, '.', '' ),
+					'amount'   => number_format( $price, 2, '.', '' ),
 					'currency' => $current_currency,
 				),
 				'product_id'     => $product->get_id(),
