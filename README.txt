@@ -3,10 +3,10 @@ Contributors: aos06wasakredit
 Donate link: https://developer.wasakredit.se
 Tags: woocommerce, ecommerce, e-commerce, checkout
 Requires at least: 4.0.0
-Tested up to: 5.8.1
+Tested up to: 5.8.2
 Requires PHP: 7.0
 WC requires at least: 4.0.0
-WC tested up to: 5.7.1
+WC tested up to: 5.9.0
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -55,6 +55,13 @@ In the settings for Wasa's checkout, there are two new settings with the heading
 2. In the text field below, enter the path to the default checkout. For example, in my checkout, it is the "checkout". If it is not the same for you, you can easily get it by activating the standard checkout and copying the uri. Dy activates it at Settings> Advanced> Page Settings> Checkout Page> "Checkout".
 
 == Changelog ==
+
+= 2021-12-07    - version 2.1.0 =
+* Feature       - Adds support for different widget formats when displaying monthly cost widget.
+* Feature       - Adds lower threshold setting to be able to control when the monthly cost widget should be displayed.
+* Tweak         - Avoid floating precision errors. Change from round to number_format for prices sent to Wasa Kredit.
+* Tweak         - Remove deprecated Advanced settings (redirect to standard checkout).
+* Fix           - Don't try to make cancel or activate request to Wasa Kredit if the order hasn't been paid for.
 
 = 2021-09-28    - version 2.0.1 =
 * Tweak         - Adds logging to cancel_order & ship_order requests.
