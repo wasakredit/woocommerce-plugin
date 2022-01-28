@@ -88,6 +88,11 @@ class Wasa_Kredit_Checkout_List_Widget {
 			$loop->the_post();
 			global $product;
 
+			// Don't try to add the product if we don't have a product object.
+			if ( ! is_object( $product ) ) {
+				continue;
+			}
+
 			if ( $product->is_type( 'variable' ) ) {
 				$price = $product->get_variation_price( 'min' );
 			} else {
