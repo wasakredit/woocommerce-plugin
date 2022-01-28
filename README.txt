@@ -56,6 +56,9 @@ In the settings for Wasa's checkout, there are two new settings with the heading
 
 == Changelog ==
 
+= 2022-01-28    - version 2.1.1 =
+* Fix           - Avoid potential error when displaying monthly cost widget in product list, if no product object is found.
+
 = 2021-12-07    - version 2.1.0 =
 * Feature       - Adds support for different widget formats when displaying monthly cost widget.
 * Feature       - Adds lower threshold setting to be able to control when the monthly cost widget should be displayed.
