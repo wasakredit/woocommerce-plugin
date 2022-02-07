@@ -6,7 +6,7 @@ Requires at least: 4.0.0
 Tested up to: 5.9
 Requires PHP: 7.0
 WC requires at least: 4.0.0
-WC tested up to: 5.9.0
+WC tested up to: 6.1.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -55,6 +55,9 @@ In the settings for Wasa's checkout, there are two new settings with the heading
 2. In the text field below, enter the path to the default checkout. For example, in my checkout, it is the "checkout". If it is not the same for you, you can easily get it by activating the standard checkout and copying the uri. Dy activates it at Settings> Advanced> Page Settings> Checkout Page> "Checkout".
 
 == Changelog ==
+
+= 2022-02-07    - version 2.1.2 =
+* Tweak         - Readme updates.
 
 = 2022-01-28    - version 2.1.1 =
 * Fix           - Avoid potential error when displaying monthly cost widget in product list, if no product object is found.
