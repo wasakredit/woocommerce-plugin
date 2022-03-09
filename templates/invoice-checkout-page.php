@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-$order_key = sanitize_key(wp_unslash($_GET['wasa_kredit_checkout'])); // @codingStandardsIgnoreLine - Validation okay. Will exit further down if order is not found.
+$order_key = filter_input( INPUT_GET, 'wasa_kredit_checkout', FILTER_SANITIZE_STRING );
 
 if ( ! isset( $order_key ) || empty( $order_key ) ) {
 	exit();
