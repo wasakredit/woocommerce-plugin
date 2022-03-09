@@ -1,6 +1,6 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) {
-	exit(); // Exit if accessed directly
+	exit(); // Exit if accessed directly.
 }
 
 require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/lib/client-php-sdk/Wasa.php';
@@ -22,7 +22,7 @@ function init_wasa_kredit_gateway() {
 	class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 
 		public function __construct() {
-			// Setup payment gateway properties
+			// Setup payment gateway properties.
 			$this->id                 = 'wasa_kredit';
 			$this->plugin_id          = 'wasa_kredit';
 			$this->name               = 'Wasa Kredit';
@@ -32,21 +32,21 @@ function init_wasa_kredit_gateway() {
 			$this->method_description = 'Use to pay with Wasa Kredit Leasing Checkout.';
 			$this->order_button_text  = __( 'Proceed', 'wasa-kredit-checkout' );
 			$this->selected_currency  = get_woocommerce_currency();
-			// Where to store settings in DB
+			// Where to store settings in DB.
 			$this->options_key = 'wasa_kredit_settings';
 
 			$this->form_fields = $this->init_form_fields();
 			$this->init_settings();
 
-			// Setup dynamic gateway properties
+			// Setup dynamic gateway properties.
 			if ( $this->settings['enabled'] ) {
 				$this->enabled = $this->settings['enabled'];
 			}
 
-			// Connect to WASA PHP SDK
+			// Connect to WASA PHP SDK.
 			$this->_client = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
 
-			// Hooks
+			// Hooks.
 			add_action(
 				'woocommerce_update_options_payment_gateways_' . $this->id,
 				array( $this, 'process_admin_options' )
@@ -68,7 +68,7 @@ function init_wasa_kredit_gateway() {
 		}
 
 		public function init_form_fields() {
-			// Defines settings fields on WooCommerce > Settings > Checkout > Wasa Kredit
+			// Defines settings fields on WooCommerce > Settings > Checkout > Wasa Kredit.
 			return array(
 				'enabled'                   => array(
 					'title'   => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
@@ -194,7 +194,7 @@ function init_wasa_kredit_gateway() {
 		}
 
 		public function process_admin_options() {
-			// On save in admin settings
+			// On save in admin settings.
 			$this->init_settings();
 
 			$post_data = $this->get_post_data();
@@ -223,11 +223,11 @@ function init_wasa_kredit_gateway() {
 		}
 
 		public function is_available() {
-			// If payment gateway should be available for customers
+			// If payment gateway should be available for customers.
 
 			$enabled = $this->get_option( 'enabled' );
 
-			// Plugin is enabled
+			// Plugin is enabled.
 			if ( 'yes' !== $enabled || is_null( WC()->cart ) ) {
 				return false;
 			}
@@ -236,18 +236,18 @@ function init_wasa_kredit_gateway() {
 			$cart_total             = $cart_totals['subtotal'] + $cart_totals['shipping_total'];
 			$financed_amount_status = $this->_client->validate_financed_amount( $cart_total );
 
-			// Cart value is within partner limits
+			// Cart value is within partner limits.
 			if ( ! isset( $financed_amount_status )
 			|| (200 !== $financed_amount_status->statusCode // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
 				|| ! $financed_amount_status->data['validation_result'] ) ) {
-				// If total order value is too small or too large
+				// If total order value is too small or too large.
 				return false;
 			}
 
 			$shipping_country = WC()->customer->get_billing_country();
 			$currency         = get_woocommerce_currency();
 
-			// Country is Sweden and currency is Swedish krona
+			// Country is Sweden and currency is Swedish krona.
 			if ( 'SE' !== $shipping_country || 'SEK' !== $currency ) {
 				return false;
 			}
@@ -257,7 +257,7 @@ function init_wasa_kredit_gateway() {
 		}
 
 		public function process_payment( $order_id ) {
-			// When clicking Proceed button, create a on-hold order
+			// When clicking Proceed button, create a on-hold order.
 			global $woocommerce;
 			$order = new WC_Order( $order_id );
 
@@ -268,7 +268,7 @@ function init_wasa_kredit_gateway() {
 		}
 
 		public function get_return_url( $order = null ) {
-			// Add order key to custom endpoint route as query param
+			// Add order key to custom endpoint route as query param.
 			return add_query_arg(
 				array(
 					'wasa_kredit_checkout'       => $order->get_order_key(),
@@ -283,7 +283,7 @@ function init_wasa_kredit_gateway() {
 		}
 
 		public function get_description() {
-			// Set custom description to display in checkout
+			// Set custom description to display in checkout.
 			if ( isset( WC()->cart ) ) {
 
 				$cart_totals = WC()->cart->get_totals();
@@ -314,7 +314,7 @@ function init_wasa_kredit_gateway() {
 								$months = $value3['contract_length'];
 								$amount = $value3['monthly_cost']['amount'];
 
-								// translators: %s placeholder is a number to display number of months
+								// translators: %s placeholder is a number to display number of months.
 								$desc_months = sprintf( __( ' for %s months.', 'wasa-kredit-checkout' ), $months );
 								$desc_item   = '<br>' . wc_price( $amount, array( 'decimals' => 0 ) ) . __( '/month', 'wasa-kredit-checkout' ) . $desc_months;
 								$desc       .= $desc_item;

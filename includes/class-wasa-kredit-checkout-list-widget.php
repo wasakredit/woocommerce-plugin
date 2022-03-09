@@ -10,10 +10,10 @@ class Wasa_Kredit_Checkout_List_Widget {
 		$this->settings               = get_option( 'wasa_kredit_settings' );
 		$this->widget_lower_threshold = isset( $this->settings['widget_lower_threshold'] ) ? $this->settings['widget_lower_threshold'] : '';
 
-		// Connect to WASA PHP SDK
+		// Connect to WASA PHP SDK.
 		$this->_client = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
 
-		// Hooks
+		// Hooks.
 		add_action(
 			'woocommerce_before_shop_loop',
 			array( $this, 'save_product_prices' ),
@@ -43,7 +43,7 @@ class Wasa_Kredit_Checkout_List_Widget {
 
 	public function display_leasing_price_per_product() {
 
-		// Adds financing info betweeen price and Add to cart button
+		// Adds financing info betweeen price and Add to cart button.
 		global $product;
 
 		if ( 'yes' !== $this->settings['widget_on_product_list'] ) {
@@ -69,21 +69,21 @@ class Wasa_Kredit_Checkout_List_Widget {
 	}
 
 	public function save_product_prices() {
-		// Collects all financing costs for all shown products
-		// Store as global variable to be accessed in display_leasing_price_per_product()
+		// Collects all financing costs for all shown products.
+		// Store as global variable to be accessed in display_leasing_price_per_product().
 
 		if ( 'yes' !== $this->settings['widget_on_product_list'] ) {
 			return;
 		}
 
 		$payload['items'] = array();
-		// Payload will contain all products with price, currency and id
+		// Payload will contain all products with price, currency and id.
 		$current_currency = get_woocommerce_currency();
 
 		global $wp_query;
 		$loop = $wp_query;
 
-		// Loop through all products
+		// Loop through all products.
 		while ( $loop->have_posts() ) :
 			$loop->the_post();
 			global $product;
@@ -114,7 +114,7 @@ class Wasa_Kredit_Checkout_List_Widget {
 			);
 		endwhile;
 
-		// Get resposne from API with all products defined in $payload
+		// Get resposne from API with all products defined in $payload.
 		$response      = $this->_client->calculate_monthly_cost( $payload );
 		$monthly_costs = array();
 
@@ -123,21 +123,21 @@ class Wasa_Kredit_Checkout_List_Widget {
 				$monthly_costs[ $current_product['product_id'] ] = $current_product['monthly_cost']['amount'];
 			}
 
-			// Save prices to global variable to access it from template
+			// Save prices to global variable to access it from template.
 			$GLOBALS['product_leasing_prices'] = $monthly_costs;
 		}
 	}
 
 	public function save_product_prices_shortcodes( $args ) {
-		// Collects all financing costs for all shown products
-		// Store as global variable to be accessed in display_leasing_price_per_product()
+		// Collects all financing costs for all shown products.
+		// Store as global variable to be accessed in display_leasing_price_per_product().
 
 		if ( 'yes' !== $this->settings['widget_on_product_list'] ) {
 			return;
 		}
 
 		$payload['items'] = array();
-		// Payload will contain all products with price, currency and id
+		// Payload will contain all products with price, currency and id.
 		$current_currency = get_woocommerce_currency();
 
 		$args = array(
@@ -161,12 +161,12 @@ class Wasa_Kredit_Checkout_List_Widget {
 		$wp_query = new WP_Query( $args );
 		$loop     = $wp_query;
 
-		// Loop through all products
+		// Loop through all products.
 		while ( $loop->have_posts() ) :
 			$loop->the_post();
 			global $product;
 
-			// Add this product to payload
+			// Add this product to payload.
 			$payload['items'][] = array(
 				'financed_price' => array(
 					'amount'   => number_format( $product->get_price(), 2, '.', '' ),
@@ -178,7 +178,7 @@ class Wasa_Kredit_Checkout_List_Widget {
 
 		wp_reset_postdata();
 
-		// Get resposne from API with all products defined in $payload
+		// Get resposne from API with all products defined in $payload.
 		$response      = $this->_client->calculate_monthly_cost( $payload );
 		$monthly_costs = array();
 
@@ -187,7 +187,7 @@ class Wasa_Kredit_Checkout_List_Widget {
 				$monthly_costs[ $current_product['product_id'] ] = $current_product['monthly_cost']['amount'];
 			}
 
-			// Save prices to global variable to access it from template
+			// Save prices to global variable to access it from template.
 			$GLOBALS['product_leasing_prices'] = $monthly_costs;
 		}
 	}

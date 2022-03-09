@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-$order_key = sanitize_key(wp_unslash($_GET['wasa_kredit_checkout'])); // @codingStandardsIgnoreLine - Validation okay. Will exit further down if order is not found.
+$order_key = filter_input( INPUT_GET, 'wasa_kredit_checkout', FILTER_SANITIZE_STRING );
 
 if ( ! isset( $order_key ) || empty( $order_key ) ) {
 	exit();
@@ -21,10 +21,10 @@ require_once plugin_dir_path( __FILE__ ) . '../includes/class-wasa-kredit-checko
 
 $settings = get_option( 'wasa_kredit_settings' );
 
-// Connect WASA SDK client
+// Connect WASA SDK client.
 $client = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
 
-// Collect data about order
+// Collect data about order.
 $order_id = wc_get_order_id_by_order_key( $order_key );
 $order    = wc_get_order( $order_id );
 
@@ -87,7 +87,7 @@ foreach ( $cart_items as $cart_item_key => $cart_item ) {
 	);
 }
 
-// Create an array of all tax rates
+// Create an array of all tax rates.
 $all_tax_rates = array_replace(
 	WC_Tax::get_rates(),
 	...array_map(
@@ -98,7 +98,7 @@ $all_tax_rates = array_replace(
 	)
 );
 
-// Add shipping cost for all shipping lines
+// Add shipping cost for all shipping lines.
 foreach ( $order->get_data()['shipping_lines'] as $shipping_key => $line ) {
 	$ex_vat       = intval( $line['total'] );
 	$vat          = intval( $line['total_tax'] );
@@ -107,12 +107,12 @@ foreach ( $order->get_data()['shipping_lines'] as $shipping_key => $line ) {
 	$total_vat    = apply_currency( $vat );
 
 	$shipping_vat_rate = 0;
-	// Check if taxes are set for shipping line
+	// Check if taxes are set for shipping line.
 	if ( isset( $line['taxes'] ) &&
 		array_key_exists( 'total', $line['taxes'] ) &&
 		! empty( $line['taxes']['total'] ) ) {
 
-		// Check to find tax rate, set if found
+		// Check to find tax rate, set if found.
 		$tax = $all_tax_rates[ array_key_first( $line['taxes']['total'] ) ];
 		if ( ! empty( $tax ) ) {
 			$shipping_vat_rate = intval( $tax['rate'] );
@@ -136,7 +136,7 @@ foreach ( $order->get_data()['shipping_lines'] as $shipping_key => $line ) {
 	);
 }
 
-// Create payload from collected data
+// Create payload from collected data.
 $payload = array(
 	'payment_types'             => 'invoice',
 	'purchaser_name'            => $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(),
@@ -173,7 +173,7 @@ $payload = array(
 	'total_price_ex_vat'        => apply_currency( number_format( ( $order_data['total'] - $order_data['total_tax'] ), 2, '.', '' ) ),
 	'total_vat'                 => apply_currency( number_format( $order_data['total_tax'], 2, '.', '' ) ),
 );
-// Get answer from API
+// Get answer from API.
 $response = $client->create_invoice_checkout( $payload );
 
 // Logging.

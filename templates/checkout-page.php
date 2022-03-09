@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-$order_key = sanitize_key( wp_unslash( $_GET['wasa_kredit_checkout'] ) ); // @codingStandardsIgnoreLine - Validation okay. Will exit further down if order is not found.
+$order_key = filter_input( INPUT_GET, 'wasa_kredit_checkout', FILTER_SANITIZE_STRING );
 
 if ( ! isset( $order_key ) || empty( $order_key ) ) {
 	exit();
@@ -21,10 +21,10 @@ require_once plugin_dir_path( __FILE__ ) . '../includes/class-wasa-kredit-checko
 
 $settings = get_option( 'wasa_kredit_settings' );
 
-// Connect WASA SDK client
+// Connect WASA SDK client.
 $client = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
 
-// Collect data about order
+// Collect data about order.
 $order_id = wc_get_order_id_by_order_key( $order_key );
 $order    = wc_get_order( $order_id );
 
@@ -80,7 +80,7 @@ foreach ( $cart_items as $cart_item_key => $cart_item ) {
 	);
 }
 
-// Create payload from collected data
+// Create payload from collected data.
 $payload = array(
 	'purchaser_name'            => $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(),
 	'purchaser_email'           => $order->get_billing_email(),
@@ -117,7 +117,7 @@ $payload = array(
 	'ping_url'                  => get_rest_url( null, 'wasa-kredit-checkout/v1/update_order_status' ),
 );
 
-// Get answer from API
+// Get answer from API.
 $response = $client->create_checkout( $payload );
 
 // Logging.

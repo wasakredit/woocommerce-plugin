@@ -75,21 +75,21 @@ class Wasa_Kredit_Checkout_API {
 		$wasa_order_id = $request->get_param( 'order_id' );
 		$order_status  = $request->get_param( 'order_status' );
 
-		// Check input parameters
+		// Check input parameters.
 		if ( ! isset( $wasa_order_id ) || ! isset( $order_status ) ) {
 			error_log( 'no order id or status set!' );
 			return;
 		}
 
-		// Find the Woo order with the correct Wasa order-id
+		// Find the Woo order with the correct Wasa order-id.
 		$orders = wc_get_orders(
 			array(
 				'limit'          => 1,
-				'transaction_id' => $wasa_order_id, // input var okay
+				'transaction_id' => $wasa_order_id, // input var okay.
 			)
 		);
 
-		// Make sure we have an order
+		// Make sure we have an order.
 		if ( ! $orders || count( $orders ) < 1 ) {
 			$client     = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
 			$wasa_order = $client->get_order( $wasa_order_id );
@@ -124,15 +124,15 @@ class Wasa_Kredit_Checkout_API {
 		}
 
 		if ( array_key_exists( wp_unslash( $order_status ), self::$status_mapping ) ) { // Input is ok
-			// Set order status if valid status
-			$status = sanitize_text_field( wp_unslash( $order_status ) ); // Input is ok
+			// Set order status if valid status.
+			$status = sanitize_text_field( wp_unslash( $order_status ) ); // Input is ok.
 
 			$order->update_status(
 				self::$status_mapping[ $status ],
 				__( 'Wasa Kredit changed order status to', 'wasa-kredit-checkout' ) . ' ' . $status . ' -> '
 			);
 
-			// If status ready_to_ship Wasa Kredit has approved the financing. Complete payment of order
+			// If status ready_to_ship Wasa Kredit has approved the financing. Complete payment of order.
 			if ( 'ready_to_ship' === $order_status ) {
 				$order->payment_complete();
 			}
@@ -142,12 +142,12 @@ class Wasa_Kredit_Checkout_API {
 	}
 
 	public function order_status_change_completed( $order_id ) {
-		// When an order is set to status Completed in WooCommerce
+		// When an order is set to status Completed in WooCommerce.
 		$this->send_order_status_to_wasa_api( $order_id, 'shipped' );
 	}
 
 	public function order_status_change_cancelled( $order_id ) {
-		// When an order is set to status Cancelled in WooCommerce
+		// When an order is set to status Cancelled in WooCommerce.
 		$this->send_order_status_to_wasa_api( $order_id, 'canceled' );
 	}
 
