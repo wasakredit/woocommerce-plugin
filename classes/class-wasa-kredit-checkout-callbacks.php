@@ -68,9 +68,13 @@ class Wasa_Kredit_Callbacks {
 
 		// Make sure we have an order.
 		if ( ! $orders || count( $orders ) < 1 ) {
-			$client     = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
-			$wasa_order = $client->get_order( $wasa_order_id );
-			foreach ( $wasa_order->data['order_references'] as $item ) {
+			$wasa_order = Wasa_Kredit_WC()->api->get_wasa_kredit_order( $wasa_order_id );
+
+			if ( is_wp_error( $wasa_order ) ) {
+				return;
+			}
+
+			foreach ( $wasa_order['order_references'] as $item ) {
 				if ( $item['key'] === 'wasa_kredit_woocommerce_order_key' ) {
 					$woo_order_key = $item['value'];
 					break;

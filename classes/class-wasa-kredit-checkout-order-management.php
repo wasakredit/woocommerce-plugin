@@ -64,38 +64,25 @@ class Wasa_Kredit_Checkout_Order_Management {
 			return;
 		}
 
-		// Connect to WASA PHP SDK.
-		$client      = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
-		$wasa_status = $client->get_order_status( $transaction_id );
-		if ( $order_status === $wasa_status->data['status'] ) {
+		$wasa_status = Wasa_Kredit_WC()->api->get_wasa_kredit_order_status( $transaction_id );
+
+		if ( is_wp_error( $wasa_order ) ) {
+			return;
+		}
+
+		if ( $order_status === $wasa_status['status'] ) {
 			return;
 		}
 
 		if ( $order_status === 'shipped' ) {
-			$response = $client->ship_order( $transaction_id );
-
-			// Logging.
-			$log      = Wasa_Kredit_Logger::format_log( $transaction_id, 'POST', 'ship_order', $order_id, '', stripslashes_deep( (array) $response ), $response->statusCode ); // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
-			$level = 'info';
-			if ( $response->statusCode < 200 || $response->statusCode > 299 ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
-				$level = 'error';
-			}
-			Wasa_Kredit_Logger::log( $log, $level, 'checkout' );
-
+			$response = Wasa_Kredit_WC()->api->ship_order( $transaction_id );
 		}
+
 		if ( $order_status === 'canceled' ) {
-			$response = $client->cancel_order( $transaction_id );
-
-			// Logging.
-			$log      = Wasa_Kredit_Logger::format_log( $transaction_id, 'POST', 'cancel_order', $order_id, '', stripslashes_deep( (array) $response ), $response->statusCode ); // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
-			$level = 'info';
-			if ( $response->statusCode < 200 || $response->statusCode > 299 ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
-				$level = 'error';
-			}
-			Wasa_Kredit_Logger::log( $log, $level, 'checkout' );
+			$response = Wasa_Kredit_WC()->api->cancel_order( $transaction_id );
 		}
 
-        if (200 !== $response->statusCode) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
+        if ( ! is_wp_error( $response ) ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
 			$note = __( 'Error: You changed order status to ', 'wasa-kredit-checkout' ) . $order_status . __( ' but the order could not be changed at Wasa Kredit.', 'wasa-kredit-checkout' );
 			$order->add_order_note( $note );
 			$order->save();
