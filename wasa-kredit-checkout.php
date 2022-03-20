@@ -84,10 +84,23 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-wasa-kredit-checkout.php';
  * @since    1.0.0
  */
 function run_wasa_kredit_checkout() {
-	$plugin = new Wasa_Kredit_Checkout();
+	// $plugin = new Wasa_Kredit_Checkout();
+	$plugin = Wasa_Kredit_Checkout::get_instance();
 	$plugin->run();
 }
 run_wasa_kredit_checkout();
+
+/**
+ * Main instance QOC WooCommerce.
+ *
+ * Returns the main instance of QOC.
+ *
+ * @return Qliro_One_For_WooCommerce
+ */
+function Wasa_Kredit_WC() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName
+	return Wasa_Kredit_Checkout::get_instance();
+}
+
 
 /**
  * Add settings link to plugin list view

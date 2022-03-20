@@ -8,6 +8,46 @@ class Wasa_Kredit_Checkout {
 	protected $plugin_name;
 	protected $version;
 
+	/**
+	 * The reference the *Singleton* instance of this class.
+	 *
+	 * @var Qliro_One_For_WooCommerce $instance
+	 */
+	private static $instance;
+
+	/**
+	 * Returns the *Singleton* instance of this class.
+	 *
+	 * @return Qliro_One_For_WooCommerce The *Singleton* instance.
+	 */
+	public static function get_instance() {
+		if ( null === self::$instance ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
+
+	/**
+	 * Private clone method to prevent cloning of the instance of the
+	 * *Singleton* instance.
+	 *
+	 * @return void
+	 */
+	private function __clone() {
+		wc_doing_it_wrong( __FUNCTION__, __( 'Nope', 'qliro-one-for-woocommerce' ), '1.0' );
+	}
+
+	/**
+	 * Private unserialize method to prevent unserializing of the *Singleton*
+	 * instance.
+	 *
+	 * @return void
+	 */
+	public function __wakeup() {
+		wc_doing_it_wrong( __FUNCTION__, __( 'Nope', 'qliro-one-for-woocommerce' ), '1.0' );
+	}
+
 	public function __construct() {
 		if ( defined( 'PLUGIN_NAME_VERSION' ) ) {
 			$this->version = PLUGIN_NAME_VERSION;
@@ -68,9 +108,6 @@ class Wasa_Kredit_Checkout {
 			'includes/class-wasa-kredit-checkout-list-widget.php';
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) .
-			'includes/class-wasa-kredit-checkout-api.php';
-
-		require_once plugin_dir_path( dirname( __FILE__ ) ) .
 			'includes/class-wasa-kredit-checkout-page.php';
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) .
@@ -79,7 +116,39 @@ class Wasa_Kredit_Checkout {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) .
 			'includes/class-wasa-kredit-logger.php';
 
+		// Classes.
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'classes/class-wasa-kredit-checkout-api.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'classes/class-wasa-kredit-checkout-callbacks.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'classes/class-wasa-kredit-checkout-order-management.php';
+
+		// Includes.
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/wasa-kredit-functions.php';
+
+		// Request classes.
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'classes/requests/class-wasa-kredit-checkout-request.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'classes/requests/class-wasa-kredit-checkout-request-get.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'classes/requests/class-wasa-kredit-checkout-request-post.php';
+
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'classes/requests/post/class-wasa-kredit-checkout-request-auth.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'classes/requests/post/class-wasa-kredit-checkout-request-add-order-reference.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'classes/requests/post/class-wasa-kredit-checkout-request-calculate-monthly-cost.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'classes/requests/post/class-wasa-kredit-checkout-request-cancel-order.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'classes/requests/post/class-wasa-kredit-checkout-request-ship-order.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'classes/requests/post/class-wasa-kredit-checkout-request-create-invoice-checkout.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'classes/requests/post/class-wasa-kredit-checkout-request-create-leasing-checkout.php';
+
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'classes/requests/get/class-wasa-kredit-checkout-request-get-leasing-payment-options.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'classes/requests/get/class-wasa-kredit-checkout-request-get-monthly-cost-widget.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'classes/requests/get/class-wasa-kredit-checkout-request-get-order-status.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'classes/requests/get/class-wasa-kredit-checkout-request-get-order.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'classes/requests/get/class-wasa-kredit-checkout-request-get-payment-methods.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'classes/requests/get/class-wasa-kredit-checkout-request-validate-financed-invoice-amount.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'classes/requests/get/class-wasa-kredit-checkout-request-validate-financed-leasing-amount.php';
+
 		$this->loader = new Wasa_Kredit_Checkout_Loader();
+
+		$this->order_management = new Wasa_Kredit_Checkout_Order_Management();
+		$this->api              = new Wasa_Kredit_Checkout_API();
 	}
 
 	private function set_locale() {
