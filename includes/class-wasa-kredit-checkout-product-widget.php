@@ -84,7 +84,7 @@ class Wasa_Kredit_Checkout_Product_Widget {
 	 * Add product widget via shortcode.
 	 */
 	public function wasa_kredit_product_widget() {
-		return wp_kses_post( $this->get_product_widget() );
+		return $this->get_product_widget();
 	}
 
 	/**
