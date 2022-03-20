@@ -3,15 +3,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/lib/client-php-sdk/Wasa.php';
-
 class Wasa_Kredit_Checkout_List_Widget {
 	public function __construct() {
 		$this->settings               = get_option( 'wasa_kredit_settings' );
 		$this->widget_lower_threshold = isset( $this->settings['widget_lower_threshold'] ) ? $this->settings['widget_lower_threshold'] : '';
-
-		// Connect to WASA PHP SDK.
-		$this->_client = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
 
 		// Hooks.
 		add_action(

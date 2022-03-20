@@ -3,8 +3,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/lib/client-php-sdk/Wasa.php';
-
 /**
  * Wasa_Kredit_Checkout_Product_Widget class.
  */
@@ -17,8 +15,6 @@ class Wasa_Kredit_Checkout_Product_Widget {
 		$this->settings               = get_option( 'wasa_kredit_settings' );
 		$this->widget_format          = isset( $this->settings['widget_format'] ) ? $this->settings['widget_format'] : 'small';
 		$this->widget_lower_threshold = isset( $this->settings['widget_lower_threshold'] ) ? $this->settings['widget_lower_threshold'] : '';
-
-		$this->_client = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
 
 		// Hooks.
 		add_shortcode(
@@ -52,8 +48,8 @@ class Wasa_Kredit_Checkout_Product_Widget {
 
 					$monthly_cost_response = Wasa_Kredit_WC()->api->calculate_monthly_cost( $payload );
 
-					if ( isset( $monthly_cost_response ) && 200 === $monthly_cost_response->statusCode ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
-						$monthly_cost = $monthly_cost_response->data['monthly_costs'][0]['monthly_cost']['amount'];
+					if ( ! is_wp_error( $monthly_cost_response ) ) {
+						$monthly_cost = $monthly_cost_response['monthly_costs'][0]['monthly_cost']['amount'];
 
 						$formatted_financing_price = wc_price( $monthly_cost, array( 'decimals' => 0 ) ) . __( '/month', 'wasa-kredit-checkout' );
 
@@ -105,7 +101,7 @@ class Wasa_Kredit_Checkout_Product_Widget {
 
 		// Don't display widget if price is lower thant lower threshold setting.
 		if ( ! empty( $this->widget_lower_threshold ) && $this->widget_lower_threshold > $price ) {
-			$log      = Wasa_Kredit_Logger::format_log( '', 'GET', 'Aborting get_monthly_cost_widget', 'Price: ' . $price . '. Lower threshold: ' . $this->widget_lower_threshold, '', '', '200' ); // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
+			$log   = Wasa_Kredit_Logger::format_log( '', 'GET', 'Aborting get_monthly_cost_widget', 'Price: ' . $price . '. Lower threshold: ' . $this->widget_lower_threshold, '', '', '200' );
 			$level = 'info';
 			Wasa_Kredit_Logger::log( $log, $level, 'monthly_cost' );
 

@@ -3,8 +3,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit(); // Exit if accessed directly.
 }
 
-require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/lib/client-php-sdk/Wasa.php';
-
 add_action( 'plugins_loaded', 'init_wasa_kredit_gateway' );
 add_filter( 'woocommerce_payment_gateways', 'add_wasa_kredit_gateway' );
 
@@ -42,9 +40,6 @@ function init_wasa_kredit_gateway() {
 			if ( $this->settings['enabled'] ) {
 				$this->enabled = $this->settings['enabled'];
 			}
-
-			// Connect to WASA PHP SDK.
-			$this->_client = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
 
 			// Hooks.
 			add_action(

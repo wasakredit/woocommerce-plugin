@@ -69,9 +69,6 @@ class Wasa_Kredit_Checkout {
 		// Support for custom public CSS and JS
 		$this->define_public_hooks();
 
-		// Load API parts and callbacks
-		$this->api = new Wasa_Kredit_Checkout_API();
-
 		// Load shortcodes, like [wasa_kredit_product_widget]
 		$this->product_widget = new Wasa_Kredit_Checkout_Product_Widget();
 
@@ -109,9 +106,6 @@ class Wasa_Kredit_Checkout {
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) .
 			'includes/class-wasa-kredit-checkout-page.php';
-
-		require_once plugin_dir_path( dirname( __FILE__ ) ) .
-			'includes/class-wasa-kredit-checkout-sdk-helper.php';
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) .
 			'includes/class-wasa-kredit-logger.php';
