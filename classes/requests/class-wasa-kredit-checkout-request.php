@@ -214,12 +214,13 @@ abstract class Wasa_Kredit_Checkout_Request {
 	 */
 	protected function log_response( $response, $request_args, $request_url ) {
 		$method   = $this->method;
-		$title    = "{$this->log_title} - URL: {$request_url}";
+		$title    = $this->log_title;
 		$code     = wp_remote_retrieve_response_code( $response );
 		$order_id = $response['OrderID'] ?? null;
 		$log      = Wasa_Kredit_Logger::format_log( $order_id, $method, $title, $request_args, $request_url, $response, $code );
+		$level    = ( $code < 200 || $code > 299 ) ? 'error' : 'info';
 
-		Wasa_Kredit_Logger::log( $log );
+		Wasa_Kredit_Logger::log( $log, $level );
 	}
 
 	/**
