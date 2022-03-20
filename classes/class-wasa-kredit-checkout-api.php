@@ -22,6 +22,19 @@ class Wasa_Kredit_Checkout_API {
 	 * @param int $order_id The WooCommerce order id.
 	 * @return mixed
 	 */
+	public function calculate_monthly_cost( $arguments = array() ) {
+		$request  = new Wasa_Kredit_Checkout_Request_Calculate_Monthly_Cost( $arguments );
+		$response = $request->request();
+
+		return $this->check_for_api_error( $response );
+	}
+
+	/**
+	 * Creates a Wasa Kredit invoice order.
+	 *
+	 * @param int $order_id The WooCommerce order id.
+	 * @return mixed
+	 */
 	public function create_wasa_kredit_invoice_checkout( $order_id = false ) {
 		$request  = new Wasa_Kredit_Checkout_Request_Create_Invoice_Checkout( array( 'order_id' => $order_id ) );
 		$response = $request->request();
