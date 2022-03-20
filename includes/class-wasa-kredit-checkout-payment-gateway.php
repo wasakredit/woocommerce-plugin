@@ -290,7 +290,7 @@ function init_wasa_kredit_gateway() {
 
 				if( ! is_wp_error( $response2 ) ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
 
-					foreach ( $response['payment_methods'] as $key => $value ) {
+					foreach ( $response2['payment_methods'] as $key => $value ) {
 						if ( 'leasing' === $value['id'] || 'rental' === $value['id'] ) {
 							$desc = '';
 							if ( 'leasing' === $value['id'] ) {

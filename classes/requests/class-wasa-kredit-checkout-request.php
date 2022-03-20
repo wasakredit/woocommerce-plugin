@@ -100,10 +100,10 @@ abstract class Wasa_Kredit_Checkout_Request {
 	 */
 	protected function calculate_auth() {
 
-		$wasa_kredit_access_token = get_transient( 'wasa_kredit_access_token' );
+		$wasa_kredit_access_token = json_decode( get_transient( 'wasa_kredit_access_token' ), true );
 
 		// Return the token if we already have one.
-		if ( ! empty( $wasa_kredit_access_token[ $this->get_partner_id() ] ) && ! empty( $wasa_kredit_access_token[ $this->get_partner_id() ]['token_expiry'] ) && ! $this->has_expired() ) {
+		if ( ! empty( $wasa_kredit_access_token[ $this->get_partner_id() ] ) && ! empty( $wasa_kredit_access_token[ $this->get_partner_id() ]['token_expiry'] ) && ! $this->has_expired( $wasa_kredit_access_token ) ) {
 			return $wasa_kredit_access_token[ $this->get_partner_id() ]['access_token'];
 		}
 
@@ -272,7 +272,7 @@ abstract class Wasa_Kredit_Checkout_Request {
 	}
 
 	/**
-	 * Logs the response from the request.
+	 * Check if access token has expired or not..
 	 *
 	 * @param array $wasa_kredit_access_token The access token data.
 	 * @return bool
