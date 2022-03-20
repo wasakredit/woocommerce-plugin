@@ -178,13 +178,11 @@ function init_wasa_kredit_invoice_gateway() {
 
 			$cart_totals            = WC()->cart->get_totals();
 			$cart_total             = $cart_totals['subtotal'] + $cart_totals['shipping_total'];
-			$financed_amount_status = $this->_client->validate_financed_invoice_amount( $cart_total );
+			$financed_amount_status = Wasa_Kredit_WC()->api->validate_financed_invoice_amount( $cart_total );
 
-			// Cart value is within partner limits
-			if ( ! isset( $financed_amount_status )
-				|| ( 200 !== $financed_amount_status->statusCode // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
-				|| ! $financed_amount_status->data['validation_result'] ) ) {
-				// If total order value is too small or too large
+			// Cart value is within partner limits.
+			if ( is_wp_error( $financed_amount_status ) || empty( $financed_amount_status['validation_result'] ) ) {
+				// If total order value is too small or too large.
 				return false;
 			}
 

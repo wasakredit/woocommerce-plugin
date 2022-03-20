@@ -234,12 +234,10 @@ function init_wasa_kredit_gateway() {
 
 			$cart_totals            = WC()->cart->get_totals();
 			$cart_total             = $cart_totals['subtotal'] + $cart_totals['shipping_total'];
-			$financed_amount_status = $this->_client->validate_financed_amount( $cart_total );
+			$financed_amount_status = Wasa_Kredit_WC()->api->validate_financed_leasing_amount( $cart_total );
 
 			// Cart value is within partner limits.
-			if ( ! isset( $financed_amount_status )
-			|| (200 !== $financed_amount_status->statusCode // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
-				|| ! $financed_amount_status->data['validation_result'] ) ) {
+			if ( is_wp_error( $financed_amount_status ) || empty( $financed_amount_status['validation_result'] ) ) {
 				// If total order value is too small or too large.
 				return false;
 			}
@@ -289,15 +287,15 @@ function init_wasa_kredit_gateway() {
 				$cart_totals = WC()->cart->get_totals();
 				$cart_total  = $cart_totals['subtotal'] + $cart_totals['shipping_total'];
 
-				$response2              = $this->_client->get_payment_methods( number_format( $cart_total, 2, '.', '' ) );
-				$paymentOptionsResponse = $this->_client->get_leasing_payment_options( number_format( $cart_total, 2, '.', '' ) );
-				if ( isset( $paymentOptionsResponse ) === false || 200 !== $paymentOptionsResponse->statusCode ) {
+				$response2                = Wasa_Kredit_WC()->api->get_payment_methods( number_format( $cart_total, 2, '.', '' ) );
+				$payment_options_response = Wasa_Kredit_WC()->api->get_leasing_payment_options( number_format( $cart_total, 2, '.', '' ) );
+				if ( is_wp_error( $payment_options_response ) ) {
 					return;
 				}
 
-				if (isset($response2) && 200 === $response2->statusCode) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
+				if( ! is_wp_error( $response2 ) ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
 
-					foreach ( $response2->data['payment_methods'] as $key => $value ) {
+					foreach ( $response['payment_methods'] as $key => $value ) {
 						if ( 'leasing' === $value['id'] || 'rental' === $value['id'] ) {
 							$desc = '';
 							if ( 'leasing' === $value['id'] ) {
@@ -308,7 +306,7 @@ function init_wasa_kredit_gateway() {
 							}
 							$desc .= '<br>';
 
-							$contract_lengths = $paymentOptionsResponse->data['contract_lengths'];
+							$contract_lengths = $payment_options_response['contract_lengths'];
 
 							foreach ( $contract_lengths as $key3 => $value3 ) {
 								$months = $value3['contract_length'];

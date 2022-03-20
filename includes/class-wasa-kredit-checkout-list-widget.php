@@ -115,11 +115,11 @@ class Wasa_Kredit_Checkout_List_Widget {
 		endwhile;
 
 		// Get resposne from API with all products defined in $payload.
-		$response      = $this->_client->calculate_monthly_cost( $payload );
+		$response      = Wasa_Kredit_WC()->api->calculate_monthly_cost( $payload );
 		$monthly_costs = array();
 
-		if ( isset( $response ) && 200 === $response->statusCode ) {
-			foreach ( $response->data['monthly_costs'] as $current_product ) {
+		if ( ! is_wp_error( $response ) ) {
+			foreach ( $response['monthly_costs'] as $current_product ) {
 				$monthly_costs[ $current_product['product_id'] ] = $current_product['monthly_cost']['amount'];
 			}
 
@@ -179,11 +179,11 @@ class Wasa_Kredit_Checkout_List_Widget {
 		wp_reset_postdata();
 
 		// Get resposne from API with all products defined in $payload.
-		$response      = $this->_client->calculate_monthly_cost( $payload );
+		$response      = Wasa_Kredit_WC()->api->calculate_monthly_cost( $payload );
 		$monthly_costs = array();
 
-		if ( isset( $response ) && 200 === $response->statusCode ) {
-			foreach ( $response->data['monthly_costs'] as $current_product ) {
+		if ( ! is_wp_error( $response ) ) {
+			foreach ( $response['monthly_costs'] as $current_product ) {
 				$monthly_costs[ $current_product['product_id'] ] = $current_product['monthly_cost']['amount'];
 			}
 
