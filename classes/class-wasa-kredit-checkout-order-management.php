@@ -66,7 +66,9 @@ class Wasa_Kredit_Checkout_Order_Management {
 
 		$wasa_status = Wasa_Kredit_WC()->api->get_wasa_kredit_order_status( $transaction_id );
 
-		if ( is_wp_error( $wasa_order ) ) {
+		if ( is_wp_error( $wasa_status ) ) {
+			$note = __( 'Error when trying to get Wasa Kredit order status.', 'wasa-kredit-checkout' );
+			$order->add_order_note( $note );
 			return;
 		}
 
@@ -83,6 +85,8 @@ class Wasa_Kredit_Checkout_Order_Management {
 		}
 
 		if ( ! is_wp_error( $response ) ) {
+			$order->add_order_note( __( 'Wasa Kredit order: ', 'wasa-kredit-checkout' ) . $order_status );
+		} else {
 			$note = __( 'Error: You changed order status to ', 'wasa-kredit-checkout' ) . $order_status . __( ' but the order could not be changed at Wasa Kredit.', 'wasa-kredit-checkout' );
 			$order->add_order_note( $note );
 			$order->save();
