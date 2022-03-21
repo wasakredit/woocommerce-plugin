@@ -19,7 +19,7 @@ class Wasa_Kredit_Checkout_API {
 	/**
 	 * Creates a Wasa Kredit invoice order.
 	 *
-	 * @param int $order_id The WooCommerce order id.
+	 * @param array $arguments The arguments passed for calculating monthly cost.
 	 * @return mixed
 	 */
 	public function calculate_monthly_cost( $arguments = array() ) {

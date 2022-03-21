@@ -30,23 +30,20 @@ class Wasa_Kredit_Checkout_Request_Auth extends Wasa_Kredit_Checkout_Request_Pos
 	 */
 	protected function get_request_url() {
 		if ( 'yes' === $this->settings['test_mode'] ) {
-			// return 'https://auth.inttest-b2b.wasakredit.se/';
 			return 'https://auth.inttest-b2b.wasakredit.se/connect/token';
-			// return 'https://private-anon-98780a8c83-checkoutgatewayapi.apiary-mock.com/auth/connect/token';
 		}
-
-		// return 'https://b2b.services.wasakredit.se/auth';
 		return 'https://b2b.services.wasakredit.se/auth/connect/token';
 	}
 
 	/**
 	 * Get the request headers.
 	 *
+	 * @param array $body not used for auth request.
+	 *
 	 * @return array
 	 */
 	protected function get_request_headers( $body = '' ) {
 		return array(
-			/*'Authorization' => 'Basic ' . base64_encode( $this->get_partner_id() . ':' . $this->get_secret() ), // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions -- Base64 used to calculate auth header. */
 			'Content-Type' => 'application/x-www-form-urlencoded',
 		);
 	}
@@ -54,20 +51,12 @@ class Wasa_Kredit_Checkout_Request_Auth extends Wasa_Kredit_Checkout_Request_Pos
 	/**
 	 * Get the body for the request.
 	 *
-	 * @return void
+	 * @return string
 	 */
 	protected function get_body() {
-		$encodedID     = urlencode( $this->get_partner_id() );
-		$encodedSecret = urlencode( $this->get_secret() );
-		$fields        = "client_id=$encodedID&client_secret=$encodedSecret&grant_type=client_credentials";
-		// $fields        = 'client_id=cbbd3568-2471-4416-b4ef-0596cdd1dc38&client_secret=%5Dk_lPnOu8zsUvntO&grant_type=client_credentials';
-		/*
-		$fields = array(
-			'client_id'     => $this->get_partner_id(),
-			'client_secret' => $this->get_secret(),
-			'grant_type'    => 'client_credentials',
-		);
-		*/
+		$encoded_id     = rawurlencode( $this->get_partner_id() );
+		$encoded_secret = rawurlencode( $this->get_secret() );
+		$fields         = "client_id=$encoded_id&client_secret=$encoded_secret&grant_type=client_credentials";
 
 		return $fields;
 	}
