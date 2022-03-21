@@ -126,7 +126,7 @@ class Wasa_Kredit_Checkout_API {
 	 * @return mixed
 	 */
 	public function get_wasa_kredit_order( $order_id = false ) {
-		$request  = new Wasa_Kredit_Checkout_Get_Order( array( 'order_id' => $order_id ) );
+		$request  = new Wasa_Kredit_Checkout_Request_Get_Order( array( 'order_id' => $order_id ) );
 		$response = $request->request();
 
 		return $this->check_for_api_error( $response );
@@ -139,7 +139,7 @@ class Wasa_Kredit_Checkout_API {
 	 * @return mixed
 	 */
 	public function get_wasa_kredit_order_status( $order_id = false ) {
-		$request  = new Wasa_Kredit_Checkout_Get_Order_Status( array( 'order_id' => $order_id ) );
+		$request  = new Wasa_Kredit_Checkout_Request_Get_Order_Status( array( 'order_id' => $order_id ) );
 		$response = $request->request();
 
 		return $this->check_for_api_error( $response );
@@ -165,7 +165,7 @@ class Wasa_Kredit_Checkout_API {
 	 * @return mixed
 	 */
 	public function cancel_order( $order_id = false ) {
-		$request  = new Wasa_Kredit_Checkout_Cancel_Order( array( 'order_id' => $order_id ) );
+		$request  = new Wasa_Kredit_Checkout_Request_Cancel_Order( array( 'order_id' => $order_id ) );
 		$response = $request->request();
 
 		return $this->check_for_api_error( $response );
