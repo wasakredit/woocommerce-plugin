@@ -48,7 +48,7 @@ get_header();
 		?>
 		var options = {
 			onComplete: function (orderReferences) {
-                window.location.href = '<?php echo $order->get_checkout_order_received_url();  // @codingStandardsIgnoreLine - Proceed Url with Query parameters ?>';
+				window.location.href = '<?php echo esc_url( $order->get_checkout_order_received_url() ); ?>';
 			},
 			onCancel: function () {
 				let checkoutUrl = '<?php echo esc_url( $cancel_url ); ?>';

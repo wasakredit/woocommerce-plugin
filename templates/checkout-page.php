@@ -68,10 +68,10 @@ get_header();
 				}
 			}
 
-			var url = '<?php echo $confirm_url; // @codingStandardsIgnoreLine - Url with Query parameters pointing towards custom endpoint ?>' + '=' + wasaKreditOrderId;
+			var url = '<?php echo esc_url( $confirm_url ); ?>' + '=' + wasaKreditOrderId;
 
 			jQuery.ajax(url);
-			window.location.href = '<?php echo $order->get_checkout_order_received_url();  // @codingStandardsIgnoreLine - Proceed Url with Query parameters ?>';
+			window.location.href = '<?php echo esc_url( $order->get_checkout_order_received_url() ); ?>';
 			},
 			onCancel: function () {
 				var checkoutUrl = '<?php echo esc_url( $cancel_url ); ?>';

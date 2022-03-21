@@ -278,7 +278,7 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 				return;
 			}
 
-			if( ! is_wp_error( $response2 ) ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
+			if ( ! is_wp_error( $response2 ) ) {
 
 				foreach ( $response2['payment_methods'] as $key => $value ) {
 					if ( 'leasing' === $value['id'] || 'rental' === $value['id'] ) {
