@@ -45,33 +45,6 @@ if ( ! defined( 'WPINC' ) ) {
 define( 'WASA_KREDIT_CHECKOUT_VERSION', '2.1.4' );
 define( 'WASA_KREDIT_CHECKOUT_PLUGIN_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 
-/**
- * The code that runs during plugin activation.
- * This action is documented in includes/class-wasa-kredit-checkout-activator.php
- */
-function activate_wasa_kredit_checkout() {
-	require_once plugin_dir_path( __FILE__ ) .
-		'includes/class-wasa-kredit-checkout-activator.php';
-	Wasa_Kredit_Checkout_Activator::activate();
-}
-
-/**
- * The code that runs during plugin deactivation.
- * This action is documented in includes/class-wasa-kredit-checkout-deactivator.php
- */
-function deactivate_wasa_kredit_checkout() {
-	require_once plugin_dir_path( __FILE__ ) .
-		'includes/class-wasa-kredit-checkout-deactivator.php';
-	Wasa_Kredit_Checkout_Deactivator::deactivate();
-}
-
-register_activation_hook( __FILE__, 'activate_wasa_kredit_checkout' );
-register_deactivation_hook( __FILE__, 'deactivate_wasa_kredit_checkout' );
-
-
-
-
-
 
 if ( ! class_exists( 'Wasa_Kredit_Checkout' ) ) {
 	/**
