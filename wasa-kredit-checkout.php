@@ -52,8 +52,25 @@ if ( ! class_exists( 'Wasa_Kredit_Checkout' ) ) {
 	 */
 	class Wasa_Kredit_Checkout {
 
+		/**
+		 * Loader.
+		 *
+		 * @var $loader
+		 */
 		protected $loader;
+
+		/**
+		 * Plugin name.
+		 *
+		 * @var $loplugin_nameader
+		 */
 		protected $plugin_name;
+
+		/**
+		 * Version.
+		 *
+		 * @var $version
+		 */
 		protected $version;
 
 		/**
@@ -151,6 +168,8 @@ if ( ! class_exists( 'Wasa_Kredit_Checkout' ) ) {
 		/**
 		 * Add settings link to plugin list view
 		 *
+		 * @param array $links The plugin links.
+		 *
 		 * @since    1.0.0
 		 */
 		public function plugin_add_settings_link( $links ) {
@@ -209,8 +228,13 @@ if ( ! class_exists( 'Wasa_Kredit_Checkout' ) ) {
 			$this->loader = new Wasa_Kredit_Checkout_Loader();
 		}
 
+		/**
+		 * Define admin hooks.
+		 *
+		 * @return void
+		 */
 		private function define_admin_hooks() {
-			// Add custom admin CSS and JS
+			// Add custom admin CSS and JS.
 			$plugin_admin = new Wasa_Kredit_Checkout_Admin(
 				$this->get_plugin_name(),
 				$this->get_version()
@@ -228,6 +252,11 @@ if ( ! class_exists( 'Wasa_Kredit_Checkout' ) ) {
 			);
 		}
 
+		/**
+		 * Define public hooks.
+		 *
+		 * @return void
+		 */
 		private function define_public_hooks() {
 			// Add custom public css and JS
 			$plugin_public = new Wasa_Kredit_Checkout_Public(
