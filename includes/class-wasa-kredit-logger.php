@@ -69,6 +69,9 @@ class Wasa_Kredit_Logger {
 
 		// Unset the snippet to prevent issues in the request body.
 		// Add logic to remove any HTML snippets from the request body.
+		if ( 'Get monthly cost widget' === $title && ( $code > 199 && $code < 300 ) ) {
+			$response = 'Response body removed since it is returning html.';
+		}
 
 		return array(
 			'id'             => $checkout_id,

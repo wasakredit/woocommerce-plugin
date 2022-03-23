@@ -1,19 +1,22 @@
-<?php
+<?php // phpcs:ignore
 if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/lib/client-php-sdk/Wasa.php';
-
+/**
+ * Wasa_Kredit_Checkout_Product_Widget class.
+ */
 class Wasa_Kredit_Checkout_Product_Widget {
+
+	/**
+	 * Class constructor.
+	 */
 	public function __construct() {
 		$this->settings               = get_option( 'wasa_kredit_settings' );
 		$this->widget_format          = isset( $this->settings['widget_format'] ) ? $this->settings['widget_format'] : 'small';
 		$this->widget_lower_threshold = isset( $this->settings['widget_lower_threshold'] ) ? $this->settings['widget_lower_threshold'] : '';
 
-		$this->_client = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
-
-		// Hooks
+		// Hooks.
 		add_shortcode(
 			'wasa_kredit_product_widget',
 			array(
@@ -43,10 +46,10 @@ class Wasa_Kredit_Checkout_Product_Widget {
 						'product_id'     => 'ADDON_PRICE',
 					);
 
-					$monthly_cost_response = $this->_client->calculate_monthly_cost( $payload );
+					$monthly_cost_response = Wasa_Kredit_WC()->api->calculate_monthly_cost( $payload );
 
-					if ( isset( $monthly_cost_response ) && 200 === $monthly_cost_response->statusCode ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
-						$monthly_cost = $monthly_cost_response->data['monthly_costs'][0]['monthly_cost']['amount'];
+					if ( ! is_wp_error( $monthly_cost_response ) ) {
+						$monthly_cost = $monthly_cost_response['monthly_costs'][0]['monthly_cost']['amount'];
 
 						$formatted_financing_price = wc_price( $monthly_cost, array( 'decimals' => 0 ) ) . __( '/month', 'wasa-kredit-checkout' );
 
@@ -62,18 +65,27 @@ class Wasa_Kredit_Checkout_Product_Widget {
 
 	}
 
+	/**
+	 * Add product widget via hook.
+	 */
 	public function add_product_widget_to_product_page() {
 		if ( 'yes' !== $this->settings['widget_on_product_details'] ) {
 			return;
 		}
 
-		echo $this->get_product_widget(); // @codingStandardsIgnoreLine - Should output html from our Backend
+		echo $this->get_product_widget();
 	}
 
+	/**
+	 * Add product widget via shortcode.
+	 */
 	public function wasa_kredit_product_widget() {
-		return $this->get_product_widget(); // @codingStandardsIgnoreLine - Should output html from our Backend
+		return $this->get_product_widget();
 	}
 
+	/**
+	 * HTML for product widget.
+	 */
 	private function get_product_widget() {
 		$product = wc_get_product();
 
@@ -81,7 +93,6 @@ class Wasa_Kredit_Checkout_Product_Widget {
 			return;
 		}
 
-		// $price    = $product->get_price();
 		if ( $product->is_type( 'variable' ) ) {
 			$price = $product->get_variation_price( 'min' );
 		} else {
@@ -90,23 +101,17 @@ class Wasa_Kredit_Checkout_Product_Widget {
 
 		// Don't display widget if price is lower thant lower threshold setting.
 		if ( ! empty( $this->widget_lower_threshold ) && $this->widget_lower_threshold > $price ) {
-			$log      = Wasa_Kredit_Logger::format_log( '', 'GET', 'Aborting get_monthly_cost_widget', 'Price: ' . $price . '. Lower threshold: ' . $this->widget_lower_threshold, '', '', '200' ); // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
+			$log   = Wasa_Kredit_Logger::format_log( '', 'GET', 'Aborting get_monthly_cost_widget', 'Price: ' . $price . '. Lower threshold: ' . $this->widget_lower_threshold, '', '', '200' );
 			$level = 'info';
 			Wasa_Kredit_Logger::log( $log, $level, 'monthly_cost' );
 
 			return;
 		}
 
-		$response = $this->_client->get_monthly_cost_widget( $price, $this->widget_format );
-		$log      = Wasa_Kredit_Logger::format_log( '', 'GET', 'get_monthly_cost_widget', 'Price: ' . $price, '', stripslashes_deep( (array) $response ), $response->statusCode ); // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
-		$level    = 'info';
-		if ( $response->statusCode < 200 || $response->statusCode > 299 ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
-			$level = 'error';
-		}
-		Wasa_Kredit_Logger::log( $log, $level, 'monthly_cost' );
+		$response = Wasa_Kredit_WC()->api->get_monthly_cost_widget( $price, $this->widget_format );
 
-		if ( isset( $response ) && 200 === $response->statusCode ) { // @codingStandardsIgnoreLine - Our backend answers in with camelCasing, not snake_casing
-			return '<div class="wasa-kredit-product-widget-container">' . $response->data . '</div>';
+		if ( ! is_wp_error( $response ) ) {
+			return '<div class="wasa-kredit-product-widget-container">' . $response . '</div>';
 		}
 
 		return false;
