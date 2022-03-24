@@ -258,7 +258,7 @@ if ( ! class_exists( 'Wasa_Kredit_Checkout' ) ) {
 		 * @return void
 		 */
 		private function define_public_hooks() {
-			// Add custom public css and JS
+			// Add custom public css and JS.
 			$plugin_public = new Wasa_Kredit_Checkout_Public(
 				$this->get_plugin_name(),
 				$this->get_version()
@@ -276,18 +276,30 @@ if ( ! class_exists( 'Wasa_Kredit_Checkout' ) ) {
 			);
 		}
 
+		/**
+		 * Activate hooks.
+		 */
 		public function run() {
 			$this->loader->run();
 		}
 
+		/**
+		 * Get plugin name.
+		 */
 		public function get_plugin_name() {
 			return $this->plugin_name;
 		}
 
+		/**
+		 * Get plugin loader.
+		 */
 		public function get_loader() {
 			return $this->loader;
 		}
 
+		/**
+		 * Get version number.
+		 */
 		public function get_version() {
 			return $this->version;
 		}

@@ -24,6 +24,8 @@ class Wasa_Kredit_Logger {
 	 * Logs an event.
 	 *
 	 * @param string $data The data string.
+	 * @param string $level info or error.
+	 * @param string $log_type type of log request.
 	 */
 	public static function log( $data, $level = 'info', $log_type = 'checkout' ) {
 		$wasa_kredit_settings = get_option( 'wasa_kredit_settings' );

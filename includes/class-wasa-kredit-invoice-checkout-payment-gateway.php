@@ -46,7 +46,7 @@ class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 	}
 
 	public function init_form_fields() {
-		// Defines settings fields on WooCommerce > Settings > Checkout > Wasa Kredit
+		// Defines settings fields on WooCommerce > Settings > Checkout > Wasa Kredit.
 		return array(
 			'invoice_enabled'    => array(
 				'title'   => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
@@ -119,7 +119,7 @@ class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 	}
 
 	public function process_admin_options() {
-		// On save in admin settings
+		// On save in admin settings.
 		$this->init_settings();
 
 		$post_data = $this->get_post_data();
@@ -152,7 +152,7 @@ class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 
 		$enabled = $this->get_option( 'invoice_enabled' );
 
-		// Plugin is enabled
+		// Plugin is enabled.
 		if ( 'yes' !== $enabled || is_null( WC()->cart ) ) {
 			return false;
 		}
@@ -182,7 +182,7 @@ class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 	}
 
 	public function process_payment( $order_id ) {
-		// When clicking Proceed button, create a on-hold order
+		// When clicking Proceed button, create a on-hold order.
 		global $woocommerce;
 		$order = new WC_Order( $order_id );
 
@@ -193,7 +193,7 @@ class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 	}
 
 	public function get_return_url( $order = null ) {
-		// Add order key to custom endpoint route as query param
+		// Add order key to custom endpoint route as query param.
 		return add_query_arg(
 			array(
 				'wasa_kredit_checkout'       => $order->get_order_key(),
@@ -204,7 +204,7 @@ class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 	}
 
 	public function get_title() {
-		// Set custom title to payment to display in checkout
+		// Set custom title to payment to display in checkout.
 		if ( isset( WC()->cart ) ) {
 
 			$cart_totals = WC()->cart->get_totals();
