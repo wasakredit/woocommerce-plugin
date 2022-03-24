@@ -73,7 +73,7 @@ class Wasa_Kredit_Checkout_Product_Widget {
 			return;
 		}
 
-		echo $this->get_product_widget();
+		echo $this->get_product_widget(); // phpcs:ignore WordPress -- Can not escape this, since its the monthly cost widget returned from Wasa Kredit.
 	}
 
 	/**
