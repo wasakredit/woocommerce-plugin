@@ -1,17 +1,21 @@
-<?php
+<?php // phpcs:ignore
 if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/lib/client-php-sdk/Wasa.php';
-
+/**
+ * Wasa_Kredit_Checkout_List_Widget class.
+ *
+ * Class that handles display of Wasa Kredit monthly cost price on archive pages.
+ */
 class Wasa_Kredit_Checkout_List_Widget {
+
+	/**
+	 * Class constructor.
+	 */
 	public function __construct() {
 		$this->settings               = get_option( 'wasa_kredit_settings' );
 		$this->widget_lower_threshold = isset( $this->settings['widget_lower_threshold'] ) ? $this->settings['widget_lower_threshold'] : '';
-
-		// Connect to WASA PHP SDK.
-		$this->_client = Wasa_Kredit_Checkout_SdkHelper::CreateClient();
 
 		// Hooks.
 		add_action(
@@ -41,6 +45,9 @@ class Wasa_Kredit_Checkout_List_Widget {
 		);
 	}
 
+	/**
+	 * Display price per month function.
+	 */
 	public function display_leasing_price_per_product() {
 
 		// Adds financing info betweeen price and Add to cart button.
@@ -62,12 +69,15 @@ class Wasa_Kredit_Checkout_List_Widget {
 		}
 
 		echo '<p>' .
-			__( 'Financing', 'wasa-kredit-checkout' ) . ' <span style="white-space:nowrap;">' .
-			wc_price( $monthly_cost, array( 'decimals' => 0 ) ) . __( '/month', 'wasa-kredit-checkout' ) .
+		esc_html( __( 'Financing', 'wasa-kredit-checkout' ) ) . ' <span style="white-space:nowrap;">' .
+		wp_kses_post( wc_price( $monthly_cost, array( 'decimals' => 0 ) ) ) . esc_html( __( '/month', 'wasa-kredit-checkout' ) ) .
 			'</span></p>';
 
 	}
 
+	/**
+	 * Fetch and save prices.
+	 */
 	public function save_product_prices() {
 		// Collects all financing costs for all shown products.
 		// Store as global variable to be accessed in display_leasing_price_per_product().
@@ -115,11 +125,11 @@ class Wasa_Kredit_Checkout_List_Widget {
 		endwhile;
 
 		// Get resposne from API with all products defined in $payload.
-		$response      = $this->_client->calculate_monthly_cost( $payload );
+		$response      = Wasa_Kredit_WC()->api->calculate_monthly_cost( $payload );
 		$monthly_costs = array();
 
-		if ( isset( $response ) && 200 === $response->statusCode ) {
-			foreach ( $response->data['monthly_costs'] as $current_product ) {
+		if ( ! is_wp_error( $response ) ) {
+			foreach ( $response['monthly_costs'] as $current_product ) {
 				$monthly_costs[ $current_product['product_id'] ] = $current_product['monthly_cost']['amount'];
 			}
 
@@ -128,6 +138,11 @@ class Wasa_Kredit_Checkout_List_Widget {
 		}
 	}
 
+	/**
+	 * Fetch and save product pricces, via shortcode.
+	 *
+	 * @param array $args The shortcode args.
+	 */
 	public function save_product_prices_shortcodes( $args ) {
 		// Collects all financing costs for all shown products.
 		// Store as global variable to be accessed in display_leasing_price_per_product().
@@ -179,11 +194,11 @@ class Wasa_Kredit_Checkout_List_Widget {
 		wp_reset_postdata();
 
 		// Get resposne from API with all products defined in $payload.
-		$response      = $this->_client->calculate_monthly_cost( $payload );
+		$response      = Wasa_Kredit_WC()->api->calculate_monthly_cost( $payload );
 		$monthly_costs = array();
 
-		if ( isset( $response ) && 200 === $response->statusCode ) {
-			foreach ( $response->data['monthly_costs'] as $current_product ) {
+		if ( ! is_wp_error( $response ) ) {
+			foreach ( $response['monthly_costs'] as $current_product ) {
 				$monthly_costs[ $current_product['product_id'] ] = $current_product['monthly_cost']['amount'];
 			}
 

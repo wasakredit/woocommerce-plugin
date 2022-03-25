@@ -24,6 +24,8 @@ class Wasa_Kredit_Logger {
 	 * Logs an event.
 	 *
 	 * @param string $data The data string.
+	 * @param string $level info or error.
+	 * @param string $log_type type of log request.
 	 */
 	public static function log( $data, $level = 'info', $log_type = 'checkout' ) {
 		$wasa_kredit_settings = get_option( 'wasa_kredit_settings' );
@@ -69,6 +71,9 @@ class Wasa_Kredit_Logger {
 
 		// Unset the snippet to prevent issues in the request body.
 		// Add logic to remove any HTML snippets from the request body.
+		if ( 'Get monthly cost widget' === $title && ( $code > 199 && $code < 300 ) ) {
+			$response = 'Response body removed since it is returning html.';
+		}
 
 		return array(
 			'id'             => $checkout_id,
