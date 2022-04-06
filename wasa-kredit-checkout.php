@@ -1,4 +1,4 @@
-<?php // phpcs:ignore
+<?php // phpcs:ignore WordPress.NamingConventions.ValidFileName
 if ( ! defined( 'ABSPATH' ) ) {
 	exit(); // Exit if accessed directly.
 }
