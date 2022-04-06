@@ -1,4 +1,10 @@
-<?php // phpcs:ignore
+<?php
+/**
+ * Product widget class file.
+ *
+ * @package Wasa_Kredit/Classes
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
@@ -73,7 +79,10 @@ class Wasa_Kredit_Checkout_Product_Widget {
 			return;
 		}
 
-		echo $this->get_product_widget(); // phpcs:ignore WordPress -- Can not escape this, since its the monthly cost widget returned from Wasa Kredit.
+		$widget             = $this->get_product_widget();
+		$widget_without_css = preg_replace( '~<style(.*?)</style>~Usi', '', $widget );
+		echo wp_kses( $widget_without_css, wasa_kredit_allowed_tags() );
+
 	}
 
 	/**
