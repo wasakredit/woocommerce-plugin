@@ -1,4 +1,10 @@
-<?php // phpcs:ignore
+<?php
+/**
+ * Logger class file.
+ *
+ * @package Wasa_Kredit/Classes
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit(); // Exit if accessed directly.
 }
