@@ -1,12 +1,17 @@
-<?php // phpcs:ignore
+<?php
+/**
+ * Wasa_Kredit_Checkout_List_Widget class.
+ *
+ * @package Wasa_Kredit_Checkout\Classes
+ * Class that handles display of Wasa Kredit monthly cost price on archive pages.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
 /**
  * Wasa_Kredit_Checkout_List_Widget class.
- *
- * Class that handles display of Wasa Kredit monthly cost price on archive pages.
  */
 class Wasa_Kredit_Checkout_List_Widget {
 
