@@ -31,6 +31,19 @@ class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 		);
 	}
 
+	/**
+	 * Get gateway icon.
+	 *
+	 * @return string
+	 */
+	public function get_icon() {
+
+		$icon_src   = WASA_KREDIT_CHECKOUT_PLUGIN_URL . '/assets/images/wasa-kredit-icon.png';
+		$icon_width = '26';
+		$icon_html  = '<img src="' . $icon_src . '" alt="Wasa Kredit" style="max-width:' . $icon_width . 'px"/>';
+		return apply_filters( 'truelayer_icon_html', $icon_html );
+	}
+
 	public function init_settings() {
 		$this->settings = get_option( $this->options_key, null );
 

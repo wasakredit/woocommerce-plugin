@@ -44,6 +44,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 define( 'WASA_KREDIT_CHECKOUT_VERSION', '2.2.1' );
 define( 'WASA_KREDIT_CHECKOUT_PLUGIN_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
+define( 'WASA_KREDIT_CHECKOUT_PLUGIN_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
 
 
 if ( ! class_exists( 'Wasa_Kredit_Checkout' ) ) {
