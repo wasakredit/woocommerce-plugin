@@ -11,12 +11,13 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 		$this->id                 = 'wasa_kredit';
 		$this->plugin_id          = 'wasa_kredit';
 		$this->name               = 'Wasa Kredit';
-		$this->title              = 'Wasa Kredit Leasing';
+		$this->title              = __( 'Wasa Kredit Leasing', 'wasa-kredit-checkout' );
 		$this->method_title       = 'Wasa Kredit Leasing';
 		$this->description        = 'Use to pay with Wasa Kredit Leasing Checkout.';
 		$this->method_description = 'Use to pay with Wasa Kredit Leasing Checkout.';
 		$this->order_button_text  = __( 'Proceed', 'wasa-kredit-checkout' );
 		$this->selected_currency  = get_woocommerce_currency();
+
 		// Where to store settings in DB.
 		$this->options_key = 'wasa_kredit_settings';
 
@@ -275,7 +276,7 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 	}
 
 	public function get_title() {
-		return __( 'Financing with Wasa Kredit Checkout', 'wasa-kredit-checkout' );
+		return $this->title;
 	}
 
 	public function get_description() {
@@ -300,7 +301,8 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 							$desc = '<p><b>' . __( 'Finance your purchase with Wasa Kredit leasing', 'wasa-kredit-checkout' ) . '</b><br>';
 						}
 						if ( 'rental' === $value['id'] ) {
-							$desc = '<p><b>' . __( 'Finance your purchase with Wasa Kredit rental', 'wasa-kredit-checkout' ) . '</b><br>';
+							$this->title = __( 'Wasa Kredit Rental', 'wasa-kredit-checkout' );
+							$desc        = '<p><b>' . __( 'Finance your purchase with Wasa Kredit rental', 'wasa-kredit-checkout' ) . '</b><br>';
 						}
 						$desc .= '<br>';
 
@@ -311,16 +313,18 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 							$amount = $value3['monthly_cost']['amount'];
 
 							// translators: %s placeholder is a number to display number of months.
-							$desc_months = sprintf( __( ' for %s months.', 'wasa-kredit-checkout' ), $months );
+							$desc_months = sprintf( __( ' for %s months', 'wasa-kredit-checkout' ), $months );
 							$desc_item   = '<br>' . wc_price( $amount, array( 'decimals' => 0 ) ) . __( '/month', 'wasa-kredit-checkout' ) . $desc_months;
 							$desc       .= $desc_item;
 						}
 
 						$desc .= '<br><br>';
-						$desc .= __( 'Proceed to select your monthly cost.', 'wasa-kredit-checkout' );
+
+						$desc .= '</p>';
+						$desc .= '<p>' . __( 'Proceed to select your monthly cost', 'wasa-kredit-checkout' ) . '</p>';
 					}
 				}
-				$desc .= '</p>';
+
 				return $desc;
 			}
 		}

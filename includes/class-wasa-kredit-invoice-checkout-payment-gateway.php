@@ -217,23 +217,12 @@ class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 	}
 
 	public function get_title() {
-		// Set custom title to payment to display in checkout.
-		if ( isset( WC()->cart ) ) {
-
-			$cart_totals = WC()->cart->get_totals();
-
-			$total_costs =
-				$cart_totals['subtotal'] +
-				$cart_totals['shipping_total'] +
-				$cart_totals['fee_total'];
-
-			return __( 'Invoice', 'wasa-kredit-checkout' );
-		}
-
-		return __( 'Financing with Wasa Kredit Invoice Checkout', 'wasa-kredit-checkout' );
+		return __( 'Wasa Kredit Invoice', 'wasa-kredit-checkout' );
 	}
 
 	public function get_description() {
-		return __( 'Financing with Wasa Kredit Checkout', 'wasa-kredit-checkout' );
+		$desc  = '<p>' . __( 'Pay within 30 days', 'wasa-kredit-checkout' ) . '</p>';
+		$desc .= '<p>' . __( 'Pay after you receive the item', 'wasa-kredit-checkout' ) . '</p>';
+		return $desc;
 	}
 }
