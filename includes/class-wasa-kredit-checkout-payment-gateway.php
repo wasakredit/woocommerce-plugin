@@ -11,12 +11,13 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 		$this->id                 = 'wasa_kredit';
 		$this->plugin_id          = 'wasa_kredit';
 		$this->name               = 'Wasa Kredit';
-		$this->title              = 'Wasa Kredit Leasing';
+		$this->title              = __( 'Wasa Kredit Leasing', 'wasa-kredit-checkout' );
 		$this->method_title       = 'Wasa Kredit Leasing';
 		$this->description        = 'Use to pay with Wasa Kredit Leasing Checkout.';
 		$this->method_description = 'Use to pay with Wasa Kredit Leasing Checkout.';
 		$this->order_button_text  = __( 'Proceed', 'wasa-kredit-checkout' );
 		$this->selected_currency  = get_woocommerce_currency();
+
 		// Where to store settings in DB.
 		$this->options_key = 'wasa_kredit_settings';
 
@@ -33,6 +34,19 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 			'woocommerce_update_options_payment_gateways_' . $this->id,
 			array( $this, 'process_admin_options' )
 		);
+	}
+
+	/**
+	 * Get gateway icon.
+	 *
+	 * @return string
+	 */
+	public function get_icon() {
+
+		$icon_src   = WASA_KREDIT_CHECKOUT_PLUGIN_URL . '/assets/images/wasa-kredit-icon.png';
+		$icon_width = '26';
+		$icon_html  = '<img src="' . $icon_src . '" alt="Wasa Kredit" style="max-width:' . $icon_width . 'px"/>';
+		return apply_filters( 'truelayer_icon_html', $icon_html );
 	}
 
 	public function init_settings() {
@@ -262,7 +276,22 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 	}
 
 	public function get_title() {
-		return __( 'Financing with Wasa Kredit Checkout', 'wasa-kredit-checkout' );
+		if ( isset( WC()->cart ) ) {
+			$cart_totals                 = WC()->cart->get_totals();
+			$cart_total                  = $cart_totals['subtotal'] + $cart_totals['shipping_total'];
+			$wasa_kredit_payment_methods = $this->get_wasa_kredit_payment_methods( $cart_total );
+			if ( ! is_wp_error( $wasa_kredit_payment_methods ) && is_array( $wasa_kredit_payment_methods ) ) {
+				foreach ( $wasa_kredit_payment_methods['payment_methods'] as $key => $value ) {
+					if ( 'rental' === $value['id'] ) {
+						return __( 'Wasa Kredit Rental', 'wasa-kredit-checkout' );
+					}
+					if ( 'leasing' === $value['id'] ) {
+						return __( 'Wasa Kredit Leasing', 'wasa-kredit-checkout' );
+					}
+				}
+			}
+		}
+		return $this->title;
 	}
 
 	public function get_description() {
@@ -272,22 +301,24 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 			$cart_totals = WC()->cart->get_totals();
 			$cart_total  = $cart_totals['subtotal'] + $cart_totals['shipping_total'];
 
-			$response2                = Wasa_Kredit_WC()->api->get_payment_methods( number_format( $cart_total, 2, '.', '' ) );
-			$payment_options_response = Wasa_Kredit_WC()->api->get_leasing_payment_options( number_format( $cart_total, 2, '.', '' ) );
+			$wasa_kredit_payment_methods = $this->get_wasa_kredit_payment_methods( $cart_total );
+
+			$payment_options_response = $this->get_wasa_kredit_leasing_payment_options( $cart_total );
 			if ( is_wp_error( $payment_options_response ) ) {
 				return;
 			}
 
-			if ( ! is_wp_error( $response2 ) ) {
+			if ( ! is_wp_error( $wasa_kredit_payment_methods ) ) {
 
-				foreach ( $response2['payment_methods'] as $key => $value ) {
+				foreach ( $wasa_kredit_payment_methods['payment_methods'] as $key => $value ) {
 					if ( 'leasing' === $value['id'] || 'rental' === $value['id'] ) {
 						$desc = '';
 						if ( 'leasing' === $value['id'] ) {
 							$desc = '<p><b>' . __( 'Finance your purchase with Wasa Kredit leasing', 'wasa-kredit-checkout' ) . '</b><br>';
 						}
 						if ( 'rental' === $value['id'] ) {
-							$desc = '<p><b>' . __( 'Finance your purchase with Wasa Kredit rental', 'wasa-kredit-checkout' ) . '</b><br>';
+							$this->title = __( 'Wasa Kredit Rental', 'wasa-kredit-checkout' );
+							$desc        = '<p><b>' . __( 'Finance your purchase with Wasa Kredit rental', 'wasa-kredit-checkout' ) . '</b><br>';
 						}
 						$desc .= '<br>';
 
@@ -298,19 +329,51 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 							$amount = $value3['monthly_cost']['amount'];
 
 							// translators: %s placeholder is a number to display number of months.
-							$desc_months = sprintf( __( ' for %s months.', 'wasa-kredit-checkout' ), $months );
+							$desc_months = sprintf( __( ' for %s months', 'wasa-kredit-checkout' ), $months );
 							$desc_item   = '<br>' . wc_price( $amount, array( 'decimals' => 0 ) ) . __( '/month', 'wasa-kredit-checkout' ) . $desc_months;
 							$desc       .= $desc_item;
 						}
 
 						$desc .= '<br><br>';
-						$desc .= __( 'Proceed to select your monthly cost.', 'wasa-kredit-checkout' );
+
+						$desc .= '</p>';
+						$desc .= '<p>' . __( 'Proceed to select your monthly cost', 'wasa-kredit-checkout' ) . '</p>';
 					}
 				}
-				$desc .= '</p>';
+
 				return $desc;
 			}
 		}
 		return __( 'Financing with Wasa Kredit Checkout', 'wasa-kredit-checkout' );
+	}
+
+	public function get_wasa_kredit_payment_methods( $cart_total ) {
+		$stored_cart_total = WC()->session->get( 'wasa_kredit_cart_total' );
+		$payment_methods   = WC()->session->get( 'wasa_kredit_payment_methods' );
+
+		if ( $cart_total !== $stored_cart_total || empty( $payment_methods ) ) {
+			$payment_methods = Wasa_Kredit_WC()->api->get_payment_methods( number_format( $cart_total, 2, '.', '' ) );
+			if ( ! is_wp_error( $payment_methods ) ) {
+				WC()->session->set( 'wasa_kredit_payment_methods', $payment_methods );
+				WC()->session->set( 'wasa_kredit_cart_total', $cart_total );
+			}
+		}
+
+		return $payment_methods;
+	}
+
+	public function get_wasa_kredit_leasing_payment_options( $cart_total ) {
+		$stored_cart_total       = WC()->session->get( 'wasa_kredit_cart_total' );
+		$leasing_payment_options = WC()->session->get( 'wasa_kredit_leasing_payment_options' );
+
+		if ( $cart_total !== $stored_cart_total || empty( $leasing_payment_options ) ) {
+			$leasing_payment_options = Wasa_Kredit_WC()->api->get_leasing_payment_options( number_format( $cart_total, 2, '.', '' ) );
+			if ( ! is_wp_error( $leasing_payment_options ) ) {
+				WC()->session->set( 'wasa_kredit_leasing_payment_options', $leasing_payment_options );
+				WC()->session->set( 'wasa_kredit_cart_total', $cart_total );
+			}
+		}
+
+		return $leasing_payment_options;
 	}
 }

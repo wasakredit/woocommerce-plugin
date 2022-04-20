@@ -6,8 +6,8 @@ Requires at least: 4.0.0
 Tested up to: 5.9.3
 Requires PHP: 7.0
 WC requires at least: 4.0.0
-WC tested up to: 6.3.1
-Stable tag: 2.2.1
+WC tested up to: 6.4.1
+Stable tag: 2.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +55,13 @@ In the settings for Wasa's checkout, there are two new settings with the heading
 2. In the text field below, enter the path to the default checkout. For example, in my checkout, it is the "checkout". If it is not the same for you, you can easily get it by activating the standard checkout and copying the uri. Dy activates it at Settings> Advanced> Page Settings> Checkout Page> "Checkout".
 
 == Changelog ==
+
+= 2022-04-20    - version 2.3.0 =
+* Feature       - Adds payment gateway icon.
+* Tweak         - Adds logic to determine if Leasing payment method should be displayed as Wasa Kredit Leasing or Wasa Kredit Rental.
+* Tweak         - Change payment method titles (to Wasa Kredit Leasing, Wasa Kredit Rental & Wasa Kredit Invoice).
+* Tweak         - Change/tweak payment method descriptions.
+* Tweak         - Updates Swedish translation.
 
 = 2022-04-06    - version 2.2.1 =
 * Tweak         - Escape monthly cost widget html.
