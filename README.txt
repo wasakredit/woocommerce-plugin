@@ -56,6 +56,9 @@ In the settings for Wasa's checkout, there are two new settings with the heading
 
 == Changelog ==
 
+= 2022-04-25    - version 2.3.1 =
+* Fix           - Solve issue with monthly cost widget popup couldn't be opened when clicked.
+
 = 2022-04-20    - version 2.3.0 =
 * Feature       - Adds payment gateway icon.
 * Tweak         - Adds logic to determine if Leasing payment method should be displayed as Wasa Kredit Leasing or Wasa Kredit Rental.

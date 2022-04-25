@@ -42,8 +42,8 @@ class Wasa_Kredit_Checkout_Public {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param      string $plugin_name       The name of the plugin.
+	 * @param      string $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 		$this->plugin_name = $plugin_name;
@@ -74,6 +74,14 @@ class Wasa_Kredit_Checkout_Public {
 		wp_enqueue_script(
 			$this->plugin_name,
 			plugin_dir_url( __FILE__ ) . 'js/wasa-kredit-checkout-public.js',
+			array( 'jquery' ),
+			$this->version,
+			false
+		);
+
+		wp_enqueue_script(
+			'wasa-kredit-monthly-cost',
+			WASA_KREDIT_CHECKOUT_PLUGIN_URL . '/assets/js/monthly-cost-widget.js',
 			array( 'jquery' ),
 			$this->version,
 			false

@@ -73,6 +73,12 @@ function wasa_kredit_allowed_tags() {
 		'blockquote' => array(
 			'cite' => array(),
 		),
+		'button'     => array(
+			'onclick'    => array(),
+			'class'      => array(),
+			'type'       => array(),
+			'aria-label' => array(),
+		),
 		'cite'       => array(
 			'title' => array(),
 		),
@@ -89,6 +95,7 @@ function wasa_kredit_allowed_tags() {
 			'id'                => array(),
 			'data-id'           => array(),
 			'data-redirect-url' => array(),
+			'onclick'           => array(),
 		),
 		'dl'         => array(),
 		'dt'         => array(),
@@ -99,13 +106,17 @@ function wasa_kredit_allowed_tags() {
 		'h4'         => array(),
 		'h5'         => array(),
 		'h6'         => array(),
+		'hr'         => array(
+			'class' => array(),
+		),
 		'i'          => array(),
 		'img'        => array(
-			'alt'    => array(),
-			'class'  => array(),
-			'height' => array(),
-			'src'    => array(),
-			'width'  => array(),
+			'alt'     => array(),
+			'class'   => array(),
+			'height'  => array(),
+			'src'     => array(),
+			'width'   => array(),
+			'onclick' => array(),
 		),
 		'li'         => array(
 			'class' => array(),
@@ -121,9 +132,11 @@ function wasa_kredit_allowed_tags() {
 			'title' => array(),
 		),
 		'span'       => array(
-			'class' => array(),
-			'title' => array(),
-			'style' => array(),
+			'class'       => array(),
+			'title'       => array(),
+			'style'       => array(),
+			'onclick'     => array(),
+			'aria-hidden' => array(),
 		),
 		'strike'     => array(),
 		'strong'     => array(),
@@ -132,6 +145,22 @@ function wasa_kredit_allowed_tags() {
 		),
 		'style'      => array(
 			'types' => array(),
+		),
+		'table'      => array(
+			'class' => array(),
+			'id'    => array(),
+		),
+		'tbody'      => array(
+			'class' => array(),
+			'id'    => array(),
+		),
+		'tr'         => array(
+			'class' => array(),
+			'id'    => array(),
+		),
+		'td'         => array(
+			'class' => array(),
+			'id'    => array(),
 		),
 		'iframe'     => array(
 			'src'             => array(),

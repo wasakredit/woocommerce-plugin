@@ -79,10 +79,10 @@ class Wasa_Kredit_Checkout_Product_Widget {
 			return;
 		}
 
-		$widget             = $this->get_product_widget();
-		$widget_without_css = preg_replace( '~<style(.*?)</style>~Usi', '', $widget );
-		echo wp_kses( $widget_without_css, wasa_kredit_allowed_tags() );
-
+		$widget                    = $this->get_product_widget();
+		$widget_without_css        = preg_replace( '~<style(.*?)</style>~Usi', '', $widget );
+		$widget_without_css_and_js = preg_replace( '~<script(.*?)</script>~Usi', '', $widget_without_css );
+		echo wp_kses( $widget_without_css_and_js, wasa_kredit_allowed_tags() );
 	}
 
 	/**
