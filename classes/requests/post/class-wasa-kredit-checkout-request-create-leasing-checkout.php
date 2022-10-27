@@ -117,7 +117,7 @@ class Wasa_Kredit_Checkout_Request_Create_Leasing_Checkout extends Wasa_Kredit_C
 			'order_references'          => array(
 				array(
 					'key'   => 'wasa_kredit_woocommerce_order_key',
-					'value' => $order->get_order_key(),
+					'value' => $order->get_id(),
 				),
 			),
 			'cart_items'                => $wasa_cart_items,
