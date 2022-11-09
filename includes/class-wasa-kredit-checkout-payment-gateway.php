@@ -271,7 +271,7 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 				'wasa_kredit_checkout'       => $order->get_order_key(),
 				'wasa_kredit_payment_method' => 'leasing',
 			),
-			get_site_url()
+			get_home_url()
 		);
 	}
 
