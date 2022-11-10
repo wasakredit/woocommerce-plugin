@@ -167,7 +167,7 @@ class Wasa_Kredit_Checkout_Request_Create_Invoice_Checkout extends Wasa_Kredit_C
 			'order_references'          => array(
 				array(
 					'key'   => 'wasa_kredit_woocommerce_order_key',
-					'value' => $order->get_id(),
+					'value' => $order->get_order_number(),
 				),
 			),
 			'cart_items'                => $wasa_cart_items,
