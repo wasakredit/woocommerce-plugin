@@ -138,7 +138,7 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 				'title'   => __( 'Enable Order Management', 'wasa-kredit-checkout' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Enable Wasa Kredit order capture on WooCommerce order completion.', 'wasa-kredit-checkout' ),
-				'default' => 'yes',
+				'default' => 'no',
 			),
 			'widget_section'            => array(
 				'title' => __( 'Monthly cost widget', 'wasa-kredit-checkout' ),
