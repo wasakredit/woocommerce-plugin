@@ -25,8 +25,15 @@ class Wasa_Kredit_Checkout_Order_Management {
 	 * Class constructor.
 	 */
 	public function __construct() {
-		add_action( 'woocommerce_order_status_completed', array( $this, 'order_status_change_completed' ) );
-		add_action( 'woocommerce_order_status_cancelled', array( $this, 'order_status_change_cancelled' ) );
+		$settings = get_option( 'wasa_kredit_settings' );
+
+		if ( ! empty( $settings ) && empty( $settings['order_management'] ) ) {
+			$settings['order_management'] = 'yes';
+		}
+		if ( 'yes' === $settings['order_management'] ) {
+			add_action( 'woocommerce_order_status_completed', array( $this, 'order_status_change_completed' ) );
+			add_action( 'woocommerce_order_status_cancelled', array( $this, 'order_status_change_cancelled' ) );
+		}
 		add_action( 'admin_notices', array( $this, 'no_credential_notice' ) );
 
 	}
