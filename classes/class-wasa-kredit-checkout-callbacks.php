@@ -76,31 +76,17 @@ class Wasa_Kredit_Callbacks {
 
 			foreach ( $wasa_order['order_references'] as $item ) {
 				if ( $item['key'] === 'wasa_kredit_woocommerce_order_key' ) {
-					$woo_order_number = $item['value'];
+					$woo_order_key = $item['value'];
 					break;
 				}
 			}
-			if ( ! isset( $woo_order_number ) ) {
+			if ( ! isset( $woo_order_key ) ) {
 				error_log( 'No order found to update with id = "' . $wasa_order_id . '"' );
 				return;
 			}
 
-			$query_args = array(
-				'numberposts' => 1,
-				'meta_key'    => '_order_number_formatted',//phpcs:ignore
-				'meta_value'  => $woo_order_number,//phpcs:ignore
-				'post_type'   => 'shop_order',
-				'post_status' => 'any',
-				'fields'      => 'ids',
-			);
-			$orders     = get_posts( $query_args );
-
-			if ( ! empty( $orders ) ) {
-				$wc_order_id = $orders[0];
-			} else {
-				$wc_order_id = $woo_order_number;
-			}
-			$order = wc_get_order( $wc_order_id );
+			$woo_order_id = wc_get_order_id_by_order_key( $woo_order_key );
+			$order        = wc_get_order( $woo_order_id );
 			// Only allow changing wasa order associations as long as the order is in status pending,
 			// meaning that no payment has been completed on wasa. This is because one order on woocommerce
 			// can in rare scenarios be associated with multiple orders in wasa.
