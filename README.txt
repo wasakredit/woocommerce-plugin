@@ -56,6 +56,11 @@ In the settings for Wasa's checkout, there are two new settings with the heading
 
 == Changelog ==
 
+= 2022-11-24    - version 2.3.2 =
+* Fix           - Error handling improvement. Fix undefined index, array to string conversion.
+* Fix           - Fix callback url, when WordPress url is different from site url.
+* Feature       - Adds support for order management.
+
 = 2022-06-14    - version 2.3.2 =
 * Fix           - Logging improvement. Check that current_priority method_exists. Avoids potential issue with Rank math plugin.
 
