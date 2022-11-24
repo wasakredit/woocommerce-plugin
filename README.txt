@@ -56,7 +56,7 @@ In the settings for Wasa's checkout, there are two new settings with the heading
 
 == Changelog ==
 
-= 2022-11-24    - version 2.3.2 =
+= 2022-11-24    - version 2.3.3 =
 * Fix           - Error handling improvement. Fix undefined index, array to string conversion.
 * Fix           - Fix callback url, when WordPress url is different from site url.
 * Feature       - Adds support for order management.
