@@ -58,8 +58,10 @@ In the settings for Wasa's checkout, there are two new settings with the heading
 
 = 2022-11-24    - version 2.3.3 =
 * Fix           - Error handling improvement. Fix undefined index, array to string conversion.
-* Fix           - Fix callback url, when WordPress url is different from site url.
-* Feature       - Adds support for order management.
+* Fix           - Fix 404 error that could happen in some stores when loading plugin template files.
+* Feature       - Adds setting for enable/disable order management.
+* Tweak         - Send WooCommerce order number to Wasa Kredit as reference for orders.
+* Tweak         - CSS file tweak.
 
 = 2022-06-14    - version 2.3.2 =
 * Fix           - Logging improvement. Check that current_priority method_exists. Avoids potential issue with Rank math plugin.
