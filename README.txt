@@ -4,10 +4,10 @@ Donate link: https://developer.wasakredit.se
 Tags: woocommerce, ecommerce, e-commerce, checkout
 Requires at least: 4.0.0
 Tested up to: 6.0
-Requires PHP: 7.0
-WC requires at least: 4.0.0
-WC tested up to: 6.5.1
-Stable tag: 2.3.2
+Requires PHP: 7.2
+WC requires at least: 5.0.0
+WC tested up to: 7.2.0
+Stable tag: 2.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,10 +56,13 @@ In the settings for Wasa's checkout, there are two new settings with the heading
 
 == Changelog ==
 
-= 2022-11-24    - version 2.3.3 =
+= 2022-12-14    - version 2.3.3 =
+* Feature       - Adds setting for enable/disable order management.
+* Tweak         - Send WooCommerce order number to Wasa Kredit as reference for orders.
+* Tweak         - CSS file tweak.
 * Fix           - Error handling improvement. Fix undefined index, array to string conversion.
-* Fix           - Fix callback url, when WordPress url is different from site url.
-* Feature       - Adds support for order management.
+* Fix           - Fix 404 error that could happen in some stores when loading plugin template files.
+* Fix           - Use wc_format_decimal instead of number_format in monthly cost widget calculation to avoid possible issues.
 
 = 2022-06-14    - version 2.3.2 =
 * Fix           - Logging improvement. Check that current_priority method_exists. Avoids potential issue with Rank math plugin.

@@ -28,8 +28,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Text Domain:       wasa-kredit-checkout
  * Domain Path:       /languages
  *
- * WC requires at least: 4.0.0
- * WC tested up to: 6.5.1
+ * WC requires at least: 5.0.0
+ * WC tested up to: 7.2.0
  */
 
 // If this file is called directly, abort.
