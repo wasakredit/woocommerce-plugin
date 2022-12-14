@@ -187,11 +187,17 @@ abstract class Wasa_Kredit_Checkout_Request {
 				$errors = json_decode( $response['body'], true );
 
 				foreach ( $errors as $error ) {
-					$error_message .= ' ' . $error;
+					if ( is_array( $error ) ) {
+						foreach ( $error as $e ) {
+							$error_message .= ' ' . $e;
+						}
+					} else {
+						$error_message .= ' ' . $error;
+					}
 				}
 			}
 			$code          = wp_remote_retrieve_response_code( $response );
-			$error_message = empty( $response['body'] ) ? "API Error ${code}" : json_decode( $response['body'], true )['ErrorMessage'];
+			$error_message = empty( $response['body'] ) ? "API Error ${code}" : json_decode( $response['body'], true );
 			$return        = new WP_Error( $code, $error_message, $data );
 		} else {
 			$return = json_decode( wp_remote_retrieve_body( $response ), true );
