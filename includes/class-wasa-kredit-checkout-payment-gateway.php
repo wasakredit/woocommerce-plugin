@@ -361,7 +361,6 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 			$payment_methods = Wasa_Kredit_WC()->api->get_payment_methods( number_format( $cart_total, 2, '.', '' ) );
 			if ( ! is_wp_error( $payment_methods ) ) {
 				WC()->session->set( 'wasa_kredit_payment_methods', $payment_methods );
-				WC()->session->set( 'wasa_kredit_cart_total', $cart_total );
 			}
 		}
 
