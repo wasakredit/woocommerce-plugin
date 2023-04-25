@@ -65,133 +65,136 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 
 	public function init_form_fields() {
 		// Defines settings fields on WooCommerce > Settings > Checkout > Wasa Kredit.
-		return array(
-			'enabled'                   => array(
-				'title'   => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
-				'type'    => 'checkbox',
-				'label'   => __(
-					'Enable Wasa Kredit Checkout',
-					'wasa-kredit-checkout'
+		return apply_filters(
+			'wasa_kredit_settings',
+			array(
+				'enabled'                   => array(
+					'title'   => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
+					'type'    => 'checkbox',
+					'label'   => __(
+						'Enable Wasa Kredit Checkout',
+						'wasa-kredit-checkout'
+					),
+					'default' => 'yes',
 				),
-				'default' => 'yes',
-			),
-			'partner_id'                => array(
-				'title'       => __( 'Partner ID', 'wasa-kredit-checkout' ),
-				'type'        => 'text',
-				'description' => __(
-					'Partner ID is issued by Wasa Kredit.',
-					'wasa-kredit-checkout'
+				'partner_id'                => array(
+					'title'       => __( 'Partner ID', 'wasa-kredit-checkout' ),
+					'type'        => 'text',
+					'description' => __(
+						'Partner ID is issued by Wasa Kredit.',
+						'wasa-kredit-checkout'
+					),
+					'default'     => '',
 				),
-				'default'     => '',
-			),
-			'client_secret'             => array(
-				'title'       => __( 'Client secret', 'wasa-kredit-checkout' ),
-				'type'        => 'password',
-				'description' => __(
-					'Client Secret is issued by Wasa Kredit.',
-					'wasa-kredit-checkout'
+				'client_secret'             => array(
+					'title'       => __( 'Client secret', 'wasa-kredit-checkout' ),
+					'type'        => 'password',
+					'description' => __(
+						'Client Secret is issued by Wasa Kredit.',
+						'wasa-kredit-checkout'
+					),
+					'default'     => '',
 				),
-				'default'     => '',
-			),
-			'test_partner_id'           => array(
-				'title'       => __( 'Test Partner ID', 'wasa-kredit-checkout' ),
-				'type'        => 'text',
-				'description' => __(
-					'Test Partner ID is issued by Wasa Kredit.',
-					'wasa-kredit-checkout'
+				'test_partner_id'           => array(
+					'title'       => __( 'Test Partner ID', 'wasa-kredit-checkout' ),
+					'type'        => 'text',
+					'description' => __(
+						'Test Partner ID is issued by Wasa Kredit.',
+						'wasa-kredit-checkout'
+					),
+					'default'     => '',
 				),
-				'default'     => '',
-			),
-			'test_client_secret'        => array(
-				'title'       => __( 'Test Client secret', 'wasa-kredit-checkout' ),
-				'type'        => 'password',
-				'description' => __(
-					'Test Client Secret is issued by Wasa Kredit.',
-					'wasa-kredit-checkout'
+				'test_client_secret'        => array(
+					'title'       => __( 'Test Client secret', 'wasa-kredit-checkout' ),
+					'type'        => 'password',
+					'description' => __(
+						'Test Client Secret is issued by Wasa Kredit.',
+						'wasa-kredit-checkout'
+					),
+					'default'     => '',
 				),
-				'default'     => '',
-			),
-			'test_mode'                 => array(
-				'title'       => __( 'Test mode', 'wasa-kredit-checkout' ),
-				'type'        => 'checkbox',
-				'label'       => __( 'Enable test mode', 'wasa-kredit-checkout' ),
-				'default'     => 'yes',
-				'description' => __(
-					'This controls if the test API should be called or not. Do not use in production.',
-					'wasa-kredit-checkout'
+				'test_mode'                 => array(
+					'title'       => __( 'Test mode', 'wasa-kredit-checkout' ),
+					'type'        => 'checkbox',
+					'label'       => __( 'Enable test mode', 'wasa-kredit-checkout' ),
+					'default'     => 'yes',
+					'description' => __(
+						'This controls if the test API should be called or not. Do not use in production.',
+						'wasa-kredit-checkout'
+					),
 				),
-			),
-			'logging'                   => array(
-				'title'       => __( 'Logging', 'wasa-kredit-checkout' ),
-				'type'        => 'select',
-				'label'       => __( 'Enable logging', 'wasa-kredit-checkout' ),
-				'default'     => 'checkout',
-				'description' => __( 'Save request data to the WooCommerce System Status log.', 'wasa-kredit-checkout' ),
-				'options'     => array(
-					'no'           => __( 'Do not log requests (except errors)', 'wasa-kredit-checkout' ),
-					'monthly_cost' => __( 'Log monthly cost requests', 'wasa-kredit-checkout' ),
-					'checkout'     => __( 'Log checkout requests', 'wasa-kredit-checkout' ),
-					'all'          => __( 'Log both monthly cost & checkout requests', 'wasa-kredit-checkout' ),
+				'logging'                   => array(
+					'title'       => __( 'Logging', 'wasa-kredit-checkout' ),
+					'type'        => 'select',
+					'label'       => __( 'Enable logging', 'wasa-kredit-checkout' ),
+					'default'     => 'checkout',
+					'description' => __( 'Save request data to the WooCommerce System Status log.', 'wasa-kredit-checkout' ),
+					'options'     => array(
+						'no'           => __( 'Do not log requests (except errors)', 'wasa-kredit-checkout' ),
+						'monthly_cost' => __( 'Log monthly cost requests', 'wasa-kredit-checkout' ),
+						'checkout'     => __( 'Log checkout requests', 'wasa-kredit-checkout' ),
+						'all'          => __( 'Log both monthly cost & checkout requests', 'wasa-kredit-checkout' ),
+					),
 				),
-			),
-			'order_management'          => array(
-				'title'   => __( 'Enable Order Management', 'wasa-kredit-checkout' ),
-				'type'    => 'checkbox',
-				'label'   => __( 'Enable Wasa Kredit order capture on WooCommerce order completion.', 'wasa-kredit-checkout' ),
-				'default' => 'yes',
-			),
-			'widget_section'            => array(
-				'title' => __( 'Monthly cost widget', 'wasa-kredit-checkout' ),
-				'type'  => 'title',
-			),
-			'widget_on_product_list'    => array(
-				'title'       => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
-				'type'        => 'checkbox',
-				'label'       => __(
-					'Show monthly cost in product list',
-					'wasa-kredit-checkout'
+				'order_management'          => array(
+					'title'   => __( 'Enable Order Management', 'wasa-kredit-checkout' ),
+					'type'    => 'checkbox',
+					'label'   => __( 'Enable Wasa Kredit order capture on WooCommerce order completion.', 'wasa-kredit-checkout' ),
+					'default' => 'yes',
 				),
-				'description' => __(
-					'Will be shown under the price in product listings (added via the <i>woocommerce_after_shop_loop_item</i> hook).',
-					'wasa-kredit-checkout'
+				'widget_section'            => array(
+					'title' => __( 'Monthly cost widget', 'wasa-kredit-checkout' ),
+					'type'  => 'title',
 				),
-				'default'     => 'yes',
-			),
-			'widget_on_product_details' => array(
-				'title'       => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
-				'type'        => 'checkbox',
-				'label'       => __(
-					'Show monthly cost in product details',
-					'wasa-kredit-checkout'
+				'widget_on_product_list'    => array(
+					'title'       => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
+					'type'        => 'checkbox',
+					'label'       => __(
+						'Show monthly cost in product list',
+						'wasa-kredit-checkout'
+					),
+					'description' => __(
+						'Will be shown under the price in product listings (added via the <i>woocommerce_after_shop_loop_item</i> hook).',
+						'wasa-kredit-checkout'
+					),
+					'default'     => 'yes',
 				),
-				'description' => __(
-					'Will be shown between the price and the add to cart button. You can also use the shortcode [wasa_kredit_product_widget] if you want to add it manually on the product page.',
-					'wasa-kredit-checkout'
+				'widget_on_product_details' => array(
+					'title'       => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
+					'type'        => 'checkbox',
+					'label'       => __(
+						'Show monthly cost in product details',
+						'wasa-kredit-checkout'
+					),
+					'description' => __(
+						'Will be shown between the price and the add to cart button. You can also use the shortcode [wasa_kredit_product_widget] if you want to add it manually on the product page.',
+						'wasa-kredit-checkout'
+					),
+					'default'     => 'yes',
 				),
-				'default'     => 'yes',
-			),
-			'widget_format'             => array(
-				'title'       => __( 'Widget format', 'wasa-kredit-checkout' ),
-				'type'        => 'select',
-				'label'       => __( 'The design of the montly cost widget', 'wasa-kredit-checkout' ),
-				'default'     => 'small',
-				'description' => __( 'Select the design of the monthly cost widget', 'wasa-kredit-checkout' ),
-				'options'     => array(
-					'small'         => __( 'Small', 'wasa-kredit-checkout' ),
-					'small-no-icon' => __( 'Small with no icons', 'wasa-kredit-checkout' ),
-					'large'         => __( 'Large', 'wasa-kredit-checkout' ),
-					'large-no-icon' => __( 'Large with no icons', 'wasa-kredit-checkout' ),
+				'widget_format'             => array(
+					'title'       => __( 'Widget format', 'wasa-kredit-checkout' ),
+					'type'        => 'select',
+					'label'       => __( 'The design of the montly cost widget', 'wasa-kredit-checkout' ),
+					'default'     => 'small',
+					'description' => __( 'Select the design of the monthly cost widget', 'wasa-kredit-checkout' ),
+					'options'     => array(
+						'small'         => __( 'Small', 'wasa-kredit-checkout' ),
+						'small-no-icon' => __( 'Small with no icons', 'wasa-kredit-checkout' ),
+						'large'         => __( 'Large', 'wasa-kredit-checkout' ),
+						'large-no-icon' => __( 'Large with no icons', 'wasa-kredit-checkout' ),
+					),
 				),
-			),
-			'widget_lower_threshold'    => array(
-				'title'       => __( 'Widget lower threshold', 'wasa-kredit-checkout' ),
-				'type'        => 'number',
-				'description' => __(
-					'Only display the monthly cost widget if the product price is higher thant the entered number. Leave blank to disable this feature.',
-					'wasa-kredit-checkout'
+				'widget_lower_threshold'    => array(
+					'title'       => __( 'Widget lower threshold', 'wasa-kredit-checkout' ),
+					'type'        => 'number',
+					'description' => __(
+						'Only display the monthly cost widget if the product price is higher thant the entered number. Leave blank to disable this feature.',
+						'wasa-kredit-checkout'
+					),
+					'default'     => '',
 				),
-				'default'     => '',
-			),
+			)
 		);
 	}
 
