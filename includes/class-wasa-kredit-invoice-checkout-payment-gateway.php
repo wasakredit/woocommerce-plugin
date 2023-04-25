@@ -60,80 +60,83 @@ class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 
 	public function init_form_fields() {
 		// Defines settings fields on WooCommerce > Settings > Checkout > Wasa Kredit.
-		return array(
-			'invoice_enabled'    => array(
-				'title'   => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
-				'type'    => 'checkbox',
-				'label'   => __(
-					'Enable Wasa Kredit Invoice Checkout',
-					'wasa-kredit-checkout'
+		return apply_filters(
+			'wasa_kredit_settings',
+			array(
+				'invoice_enabled'    => array(
+					'title'   => __( 'Enable/Disable', 'wasa-kredit-checkout' ),
+					'type'    => 'checkbox',
+					'label'   => __(
+						'Enable Wasa Kredit Invoice Checkout',
+						'wasa-kredit-checkout'
+					),
+					'default' => 'no',
 				),
-				'default' => 'no',
-			),
-			'partner_id'         => array(
-				'title'       => __( 'Partner ID', 'wasa-kredit-checkout' ),
-				'type'        => 'text',
-				'description' => __(
-					'Partner ID is issued by Wasa Kredit.',
-					'wasa-kredit-checkout'
+				'partner_id'         => array(
+					'title'       => __( 'Partner ID', 'wasa-kredit-checkout' ),
+					'type'        => 'text',
+					'description' => __(
+						'Partner ID is issued by Wasa Kredit.',
+						'wasa-kredit-checkout'
+					),
+					'default'     => '',
 				),
-				'default'     => '',
-			),
-			'client_secret'      => array(
-				'title'       => __( 'Client secret', 'wasa-kredit-checkout' ),
-				'type'        => 'password',
-				'description' => __(
-					'Client Secret is issued by Wasa Kredit.',
-					'wasa-kredit-checkout'
+				'client_secret'      => array(
+					'title'       => __( 'Client secret', 'wasa-kredit-checkout' ),
+					'type'        => 'password',
+					'description' => __(
+						'Client Secret is issued by Wasa Kredit.',
+						'wasa-kredit-checkout'
+					),
+					'default'     => '',
 				),
-				'default'     => '',
-			),
-			'test_partner_id'    => array(
-				'title'       => __( 'Test Partner ID', 'wasa-kredit-checkout' ),
-				'type'        => 'text',
-				'description' => __(
-					'Test Partner ID is issued by Wasa Kredit.',
-					'wasa-kredit-checkout'
+				'test_partner_id'    => array(
+					'title'       => __( 'Test Partner ID', 'wasa-kredit-checkout' ),
+					'type'        => 'text',
+					'description' => __(
+						'Test Partner ID is issued by Wasa Kredit.',
+						'wasa-kredit-checkout'
+					),
+					'default'     => '',
 				),
-				'default'     => '',
-			),
-			'test_client_secret' => array(
-				'title'       => __( 'Test Client secret', 'wasa-kredit-checkout' ),
-				'type'        => 'password',
-				'description' => __(
-					'Test Client Secret is issued by Wasa Kredit.',
-					'wasa-kredit-checkout'
+				'test_client_secret' => array(
+					'title'       => __( 'Test Client secret', 'wasa-kredit-checkout' ),
+					'type'        => 'password',
+					'description' => __(
+						'Test Client Secret is issued by Wasa Kredit.',
+						'wasa-kredit-checkout'
+					),
+					'default'     => '',
 				),
-				'default'     => '',
-			),
-			'test_mode'          => array(
-				'title'       => __( 'Test mode', 'wasa-kredit-checkout' ),
-				'type'        => 'checkbox',
-				'label'       => __( 'Enable test mode', 'wasa-kredit-checkout' ),
-				'default'     => 'yes',
-				'description' => __(
-					'This controls if the test API should be called or not. Do not use in production.',
-					'wasa-kredit-checkout'
+				'test_mode'          => array(
+					'title'       => __( 'Test mode', 'wasa-kredit-checkout' ),
+					'type'        => 'checkbox',
+					'label'       => __( 'Enable test mode', 'wasa-kredit-checkout' ),
+					'default'     => 'yes',
+					'description' => __(
+						'This controls if the test API should be called or not. Do not use in production.',
+						'wasa-kredit-checkout'
+					),
 				),
-			),
-			'logging'            => array(
-				'title'       => __( 'Logging', 'wasa-kredit-checkout' ),
-				'type'        => 'select',
-				'label'       => __( 'Enable logging', 'wasa-kredit-checkout' ),
-				'default'     => 'checkout',
-				'description' => __( 'Save request data to the WooCommerce System Status log.', 'wasa-kredit-checkout' ),
-				'options'     => array(
-					'monthly_cost' => __( 'Log monthly cost requests', 'wasa-kredit-checkout' ),
-					'checkout'     => __( 'Log checkout requests', 'wasa-kredit-checkout' ),
-					'all'          => __( 'Log both monthly cost & checkout requests', 'wasa-kredit-checkout' ),
+				'logging'            => array(
+					'title'       => __( 'Logging', 'wasa-kredit-checkout' ),
+					'type'        => 'select',
+					'label'       => __( 'Enable logging', 'wasa-kredit-checkout' ),
+					'default'     => 'checkout',
+					'description' => __( 'Save request data to the WooCommerce System Status log.', 'wasa-kredit-checkout' ),
+					'options'     => array(
+						'monthly_cost' => __( 'Log monthly cost requests', 'wasa-kredit-checkout' ),
+						'checkout'     => __( 'Log checkout requests', 'wasa-kredit-checkout' ),
+						'all'          => __( 'Log both monthly cost & checkout requests', 'wasa-kredit-checkout' ),
+					),
 				),
-			),
-			'order_management'   => array(
-				'title'   => __( 'Enable Order Management', 'wasa-kredit-checkout' ),
-				'type'    => 'checkbox',
-				'label'   => __( 'Enable Wasa Kredit order capture on WooCommerce order completion.', 'wasa-kredit-checkout' ),
-				'default' => 'yes',
-			),
+				'order_management'   => array(
+					'title'   => __( 'Enable Order Management', 'wasa-kredit-checkout' ),
+					'type'    => 'checkbox',
+					'label'   => __( 'Enable Wasa Kredit order capture on WooCommerce order completion.', 'wasa-kredit-checkout' ),
+					'default' => 'yes',
+				),
+			)
 		);
 	}
 
