@@ -22,6 +22,10 @@ class Wasa_Kredit_Checkout_List_Widget {
 		$this->settings               = get_option( 'wasa_kredit_settings' );
 		$this->widget_lower_threshold = isset( $this->settings['widget_lower_threshold'] ) ? $this->settings['widget_lower_threshold'] : '';
 
+		if ( 'no' === $this->settings['enabled'] ) {
+			return;
+		}
+
 		// Hooks.
 		add_action(
 			'woocommerce_before_shop_loop',
@@ -65,7 +69,7 @@ class Wasa_Kredit_Checkout_List_Widget {
 		$monthly_cost = 0;
 
 		if ( isset( $GLOBALS['product_leasing_prices'] ) &&
-			isset( $GLOBALS['product_leasing_prices'][ $product->get_id() ] ) ) {
+		isset( $GLOBALS['product_leasing_prices'][ $product->get_id() ] ) ) {
 			$monthly_cost = $GLOBALS['product_leasing_prices'][ $product->get_id() ];
 		}
 
@@ -76,7 +80,7 @@ class Wasa_Kredit_Checkout_List_Widget {
 		echo '<p>' .
 		esc_html( __( 'Financing', 'wasa-kredit-checkout' ) ) . ' <span style="white-space:nowrap;">' .
 		wp_kses_post( wc_price( $monthly_cost, array( 'decimals' => 0 ) ) ) . esc_html( __( '/month', 'wasa-kredit-checkout' ) ) .
-			'</span></p>';
+		'</span></p>';
 
 	}
 
@@ -127,7 +131,7 @@ class Wasa_Kredit_Checkout_List_Widget {
 				),
 				'product_id'     => $product->get_id(),
 			);
-		endwhile;
+			endwhile;
 
 		// Get resposne from API with all products defined in $payload.
 		$response      = Wasa_Kredit_WC()->api->calculate_monthly_cost( $payload );
@@ -194,7 +198,7 @@ class Wasa_Kredit_Checkout_List_Widget {
 				),
 				'product_id'     => $product->get_id(),
 			);
-		endwhile;
+			endwhile;
 
 		wp_reset_postdata();
 
