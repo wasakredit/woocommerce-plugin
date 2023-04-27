@@ -194,7 +194,8 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 					),
 					'default'     => '',
 				),
-			)
+			),
+			$this->id
 		);
 	}
 
