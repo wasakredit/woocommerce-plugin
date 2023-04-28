@@ -31,15 +31,6 @@ class Wasa_Kredit_Checkout_Product_Widget {
 			)
 		);
 
-		add_action(
-			'woocommerce_single_product_summary',
-			array(
-				$this,
-				'add_product_widget_to_product_page',
-			),
-			15
-		);
-
 		add_filter(
 			'woocommerce_product_addons_option_price',
 			function ( $default_formatted_price, $options ) {
@@ -69,6 +60,13 @@ class Wasa_Kredit_Checkout_Product_Widget {
 			3
 		);
 
+		// Extend the Wasa Kredit settings with product page settings.
+		add_filter( 'wasa_kredit_settings', array( $this, 'extend_settings' ) );
+
+		if ( 'yes' === $this->settings['enabled'] ) {
+			add_action( 'woocommerce_single_product_summary', array( $this, 'product_widget_hook' ), 1 );
+		}
+
 	}
 
 	/**
@@ -90,6 +88,76 @@ class Wasa_Kredit_Checkout_Product_Widget {
 	 */
 	public function wasa_kredit_product_widget() {
 		return $this->get_product_widget();
+	}
+
+	/**
+	 * Hook onto the product page (or custom hooks) to add the product widget.
+	 *
+	 * @return void
+	 */
+	public function product_widget_hook() {
+		$settings = get_option( 'wasa_kredit_settings' );
+
+		if ( ! empty( $settings['product_page_widget_placement_location'] ) ) {
+			add_action(
+				'woocommerce_single_product_summary',
+				array(
+					$this,
+					'add_product_widget_to_product_page',
+				),
+				absint( $settings['product_page_widget_placement_location'] )
+			);
+		} else {
+			$hook_name = $settings['custom_product_page_widget_placement_hook'];
+			$priority  = absint( $settings['custom_product_page_widget_placement_hook_priority'] );
+
+			add_action( $hook_name, array( $this, 'add_product_widget_to_product_page' ), $priority );
+		}
+	}
+
+
+	/**
+	 * Add settings for managing product page to the Wasa Kredit settings page.
+	 *
+	 * @param array $settings The Wasa Kredit settings.
+	 * @return array The Wasa Kredit settings with product page settings added.
+	 */
+	public function extend_settings( $settings ) {
+		$settings['product_page_widget_section'] = array(
+			'title' => 'Product Page Widget',
+			'type'  => 'title',
+		);
+
+		$settings['product_page_widget_placement_location'] = array(
+			'title'   => __( 'Product Page Widget placement', 'wasa-kredit-checkout' ),
+			'type'    => 'select',
+			'options' => array(
+				''   => __( 'No placement, I handle it myself', 'wasa-kredit-checkout' ),
+				'4'  => __( 'Above Title', 'wasa-kredit-checkout' ),
+				'7'  => __( 'Between Title and Price', 'wasa-kredit-checkout' ),
+				'15' => __( 'Between Price and Excerpt', 'wasa-kredit-checkout' ),
+				'25' => __( 'Between Excerpt and Add to cart button', 'wasa-kredit-checkout' ),
+				'35' => __( 'Between Add to cart button and Product meta', 'wasa-kredit-checkout' ),
+				'45' => __( 'Between Product meta and Product sharing buttons', 'wasa-kredit-checkout' ),
+				'55' => __( 'After Product sharing-buttons', 'wasa-kredit-checkout' ),
+			),
+			'default' => '15',
+			'desc'    => __( 'Select where to display the widget in your product pages.', 'wasa-kredit-checkout' ),
+		);
+
+		$settings['custom_product_page_widget_placement_hook'] = array(
+			'title'    => __( 'Custom placement hook', 'wasa-kredit-checkout' ),
+			'desc_tip' => __( 'Enter a custom hook where you want the product page widget to be placed.', 'wasa-kredit-checkout' ),
+			'type'     => 'text',
+		);
+
+		$settings['custom_product_page_widget_placement_priority'] = array(
+			'title'    => __( 'Custom placement hook priority', 'wasa-kredit-checkout' ),
+			'desc_tip' => __( 'Enter a priority for the custom hook where you want the product page widget to be placed.', 'wasa-kredit-checkout' ),
+			'type'     => 'text',
+		);
+
+		return $settings;
 	}
 
 	/**
