@@ -136,7 +136,8 @@ class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 					'label'   => __( 'Enable Wasa Kredit order capture on WooCommerce order completion.', 'wasa-kredit-checkout' ),
 					'default' => 'yes',
 				),
-			)
+			),
+			$this->id
 		);
 	}
 
@@ -226,12 +227,12 @@ class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 	}
 
 	public function get_title() {
-		return __( 'Wasa Kredit Invoice', 'wasa-kredit-checkout' );
+		return apply_filters( 'woocommerce_gateway_title', __( 'Wasa Kredit Invoice', 'wasa-kredit-checkout' ), $this->id );
 	}
 
 	public function get_description() {
 		$desc  = '<p>' . __( 'Pay within 30 days', 'wasa-kredit-checkout' ) . '</p>';
 		$desc .= '<p>' . __( 'Pay after you receive the item', 'wasa-kredit-checkout' ) . '</p>';
-		return $desc;
+		return apply_filters( 'woocommerce_gateway_description', $desc, $this->id );
 	}
 }
