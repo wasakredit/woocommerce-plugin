@@ -215,14 +215,14 @@ class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 		);
 	}
 
-	public function get_return_url( $order = null ) {
+	public function get_return_url( $order ) {
 		// Add order key to custom endpoint route as query param.
 		return add_query_arg(
 			array(
 				'wasa_kredit_checkout'       => $order->get_order_key(),
 				'wasa_kredit_payment_method' => 'invoice',
 			),
-			get_home_url()
+			$order->get_checkout_payment_url()
 		);
 	}
 

@@ -20,7 +20,6 @@ if ( ! isset( $order_key ) || empty( $order_key ) ) {
 // Collect data about order.
 $order_id = wc_get_order_id_by_order_key( $order_key );
 $order    = wc_get_order( $order_id );
-get_header();
 ?>
 
 	<style>
@@ -48,15 +47,14 @@ get_header();
 		?>
 		var options = {
 			onComplete: function (orderReferences) {
+				console.log('<?php echo esc_url( $order->get_checkout_order_received_url() ); ?>')
 				window.location.href = '<?php echo esc_url( $order->get_checkout_order_received_url() ); ?>';
 			},
 			onCancel: function () {
 				let checkoutUrl = '<?php echo esc_url( $cancel_url ); ?>';
+				console.log(checkoutUrl)
 				window.location.href = checkoutUrl;
 			}
 		};
 		window.wasaCheckout.init(options);
 	</script>
-
-<?php
-get_footer();
