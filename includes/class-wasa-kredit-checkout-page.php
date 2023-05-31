@@ -23,7 +23,7 @@ class Wasa_Kredit_Checkout_Page {
 	 * @return string
 	 */
 	public function replace_order_pay( $template, $template_name ) {
-		if ( isset( WC()->session ) && false !== strpos( WC()->session->get( 'chosen_payment_method' ), 'wasa_kredit_' ) ) {
+		if ( isset( WC()->session ) && false !== strpos( WC()->session->get( 'chosen_payment_method' ), 'wasa_kredit' ) ) {
 			if ( 'checkout/form-pay.php' === $template_name && isset( WC()->session ) && is_wc_endpoint_url( 'order-pay' ) ) {
 				$wasa_kredit_payment_method = get_query_var( 'wasa_kredit_payment_method' );
 				if ( 'invoice' === $wasa_kredit_payment_method ) {
