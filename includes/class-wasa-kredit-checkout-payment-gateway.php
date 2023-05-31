@@ -263,7 +263,7 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 		return true;
 	}
 
-	public function process_payment( $order_id ) {
+	public function process_payment( $order_id = null ) {
 		// When clicking Proceed button, create a on-hold order.
 		global $woocommerce;
 		$order = new WC_Order( $order_id );
@@ -274,7 +274,7 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 		);
 	}
 
-	public function get_return_url( $order ) {
+	public function get_return_url( $order = null ) {
 		// Add order key to custom endpoint route as query param.
 		return add_query_arg(
 			array(
