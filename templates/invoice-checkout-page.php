@@ -47,12 +47,10 @@ $order    = wc_get_order( $order_id );
 		?>
 		var options = {
 			onComplete: function (orderReferences) {
-				console.log('<?php echo esc_url( $order->get_checkout_order_received_url() ); ?>')
 				window.location.href = '<?php echo esc_url( $order->get_checkout_order_received_url() ); ?>';
 			},
 			onCancel: function () {
 				let checkoutUrl = '<?php echo esc_url( $cancel_url ); ?>';
-				console.log(checkoutUrl)
 				window.location.href = checkoutUrl;
 			}
 		};
