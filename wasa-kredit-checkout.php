@@ -156,9 +156,6 @@ if ( ! class_exists( 'Wasa_Kredit_Checkout' ) ) {
 			// Load monthly cost on product listings.
 			$this->list_widget = new Wasa_Kredit_Checkout_List_Widget();
 
-			// Create checkout page if not exists, override templates.
-			$this->page = new Wasa_Kredit_Checkout_Page();
-
 			$this->order_management = new Wasa_Kredit_Checkout_Order_Management();
 			$this->api              = new Wasa_Kredit_Checkout_API();
 			$this->run();
@@ -194,7 +191,6 @@ if ( ! class_exists( 'Wasa_Kredit_Checkout' ) ) {
 			require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/includes/class-wasa-kredit-invoice-checkout-payment-gateway.php';
 			require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/includes/class-wasa-kredit-checkout-product-widget.php';
 			require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/includes/class-wasa-kredit-checkout-list-widget.php';
-			require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/includes/class-wasa-kredit-checkout-page.php';
 			require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/includes/class-wasa-kredit-logger.php';
 
 			// Classes.

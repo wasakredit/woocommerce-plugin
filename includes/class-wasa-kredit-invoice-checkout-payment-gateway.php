@@ -24,6 +24,9 @@ class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 		// Setup dynamic gateway properties.
 		$this->enabled = isset( $this->settings['invoice_enabled'] ) ? $this->settings['invoice_enabled'] : 'no';
 
+		// Hook onto the receipt page to display the payment form.
+		add_action( 'woocommerce_receipt_' . $this->id, array( $this, 'receipt_page' ) );
+
 		// Hooks.
 		add_action(
 			'woocommerce_update_options_payment_gateways_' . $this->id,
@@ -222,7 +225,7 @@ class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 				'wasa_kredit_checkout'       => $order->get_order_key(),
 				'wasa_kredit_payment_method' => 'invoice',
 			),
-			get_home_url()
+			$order->get_checkout_payment_url( true )
 		);
 	}
 
@@ -234,5 +237,17 @@ class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 		$desc  = '<p>' . __( 'Pay within 30 days', 'wasa-kredit-checkout' ) . '</p>';
 		$desc .= '<p>' . __( 'Pay after you receive the item', 'wasa-kredit-checkout' ) . '</p>';
 		return apply_filters( 'woocommerce_gateway_description', $desc, $this->id );
+	}
+
+	/**
+	 * Contrary to the name, this function is called on the order-pay to display the payment form.
+	 *
+	 * @param int $order_id WooCommerce order ID.
+	 * @return void
+	 */
+	public function receipt_page( $order_id ) {
+		if ( is_wc_endpoint_url( 'order-pay' ) ) {
+			include plugin_dir_path( __file__ ) . '../templates/invoice-checkout-page.php';
+		}
 	}
 }
