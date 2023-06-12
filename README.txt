@@ -7,7 +7,7 @@ Tested up to: 6.0
 Requires PHP: 7.2
 WC requires at least: 5.0.0
 WC tested up to: 7.2.0
-Stable tag: 2.4.0
+Stable tag: 2.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +55,10 @@ In the settings for Wasa's checkout, there are two new settings with the heading
 2. In the text field below, enter the path to the default checkout. For example, in my checkout, it is the "checkout". If it is not the same for you, you can easily get it by activating the standard checkout and copying the uri. Dy activates it at Settings> Advanced> Page Settings> Checkout Page> "Checkout".
 
 == Changelog ==
+= 2023-06-12    - version 2.5.0 =
+* Feature       - The customer will now be redirected to a new checkout page that is more compatible with the store's theming and styling.
+* Fix           - Fixed an undefined index notice that happened due to missing a default value.
+
 = 2023-05-04    - version 2.4.0 =
 * Feature       - Added a setting to let you change the placement of the monthly cost widget on the product page or attach it onto a custom hook.
 * Feature       - You can now customize the payment gateways' title and description as shown to the customer.
