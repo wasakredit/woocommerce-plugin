@@ -25,7 +25,6 @@ if ( ! $order ) {
 	exit();
 }
 
-get_header();
 ?>
 
 <style>
@@ -80,6 +79,3 @@ get_header();
 		};
 		window.wasaCheckout.init( options );
 	</script>
-
-<?php
-get_footer();

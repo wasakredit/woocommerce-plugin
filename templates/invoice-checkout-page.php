@@ -20,7 +20,6 @@ if ( ! isset( $order_key ) || empty( $order_key ) ) {
 // Collect data about order.
 $order_id = wc_get_order_id_by_order_key( $order_key );
 $order    = wc_get_order( $order_id );
-get_header();
 ?>
 
 	<style>
@@ -57,6 +56,3 @@ get_header();
 		};
 		window.wasaCheckout.init(options);
 	</script>
-
-<?php
-get_footer();

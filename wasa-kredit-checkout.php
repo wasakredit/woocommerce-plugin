@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin URI:        https://github.com/wasakredit/woocommerse-plugin
  * Description:       Wasa Kredit Checkout offers financing as a payment method for B2B.
  * Author:            Wasa Kredit
- * Version:           2.4.0
+ * Version:           2.5.0
 
  * Author URI:        https://developer.wasakredit.se
  * License:           GPL-2.0+
@@ -42,7 +42,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Rename this for your plugin and update it as you release new versions.
  */
 
-define( 'WASA_KREDIT_CHECKOUT_VERSION', '2.4.0' );
+define( 'WASA_KREDIT_CHECKOUT_VERSION', '2.5.0' );
 define( 'WASA_KREDIT_CHECKOUT_PLUGIN_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'WASA_KREDIT_CHECKOUT_PLUGIN_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
 
@@ -156,9 +156,6 @@ if ( ! class_exists( 'Wasa_Kredit_Checkout' ) ) {
 			// Load monthly cost on product listings.
 			$this->list_widget = new Wasa_Kredit_Checkout_List_Widget();
 
-			// Create checkout page if not exists, override templates.
-			$this->page = new Wasa_Kredit_Checkout_Page();
-
 			$this->order_management = new Wasa_Kredit_Checkout_Order_Management();
 			$this->api              = new Wasa_Kredit_Checkout_API();
 			$this->run();
@@ -194,7 +191,6 @@ if ( ! class_exists( 'Wasa_Kredit_Checkout' ) ) {
 			require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/includes/class-wasa-kredit-invoice-checkout-payment-gateway.php';
 			require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/includes/class-wasa-kredit-checkout-product-widget.php';
 			require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/includes/class-wasa-kredit-checkout-list-widget.php';
-			require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/includes/class-wasa-kredit-checkout-page.php';
 			require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/includes/class-wasa-kredit-logger.php';
 
 			// Classes.

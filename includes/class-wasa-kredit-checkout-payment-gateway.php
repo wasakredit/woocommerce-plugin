@@ -29,6 +29,9 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 			$this->enabled = $this->settings['enabled'];
 		}
 
+		// Hook onto the receipt page to display the payment form.
+		add_action( 'woocommerce_receipt_' . $this->id, array( $this, 'receipt_page' ) );
+
 		// Hooks.
 		add_action(
 			'woocommerce_update_options_payment_gateways_' . $this->id,
@@ -263,7 +266,7 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 		return true;
 	}
 
-	public function process_payment( $order_id ) {
+	public function process_payment( $order_id = null ) {
 		// When clicking Proceed button, create a on-hold order.
 		global $woocommerce;
 		$order = new WC_Order( $order_id );
@@ -281,7 +284,7 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 				'wasa_kredit_checkout'       => $order->get_order_key(),
 				'wasa_kredit_payment_method' => 'leasing',
 			),
-			get_home_url()
+			$order->get_checkout_payment_url( true )
 		);
 	}
 
@@ -380,5 +383,16 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 		}
 
 		return $leasing_payment_options;
+	}
+	/**
+	 * Contrary to the name, this function is called on the order-pay to display the payment form.
+	 *
+	 * @param int $order_id WooCommerce order ID.
+	 * @return void
+	 */
+	public function receipt_page( $order_id ) {
+		if ( is_wc_endpoint_url( 'order-pay' ) ) {
+			include plugin_dir_path( __file__ ) . '../templates/checkout-page.php';
+		}
 	}
 }
