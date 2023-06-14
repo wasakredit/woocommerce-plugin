@@ -37,6 +37,9 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 			'woocommerce_update_options_payment_gateways_' . $this->id,
 			array( $this, 'process_admin_options' )
 		);
+
+		// Inject Wasa Kredit's payment form on the order-pay page.
+		add_filter( 'wc_get_template', array( $this, 'replace_checkout_page' ), 10, 2 );
 	}
 
 	/**
@@ -384,15 +387,20 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 
 		return $leasing_payment_options;
 	}
+
 	/**
-	 * Contrary to the name, this function is called on the order-pay to display the payment form.
+	 * Inject the Wasa Kredit payment form on the order-pay page.
 	 *
-	 * @param int $order_id WooCommerce order ID.
-	 * @return void
+	 * @param string $template Absolute path to the template.
+	 * @param string $template_name Template name.
+	 * @return string
 	 */
-	public function receipt_page( $order_id ) {
+	public function replace_checkout_page( $template, $template_name ) {
 		if ( is_wc_endpoint_url( 'order-pay' ) ) {
-			include plugin_dir_path( __file__ ) . '../templates/checkout-page.php';
+			if ( 'checkout/order-receipt.php' === $template_name ) {
+				return plugin_dir_path( __FILE__ ) . '../templates/invoice-checkout-page.php';
+			}
 		}
+		return $template;
 	}
 }
