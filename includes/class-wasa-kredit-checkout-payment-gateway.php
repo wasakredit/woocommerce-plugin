@@ -398,11 +398,16 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 	public function replace_checkout_page( $template, $template_name ) {
 		if ( is_wc_endpoint_url( 'order-pay' ) ) {
 			if ( 'checkout/order-receipt.php' === $template_name ) {
-				if ( isset( WC()->session ) && WC()->session->get( 'chosen_payment_method' === $this->id ) ) {
-					return plugin_dir_path( __FILE__ ) . '../templates/invoice-checkout-page.php';
+				$order_id = absint( get_query_var( 'order-pay', 0 ) );
+				$order    = wc_get_order( $order_id );
+				if ( empty( $order ) || $order->get_payment_method() !== $this->id ) {
+					return $template;
 				}
+
+				return plugin_dir_path( __FILE__ ) . '../templates/invoice-checkout-page.php';
 			}
 		}
+
 		return $template;
 	}
 }
