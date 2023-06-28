@@ -24,14 +24,14 @@ class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 		// Setup dynamic gateway properties.
 		$this->enabled = isset( $this->settings['invoice_enabled'] ) ? $this->settings['invoice_enabled'] : 'no';
 
-		// Hook onto the receipt page to display the payment form.
-		add_action( 'woocommerce_receipt_' . $this->id, array( $this, 'receipt_page' ) );
-
 		// Hooks.
 		add_action(
 			'woocommerce_update_options_payment_gateways_' . $this->id,
 			array( $this, 'process_admin_options' )
 		);
+
+		// Inject Wasa Kredit's payment form on the order-pay page.
+		add_filter( 'wc_get_template', array( $this, 'replace_checkout_page' ), 10, 2 );
 	}
 
 	/**
@@ -240,14 +240,25 @@ class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
-	 * Contrary to the name, this function is called on the order-pay to display the payment form.
+	 * Inject the Wasa Kredit payment form on the order-pay page.
 	 *
-	 * @param int $order_id WooCommerce order ID.
-	 * @return void
+	 * @param string $template Absolute path to the template.
+	 * @param string $template_name Template name.
+	 * @return string
 	 */
-	public function receipt_page( $order_id ) {
+	public function replace_checkout_page( $template, $template_name ) {
 		if ( is_wc_endpoint_url( 'order-pay' ) ) {
-			include plugin_dir_path( __file__ ) . '../templates/invoice-checkout-page.php';
+			if ( 'checkout/order-receipt.php' === $template_name ) {
+				$order_id = absint( get_query_var( 'order-pay', 0 ) );
+				$order    = wc_get_order( $order_id );
+				if ( empty( $order ) || $order->get_payment_method() !== $this->id ) {
+					return $template;
+				}
+
+				return plugin_dir_path( __FILE__ ) . '../templates/invoice-checkout-page.php';
+			}
 		}
+
+		return $template;
 	}
 }
