@@ -29,9 +29,6 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 			$this->enabled = $this->settings['enabled'];
 		}
 
-		// Hook onto the receipt page to display the payment form.
-		add_action( 'woocommerce_receipt_' . $this->id, array( $this, 'receipt_page' ) );
-
 		// Hooks.
 		add_action(
 			'woocommerce_update_options_payment_gateways_' . $this->id,
