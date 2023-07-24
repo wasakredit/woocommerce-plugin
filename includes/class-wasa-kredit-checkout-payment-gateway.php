@@ -401,7 +401,7 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 					return $template;
 				}
 
-				return plugin_dir_path( __FILE__ ) . '../templates/invoice-checkout-page.php';
+				return plugin_dir_path( __FILE__ ) . '../templates/checkout-page.php';
 			}
 		}
 
