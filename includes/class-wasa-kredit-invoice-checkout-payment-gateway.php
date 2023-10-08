@@ -209,8 +209,7 @@ class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 
 	public function process_payment( $order_id ) {
 		// When clicking Proceed button, create a on-hold order.
-		global $woocommerce;
-		$order = new WC_Order( $order_id );
+		$order = wc_get_order( $order_id );
 
 		return array(
 			'result'   => 'success',

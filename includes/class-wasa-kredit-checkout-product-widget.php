@@ -179,8 +179,17 @@ class Wasa_Kredit_Checkout_Product_Widget {
 
 		if ( $product->is_type( 'variable' ) ) {
 			$price = $product->get_variation_price( 'min' );
+		} elseif ( $product->is_type( 'bundle' ) ) {
+			$price = $product->get_bundle_price( 'min' );
 		} else {
 			$price = wc_get_price_to_display( $product );
+		}
+
+		// WOO-DISCOUNT-RULES: Check if the filter for retrieving the discounted price exists. Note: by default, quantity is 1.
+		// Link: https://gist.github.com/AshlinRejo/c37a155a42c0e30beafbbad183f0c4e8
+		if ( has_filter( 'advanced_woo_discount_rules_get_product_discount_price_from_custom_price' ) ) {
+			$maybe_price = apply_filters( 'advanced_woo_discount_rules_get_product_discount_price_from_custom_price', $price, $product, 1, $price, 'discounted_price', true );
+			$price       = false !== $maybe_price ? $maybe_price : $price;
 		}
 
 		// Don't display widget if price is lower thant lower threshold setting.
