@@ -1,307 +1,339 @@
-#, fuzzy
+# Copyright (C) 2023 wasa-kredit-checkout
+# This file is distributed under the same license as the wasa-kredit-checkout package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Wasa Kredit Checkout\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-12 13:56+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: \n"
-"Language: \n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: wasa-kredit-checkout\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Loco https://localise.biz/"
+"Language-Team: Krokedil <info@krokedil.se>\n"
+"Last-Translator: Krokedil <info@krokedil.se>\n"
+"POT-Creation-Date: 2023-10-08 19:11+0000\n"
+"Report-Msgid-Bugs-To: http://krokedil.se\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: classes/class-wasa-kredit-checkout-order-management.php:90
-msgid " but the order could not be changed at Wasa Kredit."
-msgstr ""
-
-#. %s placeholder is a number to display number of months.
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:332
-#, php-format
-msgid " for %s months"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-product-widget.php:60
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:333
-#: includes/class-wasa-kredit-checkout-list-widget.php:78
-msgid "/month"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:88
-#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:83
-msgid "Client secret"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:90
-#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:85
-msgid "Client Secret is issued by Wasa Kredit."
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:131
-msgid "Do not log requests (except errors)"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:127
-#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:122
-msgid "Enable logging"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:117
-#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:112
-msgid "Enable test mode"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:72
-msgid "Enable Wasa Kredit Checkout"
-msgstr ""
-
-#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:67
-msgid "Enable Wasa Kredit Invoice Checkout"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:70
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:142
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:155
-#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:65
-msgid "Enable/Disable"
-msgstr ""
-
-#: classes/class-wasa-kredit-checkout-order-management.php:70
-msgid "Error when trying to get Wasa Kredit order status."
-msgstr ""
-
-#: classes/class-wasa-kredit-checkout-order-management.php:90
-msgid "Error: You changed order status to "
-msgstr ""
-
-#: classes/class-wasa-kredit-checkout-callbacks.php:121
-msgid "Failed to find a mapping for Wasa Kredit status"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:317
-msgid "Finance your purchase with Wasa Kredit leasing"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:321
-msgid "Finance your purchase with Wasa Kredit rental"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-list-widget.php:77
-msgid "Financing"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:347
-msgid "Financing with Wasa Kredit Checkout"
-msgstr ""
-
-#. Author URI of the plugin
-msgid "https://developer.wasakredit.se"
-msgstr ""
-
-#. URI of the plugin
-msgid "https://github.com/wasakredit/woocommerse-plugin"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:176
-msgid "Large"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:177
-msgid "Large with no icons"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:134
-#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:128
-msgid "Log both monthly cost & checkout requests"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:133
-#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:127
-msgid "Log checkout requests"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:132
-#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:126
-msgid "Log monthly cost requests"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:125
-#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:120
-msgid "Logging"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:138
-msgid "Monthly cost widget"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:183
-msgid ""
-"Only display the monthly cost widget if the product price is higher thant "
-"the entered number. Leave blank to disable this feature."
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:79
-#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:74
-msgid "Partner ID"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:81
-#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:76
-msgid "Partner ID is issued by Wasa Kredit."
-msgstr ""
-
-#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:225
-msgid "Pay after you receive the item"
-msgstr ""
-
-#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:224
-msgid "Pay within 30 days"
-msgstr ""
-
-#: classes/class-wasa-kredit-checkout-order-management.php:103
-msgid "Please set your partner credentials on the"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:18
-#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:16
-msgid "Proceed"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:340
-msgid "Proceed to select your monthly cost"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:129
-#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:124
-msgid "Save request data to the WooCommerce System Status log."
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:172
-msgid "Select the design of the monthly cost widget"
-msgstr ""
-
-#: wasa-kredit-checkout.php:177
+#: ../wasa-kredit-checkout.php:174
 msgid "Settings"
 msgstr ""
 
-#: classes/class-wasa-kredit-checkout-order-management.php:104
-msgid "settings page"
+#: ../admin/class-wasa-kredit-checkout-admin.php:70
+msgid "Title"
 msgstr ""
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:157
-msgid "Show monthly cost in product details"
+#: ../admin/class-wasa-kredit-checkout-admin.php:72
+msgid "This controls the payment gateway <b>title</b> which the user sees during checkout."
 msgstr ""
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:144
-msgid "Show monthly cost in product list"
+#: ../admin/class-wasa-kredit-checkout-admin.php:78
+msgid "Description"
 msgstr ""
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:174
-msgid "Small"
+#: ../admin/class-wasa-kredit-checkout-admin.php:80
+msgid "This controls the payment gateway <b>description</b> which the user sees during checkout."
 msgstr ""
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:175
-msgid "Small with no icons"
+#: ../classes/class-wasa-kredit-checkout-callbacks.php:102
+msgid "Woocommerce associated order with wasa kredit id"
 msgstr ""
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:106
-#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:101
-msgid "Test Client secret"
+#: ../classes/class-wasa-kredit-checkout-callbacks.php:121
+msgid "Failed to find a mapping for Wasa Kredit status"
 msgstr ""
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:108
-#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:103
-msgid "Test Client Secret is issued by Wasa Kredit."
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:115
-#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:110
-msgid "Test mode"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:97
-#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:92
-msgid "Test Partner ID"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:99
-#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:94
-msgid "Test Partner ID is issued by Wasa Kredit."
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:170
-msgid "The design of the montly cost widget"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:119
-#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:114
-msgid ""
-"This controls if the test API should be called or not. Do not use in "
-"production."
-msgstr ""
-
-#. Author of the plugin
-msgid "Wasa Kredit"
-msgstr ""
-
-#: classes/class-wasa-kredit-checkout-callbacks.php:113
+#: ../classes/class-wasa-kredit-checkout-callbacks.php:113
 msgid "Wasa Kredit changed order status to"
 msgstr ""
 
-#. Name of the plugin
-msgid "Wasa Kredit Checkout"
+#: ../classes/class-wasa-kredit-checkout-order-management.php:77
+msgid "Error when trying to get Wasa Kredit order status."
 msgstr ""
 
-#. Description of the plugin
-msgid "Wasa Kredit Checkout offers financing as a payment method for B2B."
+#: ../classes/class-wasa-kredit-checkout-order-management.php:97
+msgid "Error: You changed order status to "
 msgstr ""
 
-#: classes/class-wasa-kredit-checkout-order-management.php:103
-msgid "Wasa Kredit Checkout:"
+#: ../classes/class-wasa-kredit-checkout-order-management.php:97
+msgid " but the order could not be changed at Wasa Kredit."
 msgstr ""
 
-#: includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:220
-msgid "Wasa Kredit Invoice"
-msgstr ""
-
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:14
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:289
-msgid "Wasa Kredit Leasing"
-msgstr ""
-
-#: classes/class-wasa-kredit-checkout-order-management.php:88
+#: ../classes/class-wasa-kredit-checkout-order-management.php:95
 msgid "Wasa Kredit order: "
 msgstr ""
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:286
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:320
-msgid "Wasa Kredit Rental"
+#: ../classes/class-wasa-kredit-checkout-order-management.php:110
+msgid "Wasa Kredit Checkout:"
 msgstr ""
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:168
+#: ../classes/class-wasa-kredit-checkout-order-management.php:110
+msgid "Please set your partner credentials on the"
+msgstr ""
+
+#: ../classes/class-wasa-kredit-checkout-order-management.php:111
+msgid "settings page"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-list-widget.php:89
+msgid "Financing"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-list-widget.php:90, ../includes/class-wasa-kredit-checkout-payment-gateway.php:344, ../includes/class-wasa-kredit-checkout-product-widget.php:58
+msgid "/month"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:14, ../includes/class-wasa-kredit-checkout-payment-gateway.php:303
+msgid "Wasa Kredit Leasing"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:18, ../includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:16
+msgid "Proceed"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:75, ../includes/class-wasa-kredit-checkout-payment-gateway.php:153, ../includes/class-wasa-kredit-checkout-payment-gateway.php:166, ../includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:70
+msgid "Enable/Disable"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:77
+msgid "Enable Wasa Kredit Checkout"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:84, ../includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:79
+msgid "Partner ID"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:86, ../includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:81
+msgid "Partner ID is issued by Wasa Kredit."
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:93, ../includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:88
+msgid "Client secret"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:95, ../includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:90
+msgid "Client Secret is issued by Wasa Kredit."
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:102, ../includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:97
+msgid "Test Partner ID"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:104, ../includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:99
+msgid "Test Partner ID is issued by Wasa Kredit."
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:111, ../includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:106
+msgid "Test Client secret"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:113, ../includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:108
+msgid "Test Client Secret is issued by Wasa Kredit."
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:120, ../includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:115
+msgid "Test mode"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:122, ../includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:117
+msgid "Enable test mode"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:124, ../includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:119
+msgid "This controls if the test API should be called or not. Do not use in production."
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:130, ../includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:125
+msgid "Logging"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:132, ../includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:127
+msgid "Enable logging"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:134, ../includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:129
+msgid "Save request data to the WooCommerce System Status log."
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:136
+msgid "Do not log requests (except errors)"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:137, ../includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:131
+msgid "Log monthly cost requests"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:138, ../includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:132
+msgid "Log checkout requests"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:139, ../includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:133
+msgid "Log both monthly cost & checkout requests"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:143, ../includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:137
+msgid "Enable Order Management"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:145, ../includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:139
+msgid "Enable Wasa Kredit order capture on WooCommerce order completion."
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:149
+msgid "Monthly cost widget"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:155
+msgid "Show monthly cost in product list"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:159
+msgid "Will be shown under the price in product listings (added via the <i>woocommerce_after_shop_loop_item</i> hook)."
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:168
+msgid "Show monthly cost in product details"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:172
+msgid "Will be shown between the price and the add to cart button. You can also use the shortcode [wasa_kredit_product_widget] if you want to add it manually on the product page."
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:179
 msgid "Widget format"
 msgstr ""
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:181
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:181
+msgid "The design of the montly cost widget"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:183
+msgid "Select the design of the monthly cost widget"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:185
+msgid "Small"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:186
+msgid "Small with no icons"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:187
+msgid "Large"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:188
+msgid "Large with no icons"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:192
 msgid "Widget lower threshold"
 msgstr ""
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:161
-msgid ""
-"Will be shown between the price and the add to cart button. You can also use "
-"the shortcode [wasa_kredit_product_widget] if you want to add it manually on "
-"the product page."
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:194
+msgid "Only display the monthly cost widget if the product price is higher thant the entered number. Leave blank to disable this feature."
 msgstr ""
 
-#: includes/class-wasa-kredit-checkout-payment-gateway.php:148
-msgid ""
-"Will be shown under the price in product listings (added via the <i>"
-"woocommerce_after_shop_loop_item</i> hook)."
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:300, ../includes/class-wasa-kredit-checkout-payment-gateway.php:331
+msgid "Wasa Kredit Rental"
 msgstr ""
 
-#: classes/class-wasa-kredit-checkout-callbacks.php:102
-msgid "Woocommerce associated order with wasa kredit id"
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:314
+msgid "Financing with Wasa Kredit Checkout"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:328
+msgid "Finance your purchase with Wasa Kredit leasing"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:332
+msgid "Finance your purchase with Wasa Kredit rental"
+msgstr ""
+
+#. translators: %s placeholder is a number to display number of months.
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:343
+msgid " for %s months"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:351
+msgid "Proceed to select your monthly cost"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:139
+msgid "Product Page Widget placement"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:142
+msgid "No placement, I handle it myself"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:143
+msgid "Above Title"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:144
+msgid "Between Title and Price"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:145
+msgid "Between Price and Excerpt"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:146
+msgid "Between Excerpt and Add to cart button"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:147
+msgid "Between Add to cart button and Product meta"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:148
+msgid "Between Product meta and Product sharing buttons"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:149
+msgid "After Product sharing-buttons"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:152
+msgid "Select where to display the widget in your product pages."
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:156
+msgid "Custom placement hook"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:157
+msgid "Enter a custom hook where you want the product page widget to be placed."
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:162
+msgid "Custom placement hook priority"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:163
+msgid "Enter a priority for the custom hook where you want the product page widget to be placed."
+msgstr ""
+
+#: ../includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:72
+msgid "Enable Wasa Kredit Invoice Checkout"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:233
+msgid "Wasa Kredit Invoice"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:237
+msgid "Pay within 30 days"
+msgstr ""
+
+#: ../includes/class-wasa-kredit-invoice-checkout-payment-gateway.php:238
+msgid "Pay after you receive the item"
+msgstr ""
+
+#: ../templates/checkout-page.php:3, ../templates/invoice-checkout-page.php:3
+msgid "Wasa Kredit Checkout Template"
 msgstr ""
