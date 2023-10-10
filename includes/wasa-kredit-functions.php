@@ -48,7 +48,32 @@ function wasa_kredit_get_leasing_snippet( $order_id ) {
  * @return void
  */
 function wasa_kredit_print_error_message( $wp_error ) {
-	wc_print_notice( $wp_error->get_error_message(), 'error' );
+	if ( is_ajax() ) {
+		if ( function_exists( 'wc_add_notice' ) ) {
+			$print = 'wc_add_notice';
+		}
+	} elseif ( function_exists( 'wc_print_notice' ) ) {
+		$print = 'wc_print_notice';
+	}
+
+	if ( ! isset( $print ) ) {
+		return;
+	}
+
+	foreach ( $wp_error->get_error_messages() as $error ) {
+		$message = $error;
+		if ( is_array( $error ) ) {
+			$error   = array_filter(
+				$error,
+				function ( $e ) {
+					return ! empty( $e );
+				}
+			);
+			$message = implode( ' ', $error );
+		}
+
+		$print( $message, 'error' );
+	}
 }
 
 /**
