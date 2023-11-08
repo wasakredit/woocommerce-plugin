@@ -201,6 +201,7 @@ if ( ! class_exists( 'Wasa_Kredit_Checkout' ) ) {
 			require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/classes/class-wasa-kredit-checkout-api.php';
 			require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/classes/class-wasa-kredit-checkout-callbacks.php';
 			require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/classes/class-wasa-kredit-checkout-order-management.php';
+			require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/classes/class-wasa-kredit-checkout-ajax.php';
 
 			// Includes.
 			require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/includes/wasa-kredit-functions.php';

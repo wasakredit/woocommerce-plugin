@@ -79,12 +79,23 @@ class Wasa_Kredit_Checkout_Public {
 			false
 		);
 
-		wp_enqueue_script(
+		wp_register_script(
 			'wasa-kredit-monthly-cost',
 			WASA_KREDIT_CHECKOUT_PLUGIN_URL . '/assets/js/monthly-cost-widget.js',
 			array( 'jquery' ),
 			$this->version,
 			false
 		);
+
+		wp_localize_script(
+			'wasa-kredit-monthly-cost',
+			'wasaKreditParams',
+			array(
+				'wasa_kredit_update_monthly_widget_url'   => WC_AJAX::get_endpoint( 'wasa_kredit_update_monthly_widget' ),
+				'wasa_kredit_update_monthly_widget_nonce' => wp_create_nonce( 'wasa_kredit_update_monthly_widget' ),
+			)
+		);
+
+		wp_enqueue_script( 'wasa-kredit-monthly-cost' );
 	}
 }

@@ -33,4 +33,59 @@ if (!window.wasaKreditMonthlyCostWidget) {
         }
     };
     window.wasaKreditMonthlyCostWidget = monthlyCostWidget;
+
+    if (wasaKreditParams !== undefined) {
+        jQuery(function ($) {
+            const widget = {
+                update_monthly_widget: function (price) {
+                    const url = new URL(wasaKreditParams.wasa_kredit_update_monthly_widget_url, window.location)
+                    $.ajax({
+                        url: url.href,
+                        type: 'POST',
+                        data: {
+                            price: price.toFixed(2),
+                            nonce: wasaKreditParams.wasa_kredit_update_monthly_widget_nonce, 
+                        },
+                        dataType: 'json',
+                        crossDomain: false,
+                        success: function (res) {
+                            const container = $('.wasa-kredit-product-widget-container')
+                            container.replaceWith($.parseHTML(res.data));
+                        },
+                        complete: function (res) {
+                            console.log(res)
+                        }
+                    })
+                }
+            }
+
+            $(document).on('found_variation', function (e, variation) {
+                let price = Math.round(variation.display_price);
+                const quantity = parseInt($('form.cart input[name=quantity]').val());
+                if (!isNaN(quantity)) {
+                    price *= quantity;
+                }
+                widget.update_monthly_widget(price)
+            });
+
+            $('form.cart').on('change', 'input.qty', function () {
+                const quantity = parseInt($(this).val())
+
+                let price = $('form.cart .woocommerce-variation-price .amount');
+                if (0 === price.length) {
+                    price = $('.summary .price .amount');
+                }
+
+                const unit_price = parseFloat(price.text().replace(/[^\d.,]+/g, ''))
+
+                if (quantity > 0) {
+                    const total_price = quantity * unit_price; 
+                    if (!isNaN(total_price)) {
+                        widget.update_monthly_widget(total_price)
+                    }
+                }
+            })
+
+        })
+    }
 }
