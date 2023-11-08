@@ -34,6 +34,9 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 			'woocommerce_update_options_payment_gateways_' . $this->id,
 			array( $this, 'process_admin_options' )
 		);
+
+		// Inject Wasa Kredit's payment form on the order-pay page.
+		add_filter( 'wc_get_template', array( $this, 'replace_checkout_page' ), 10, 2 );
 	}
 
 	/**
@@ -194,7 +197,8 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 					),
 					'default'     => '',
 				),
-			)
+			),
+			$this->id
 		);
 	}
 
@@ -262,10 +266,9 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 		return true;
 	}
 
-	public function process_payment( $order_id ) {
+	public function process_payment( $order_id = null ) {
 		// When clicking Proceed button, create a on-hold order.
-		global $woocommerce;
-		$order = new WC_Order( $order_id );
+		$order = wc_get_order( $order_id );
 
 		return array(
 			'result'   => 'success',
@@ -280,11 +283,12 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 				'wasa_kredit_checkout'       => $order->get_order_key(),
 				'wasa_kredit_payment_method' => 'leasing',
 			),
-			get_home_url()
+			$order->get_checkout_payment_url( true )
 		);
 	}
 
 	public function get_title() {
+		$title = $this->title;
 		if ( isset( WC()->cart ) ) {
 			$cart_totals                 = WC()->cart->get_totals();
 			$cart_total                  = $cart_totals['subtotal'] + $cart_totals['shipping_total'];
@@ -292,33 +296,30 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 			if ( ! is_wp_error( $wasa_kredit_payment_methods ) && is_array( $wasa_kredit_payment_methods ) ) {
 				foreach ( $wasa_kredit_payment_methods['payment_methods'] as $key => $value ) {
 					if ( 'rental' === $value['id'] ) {
-						return __( 'Wasa Kredit Rental', 'wasa-kredit-checkout' );
+						$title = __( 'Wasa Kredit Rental', 'wasa-kredit-checkout' );
 					}
 					if ( 'leasing' === $value['id'] ) {
-						return __( 'Wasa Kredit Leasing', 'wasa-kredit-checkout' );
+						$title = __( 'Wasa Kredit Leasing', 'wasa-kredit-checkout' );
 					}
 				}
 			}
 		}
-		return $this->title;
+		return apply_filters( 'woocommerce_gateway_title', $title, $this->id );
 	}
 
 	public function get_description() {
 		// Set custom description to display in checkout.
+
+		$desc = __( 'Financing with Wasa Kredit Checkout', 'wasa-kredit-checkout' );
 		if ( isset( WC()->cart ) ) {
 
 			$cart_totals = WC()->cart->get_totals();
 			$cart_total  = $cart_totals['subtotal'] + $cart_totals['shipping_total'];
 
 			$wasa_kredit_payment_methods = $this->get_wasa_kredit_payment_methods( $cart_total );
+			$payment_options_response    = $this->get_wasa_kredit_leasing_payment_options( $cart_total );
 
-			$payment_options_response = $this->get_wasa_kredit_leasing_payment_options( $cart_total );
-			if ( is_wp_error( $payment_options_response ) ) {
-				return;
-			}
-
-			if ( ! is_wp_error( $wasa_kredit_payment_methods ) ) {
-
+			if ( ! is_wp_error( $payment_options_response ) && ! is_wp_error( $wasa_kredit_payment_methods ) ) {
 				foreach ( $wasa_kredit_payment_methods['payment_methods'] as $key => $value ) {
 					if ( 'leasing' === $value['id'] || 'rental' === $value['id'] ) {
 						$desc = '';
@@ -349,11 +350,9 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 						$desc .= '<p>' . __( 'Proceed to select your monthly cost', 'wasa-kredit-checkout' ) . '</p>';
 					}
 				}
-
-				return $desc;
 			}
 		}
-		return __( 'Financing with Wasa Kredit Checkout', 'wasa-kredit-checkout' );
+		return apply_filters( 'woocommerce_gateway_description', $desc, $this->id );
 	}
 
 	public function get_wasa_kredit_payment_methods( $cart_total ) {
@@ -383,5 +382,28 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 		}
 
 		return $leasing_payment_options;
+	}
+
+	/**
+	 * Inject the Wasa Kredit payment form on the order-pay page.
+	 *
+	 * @param string $template Absolute path to the template.
+	 * @param string $template_name Template name.
+	 * @return string
+	 */
+	public function replace_checkout_page( $template, $template_name ) {
+		if ( is_wc_endpoint_url( 'order-pay' ) ) {
+			if ( 'checkout/order-receipt.php' === $template_name ) {
+				$order_id = absint( get_query_var( 'order-pay', 0 ) );
+				$order    = wc_get_order( $order_id );
+				if ( empty( $order ) || $order->get_payment_method() !== $this->id ) {
+					return $template;
+				}
+
+				return plugin_dir_path( __FILE__ ) . '../templates/checkout-page.php';
+			}
+		}
+
+		return $template;
 	}
 }

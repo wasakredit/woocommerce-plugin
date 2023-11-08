@@ -18,7 +18,14 @@ class Wasa_Kredit_Checkout_Product_Widget {
 	 * Class constructor.
 	 */
 	public function __construct() {
-		$this->settings               = get_option( 'wasa_kredit_settings' );
+		$this->settings = wp_parse_args(
+			get_option( 'wasa_kredit_settings', array() ),
+			array(
+				'enabled'                   => 'no',
+				'widget_on_product_details' => 'yes',
+			),
+		);
+
 		$this->widget_format          = isset( $this->settings['widget_format'] ) ? $this->settings['widget_format'] : 'small';
 		$this->widget_lower_threshold = isset( $this->settings['widget_lower_threshold'] ) ? $this->settings['widget_lower_threshold'] : '';
 

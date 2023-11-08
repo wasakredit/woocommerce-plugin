@@ -29,6 +29,9 @@ class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 			'woocommerce_update_options_payment_gateways_' . $this->id,
 			array( $this, 'process_admin_options' )
 		);
+
+		// Inject Wasa Kredit's payment form on the order-pay page.
+		add_filter( 'wc_get_template', array( $this, 'replace_checkout_page' ), 10, 2 );
 	}
 
 	/**
@@ -56,6 +59,8 @@ class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 				wp_list_pluck( $form_fields, 'default' )
 			);
 		}
+
+		$this->enabled = ! empty( $this->settings['invoice_enabled'] ) && 'yes' === $this->settings['invoice_enabled'] ? 'yes' : 'no';
 	}
 
 	public function init_form_fields() {
@@ -136,7 +141,8 @@ class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 					'label'   => __( 'Enable Wasa Kredit order capture on WooCommerce order completion.', 'wasa-kredit-checkout' ),
 					'default' => 'yes',
 				),
-			)
+			),
+			$this->id
 		);
 	}
 
@@ -154,6 +160,10 @@ class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 						$field,
 						$post_data
 					);
+
+					if ( 'enabled' === $key ) {
+						$this->settings['invoice_enabled'] = $this->settings[ $key ];
+					}
 				} catch ( Exception $e ) {
 					$this->add_error( $e->getMessage() );
 				}
@@ -167,6 +177,40 @@ class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 				$this->settings
 			)
 		);
+	}
+
+	/**
+	 * Update a single option.
+	 *
+	 * @see parent::update_option.
+
+	 * @param string $key Option key.
+	 * @param mixed  $value Value to set.
+	 * @return bool was anything saved?
+	 */
+	public function update_option( $key, $value = '' ) {
+		if ( 'enabled' === $key ) {
+			$key = 'invoice_enabled';
+		}
+
+		return parent::update_option( $key, $value );
+	}
+
+	/**
+	 * Get option from DB.
+	 *
+	 * @see parent::get_option.
+	 *
+	 * @param  string $key Option key.
+	 * @param  mixed  $empty_value Value when empty.
+	 * @return string The value specified for the option or a default value for the option.
+	 */
+	public function get_option( $key, $empty_value = null ) {
+		if ( 'enabled' === $key ) {
+			$key = 'invoice_enabled';
+		}
+
+		return parent::get_option( $key, $empty_value );
 	}
 
 	public function is_available() {
@@ -221,17 +265,40 @@ class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 				'wasa_kredit_checkout'       => $order->get_order_key(),
 				'wasa_kredit_payment_method' => 'invoice',
 			),
-			get_home_url()
+			$order->get_checkout_payment_url( true )
 		);
 	}
 
 	public function get_title() {
-		return __( 'Wasa Kredit Invoice', 'wasa-kredit-checkout' );
+		return apply_filters( 'woocommerce_gateway_title', __( 'Wasa Kredit Invoice', 'wasa-kredit-checkout' ), $this->id );
 	}
 
 	public function get_description() {
 		$desc  = '<p>' . __( 'Pay within 30 days', 'wasa-kredit-checkout' ) . '</p>';
 		$desc .= '<p>' . __( 'Pay after you receive the item', 'wasa-kredit-checkout' ) . '</p>';
-		return $desc;
+		return apply_filters( 'woocommerce_gateway_description', $desc, $this->id );
+	}
+
+	/**
+	 * Inject the Wasa Kredit payment form on the order-pay page.
+	 *
+	 * @param string $template Absolute path to the template.
+	 * @param string $template_name Template name.
+	 * @return string
+	 */
+	public function replace_checkout_page( $template, $template_name ) {
+		if ( is_wc_endpoint_url( 'order-pay' ) ) {
+			if ( 'checkout/order-receipt.php' === $template_name ) {
+				$order_id = absint( get_query_var( 'order-pay', 0 ) );
+				$order    = wc_get_order( $order_id );
+				if ( empty( $order ) || $order->get_payment_method() !== $this->id ) {
+					return $template;
+				}
+
+				return plugin_dir_path( __FILE__ ) . '../templates/invoice-checkout-page.php';
+			}
+		}
+
+		return $template;
 	}
 }

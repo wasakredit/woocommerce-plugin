@@ -3,11 +3,11 @@ Contributors: aos06wasakredit
 Donate link: https://developer.wasakredit.se
 Tags: woocommerce, ecommerce, e-commerce, checkout
 Requires at least: 4.0.0
-Tested up to: 6.0
+Tested up to: 6.3.2
 Requires PHP: 7.2
 WC requires at least: 5.0.0
-WC tested up to: 7.2.0
-Stable tag: 2.3.4
+WC tested up to: 8.2.0
+Stable tag: 2.5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +55,25 @@ In the settings for Wasa's checkout, there are two new settings with the heading
 2. In the text field below, enter the path to the default checkout. For example, in my checkout, it is the "checkout". If it is not the same for you, you can easily get it by activating the standard checkout and copying the uri. Dy activates it at Settings> Advanced> Page Settings> Checkout Page> "Checkout".
 
 == Changelog ==
+= 2023-10-09    - version 2.5.4 =
+* Fix           - Fixed a critical error that sometimes happened when attempting to show an error notice.
+
+= 2023-07-24    - version 2.5.3 =
+* Fix           - Leasing should now work expected. Prior to this fix, an incorrect template was being used, causing the invoice template to be displayed instead.
+
+= 2023-07-12    - version 2.5.2 =
+* Fix           - Removed an action that references an undefined method which would cause a fatal error.
+
+= 2023-06-28    - version 2.5.1 =
+* Tweak         - The checkout page has been modified to replace the order receipt with the payment form.
+
+= 2023-06-12    - version 2.5.0 =
+* Feature       - The customer will now be redirected to a new checkout page that is more compatible with the store's theming and styling.
+* Fix           - Fixed an undefined index notice that happened due to missing a default value.
+
+= 2023-05-04    - version 2.4.0 =
+* Feature       - Added a setting to let you change the placement of the monthly cost widget on the product page or attach it onto a custom hook.
+* Feature       - You can now customize the payment gateways' title and description as shown to the customer.
 
 = 2022-12-19    - version 2.3.4 =
 * Fix           - Improve calculate monthly cost logic in checkout page.

@@ -52,13 +52,81 @@ class Wasa_Kredit_Checkout_Admin {
 	public function __construct( $plugin_name, $version ) {
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
+
+		add_filter( 'wasa_kredit_settings', array( $this, 'extend_settings' ), 10, 2 );
+
+		add_filter( 'woocommerce_gateway_title', array( $this, 'custom_gateway_title' ), 10, 2 );
+		add_filter( 'woocommerce_gateway_description', array( $this, 'custom_gateway_description' ), 10, 2 );
 	}
 
 	/**
-	 * Register the stylesheets for the admin area.
+	 * Used for adding additional settings that apply to all Wasa Kredit gateways.
 	 *
-	 * @since    1.0.0
+	 * @param array $settings
+	 * @return array
 	 */
+	public function extend_settings( $settings, $gateway_id ) {
+		$extended_settings[ $gateway_id . '_custom_gateway_title' ] = array(
+			'title'       => __( 'Title', 'wasa-kredit-checkout' ),
+			'type'        => 'text',
+			'description' => __( 'This controls the payment gateway <b>title</b> which the user sees during checkout.', 'wasa-kredit-checkout' ),
+			'default'     => '',
+			'placeholder' => 'Leave empty to use default.',
+		);
+
+		$extended_settings[ $gateway_id . '_custom_gateway_description' ] = array(
+			'title'       => __( 'Description', 'wasa-kredit-checkout' ),
+			'type'        => 'text',
+			'description' => __( 'This controls the payment gateway <b>description</b> which the user sees during checkout.', 'wasa-kredit-checkout' ),
+			'default'     => '',
+			'placeholder' => 'Leave empty to use default.',
+		);
+
+		// Insert the extended settings after the first setting.
+		$head = array_slice( $settings, 0, 1, true );
+		$tail = array_slice( $settings, 1, null, true );
+		return array_merge( $head, $extended_settings, $tail );
+	}
+
+	/**
+	 * Used for overriding the gateway title.
+	 *
+	 * @param string $title
+	 * @param string $gateway_id
+	 * @return string
+	 */
+	public function custom_gateway_title( $title, $gateway_id ) {
+		if ( false !== strpos( $gateway_id, 'wasa_kredit' ) ) {
+			$settings = get_option( 'wasa_kredit_settings' );
+			if ( ! empty( $settings[ $gateway_id . '_custom_gateway_title' ] ) ) {
+				$title = $settings[ $gateway_id . '_custom_gateway_title' ];
+			}
+		}
+		return $title;
+	}
+
+	/**
+	 * Used for overriding the gateway description.
+	 *
+	 * @param string $description
+	 * @param string $gateway_id
+	 * @return string
+	 */
+	public function custom_gateway_description( $description, $gateway_id ) {
+		if ( false !== strpos( $gateway_id, 'wasa_kredit' ) ) {
+			$settings = get_option( 'wasa_kredit_settings' );
+			if ( ! empty( $settings[ $gateway_id . '_custom_gateway_description' ] ) ) {
+				$description = $settings[ $gateway_id . '_custom_gateway_description' ];
+			}
+		}
+		return $description;
+	}
+
+		/**
+		 * Register the stylesheets for the admin area.
+		 *
+		 * @since    1.0.0
+		 */
 	public function enqueue_styles() {
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -80,11 +148,11 @@ class Wasa_Kredit_Checkout_Admin {
 		);
 	}
 
-	/**
-	 * Register the JavaScript for the admin area.
-	 *
-	 * @since    1.0.0
-	 */
+		/**
+		 * Register the JavaScript for the admin area.
+		 *
+		 * @since    1.0.0
+		 */
 	public function enqueue_scripts() {
 		/**
 		 * This function is provided for demonstration purposes only.
