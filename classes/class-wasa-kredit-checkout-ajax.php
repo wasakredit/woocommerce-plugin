@@ -2,7 +2,7 @@
 /**
  * Ajax class file.
  *
- * @package Dintero_Checkout/Classes
+ * @package Wasa_Kredit_Checkout/Classes
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
