@@ -3,27 +3,40 @@
  * included in this file.
  */
 
- .wasa-kredit-product-widget-container {
-     margin-bottom: 1em;
- }
+.wasa-kredit-product-widget-container {
+    margin-bottom: 1em;
+}
 
- .wasa-kredit-redirect-widget-container {
-     border:1px solid #efefef;
-     padding:15px;
-     margin-bottom:40px;
-     background-color:#fbfbfb;
- }
+.wasa-kredit-information-overlay__inner {
+    overflow-y: inherit !important;
+}
 
- .wasa-kredit-redirect-widget-title {
-    display:block;
+.wasa-kredit-information-overlay__inner__header {
+    position: static !important;
+}
+
+.wasa-kredit-information-overlay__inner__body {
+    overflow-y: auto !important;
+    height: inherit !important;
+}
+
+.wasa-kredit-redirect-widget-container {
+    border: 1px solid #efefef;
+    padding: 15px;
+    margin-bottom: 40px;
+    background-color: #fbfbfb;
+}
+
+.wasa-kredit-redirect-widget-title {
+    display: block;
 }
 
 .wasa-kredit-redirect-widget-button {
-    display:inline-block;
-    float:right;
-    color:#fff;
-    background-color:#ad1015;
-    padding:10px 20px;
+    display: inline-block;
+    float: right;
+    color: #fff;
+    background-color: #ad1015;
+    padding: 10px 20px;
     line-height: 1.3em;
 }
 
@@ -36,23 +49,23 @@
 }
 
 .wasa-kredit-redirect-widget-monthly-cost-list {
-    list-style:none;
-    margin:0px;
-    float:left;
+    list-style: none;
+    margin: 0px;
+    float: left;
 }
 
 .wasa-kredit-redirect-widget-clear {
-    clear:both;
+    clear: both;
 }
 
 @media (max-width: 530px) {
 
     .wasa-kredit-redirect-widget-button {
-        float:none;
+        float: none;
     }
 
     .wasa-kredit-redirect-widget-monthly-cost-list {
-        float:none;
+        float: none;
         margin-bottom: 10px;
     }
 }
@@ -60,92 +73,93 @@
 /* Montly cost widget on product page */
 @font-face {
     font-family: IntroCondBold;
-    src: url(https://api.inttest-b2b.wasakredit.se/media/fonts/intro-cond-bold.woff2) format(\'woff2\'), url(https://api.inttest-b2b.wasakredit.se/media/fonts/intro-cond-bold.woff) format(\'woff\'), url(https://api.inttest-b2b.wasakredit.se/media/fonts/intro-cond-bold.ttf) format(\'truetype\')
+    src: url(https://api.inttest-b2b.wasakredit.se/media/fonts/intro-cond-bold.woff2) format('woff2'), url(https://api.inttest-b2b.wasakredit.se/media/fonts/intro-cond-bold.woff) format('woff'), url(https://api.inttest-b2b.wasakredit.se/media/fonts/intro-cond-bold.ttf) format('truetype')
 }
 
 @font-face {
-        font-family: IntroCond;
-        src: url(https://api.inttest-b2b.wasakredit.se/media/fonts/intro-cond-regular.woff2) format(\'woff2\'), url(https://api.inttest-b2b.wasakredit.se/media/fonts/intro-cond-regular.woff) format(\'woff\'), url(https://api.inttest-b2b.wasakredit.se/media/fonts/intro-cond-regular.ttf) format(\'truetype\')
+    font-family: IntroCond;
+    src: url(https://api.inttest-b2b.wasakredit.se/media/fonts/intro-cond-regular.woff2) format('woff2'), url(https://api.inttest-b2b.wasakredit.se/media/fonts/intro-cond-regular.woff) format('woff'), url(https://api.inttest-b2b.wasakredit.se/media/fonts/intro-cond-regular.ttf) format('truetype')
 }
 
 .wasa-kredit-monthly-cost-widget {
+    cursor: pointer !important;
     display: inline-block !important;
     -webkit-box-sizing: border-box !important;
     box-sizing: border-box !important;
     margin: 0 !important;
-    height: 47px !important;
+    height: 37px !important;
     color: #005aa0 !important;
 }
 
-.wasa-kredit-monthly-cost-widget > .wasa-kredit-monthly-cost-widget__wrapper > .wasa-kredit-monthly-cost-widget__price {
+.wasa-kredit-monthly-cost-widget>.wasa-kredit-monthly-cost-widget__wrapper>.wasa-kredit-monthly-cost-widget__price {
     font-family: IntroCondBold, serif !important;
-    font-size: 22px !important;
-    line-height: 19px !important;
+    font-size: 18px !important;
+    line-height: 15px !important;
     text-align: left !important;
     color: inherit !important
 }
 
-.wasa-kredit-monthly-cost-widget > .wasa-kredit-monthly-cost-widget__wrapper > .wasa-kredit-monthly-cost-widget__price > .wasa-kredit-monthly-cost-widget__currency {
+.wasa-kredit-monthly-cost-widget>.wasa-kredit-monthly-cost-widget__wrapper>.wasa-kredit-monthly-cost-widget__price>.wasa-kredit-monthly-cost-widget__currency {
     font-family: IntroCondBold, serif !important;
-    font-size: 16px !important;
-    line-height: 13px !important;
+    font-size: 12px !important;
+    line-height: 10px !important;
     margin-left: 3px !important;
     text-align: left !important
 }
-    
-.wasa-kredit-monthly-cost-widget > .wasa-kredit-monthly-cost-widget__wrapper > .wasa-kredit-monthly-cost-widget__price > .wasa-kredit-monthly-cost-widget__title {
+
+.wasa-kredit-monthly-cost-widget>.wasa-kredit-monthly-cost-widget__wrapper>.wasa-kredit-monthly-cost-widget__price>.wasa-kredit-monthly-cost-widget__title {
     font-family: IntroCond, serif !important;
-    font-size: 16px !important;
-    line-height: 13px !important;
+    font-size: 12px !important;
+    line-height: 10px !important;
     margin-left: 3px !important;
     text-align: left !important;
     display: inline-block !important;
 }
 
-.wasa-kredit-monthly-cost-widget > .wasa-kredit-monthly-cost-widget__payment-type-icon {
-    height: 47px !important;
-    margin-right: 4px !important;
+.wasa-kredit-monthly-cost-widget>.wasa-kredit-monthly-cost-widget__payment-type-icon {
+    height: 37px !important;
+    margin-right: 3px !important;
     display: inline-block !important;
 }
 
-.wasa-kredit-monthly-cost-widget > .wasa-kredit-monthly-cost-widget__wrapper > .wasa-kredit-monthly-cost-widget__info {
+.wasa-kredit-monthly-cost-widget>.wasa-kredit-monthly-cost-widget__wrapper>.wasa-kredit-monthly-cost-widget__info {
     display: inline-block !important;
     line-height: 0 !important;
     margin-top: 2px !important;
 }
 
-.wasa-kredit-monthly-cost-widget > .wasa-kredit-monthly-cost-widget__wrapper > .wasa-kredit-monthly-cost-widget__info > .wasa-kredit-monthly-cost-widget__info__icon {
-    width: 8px !important;
-    height: 8px !important;
+.wasa-kredit-monthly-cost-widget>.wasa-kredit-monthly-cost-widget__wrapper>.wasa-kredit-monthly-cost-widget__info>.wasa-kredit-monthly-cost-widget__info__icon {
+    width: 7px !important;
+    height: 7px !important;
     cursor: pointer !important;
     display: inline-block !important;
 }
 
-.wasa-kredit-monthly-cost-widget > .wasa-kredit-monthly-cost-widget__wrapper > .wasa-kredit-monthly-cost-widget__info > .wasa-kredit-monthly-cost-widget__info__desc {
+.wasa-kredit-monthly-cost-widget>.wasa-kredit-monthly-cost-widget__wrapper>.wasa-kredit-monthly-cost-widget__info>.wasa-kredit-monthly-cost-widget__info__desc {
     font-family: IntroCond, serif !important;
-    font-size: 8px !important;
+    font-size: 7px !important;
     cursor: pointer !important;
 }
 
-.wasa-kredit-monthly-cost-widget > .wasa-kredit-monthly-cost-widget__wrapper > .wasa-kredit-monthly-cost-widget__wk-icon {
-    width: 14px !important;
-    height: 14px !important;
-    margin-left: 4px !important;
+.wasa-kredit-monthly-cost-widget>.wasa-kredit-monthly-cost-widget__wrapper>.wasa-kredit-monthly-cost-widget__wk-icon {
+    width: 11px !important;
+    height: 11px !important;
+    margin-left: 3px !important;
     margin-right: 0px !important;
-    transform: translateY(-2.4px) !important;
+    transform: translateY(-2.3px) !important;
     vertical-align: text-bottom !important;
     margin-top: 3px !important;
     display: inline-block !important;
     border-radius: 0 !important;
 }
-    
-.wasa-kredit-monthly-cost-widget > .wasa-kredit-monthly-cost-widget__wrapper > .wasa-kredit-monthly-cost-widget__wk-icon__long {
-    width: 55px !important;
-    height: 14px !important;
-    margin-left: 4px !important;
+
+.wasa-kredit-monthly-cost-widget>.wasa-kredit-monthly-cost-widget__wrapper>.wasa-kredit-monthly-cost-widget__wk-icon__long {
+    width: 43px !important;
+    height: 11px !important;
+    margin-left: 3px !important;
     margin-right: 0px !important;
     margin-top: 3px !important;
-    transform: translateY(-2.4px) !important;
+    transform: translateY(-2.3px) !important;
     vertical-align: text-bottom !important;
     display: inline-block !important;
     border-radius: 0 !important;
@@ -163,7 +177,7 @@
     background-color: rgba(0, 0, 0, .2) !important
 }
 
-.wasa-kredit-information-overlay > .wasa-kredit-information-overlay__inner {
+.wasa-kredit-information-overlay>.wasa-kredit-information-overlay__inner {
     overflow: auto !important;
     height: calc(100% - 95px) !important;
     position: absolute !important;
@@ -174,18 +188,18 @@
     background-color: #fff !important
 }
 
-.wasa-kredit-information-overlay > .wasa-kredit-information-overlay__inner > .wasa-kredit-information-overlay__inner__header {
+.wasa-kredit-information-overlay>.wasa-kredit-information-overlay__inner>.wasa-kredit-information-overlay__inner__header {
     padding: 30px 30px !important;
     color: #00427a !important;
 }
 
-.wasa-kredit-information-overlay > .wasa-kredit-information-overlay__inner > .wasa-kredit-information-overlay__inner__header > .wasa-kredit-information-overlay__inner__header__logo {
+.wasa-kredit-information-overlay>.wasa-kredit-information-overlay__inner>.wasa-kredit-information-overlay__inner__header>.wasa-kredit-information-overlay__inner__header__logo {
     height: 58px !important;
     margin: -16px -15px -20px !important;
     user-select: none !important
 }
 
-.wasa-kredit-information-overlay > .wasa-kredit-information-overlay__inner > .wasa-kredit-information-overlay__inner__header > .wasa-kredit-information-overlay__inner__header__close {
+.wasa-kredit-information-overlay>.wasa-kredit-information-overlay__inner>.wasa-kredit-information-overlay__inner__header>.wasa-kredit-information-overlay__inner__header__close {
     font-size: 0 !important;
     font-weight: 700 !important;
     line-height: 1 !important;
@@ -209,40 +223,41 @@
     -webkit-appearance: none !important
 }
 
-.wasa-kredit-information-overlay > .wasa-kredit-information-overlay__inner > .wasa-kredit-information-overlay__inner__header > .wasa-kredit-information-overlay__inner__header__close:hover {
+.wasa-kredit-information-overlay>.wasa-kredit-information-overlay__inner>.wasa-kredit-information-overlay__inner__header>.wasa-kredit-information-overlay__inner__header__close:hover {
     opacity: .8 !important
 }
 
-.wasa-kredit-information-overlay > .wasa-kredit-information-overlay__inner > .wasa-kredit-information-overlay__inner__header > .wasa-kredit-information-overlay__inner__header__close:active {
+.wasa-kredit-information-overlay>.wasa-kredit-information-overlay__inner>.wasa-kredit-information-overlay__inner__header>.wasa-kredit-information-overlay__inner__header__close:active {
     transition: none !important;
     opacity: .4 !important
 }
 
-.wasa-kredit-information-overlay > .wasa-kredit-information-overlay__inner > .wasa-kredit-information-overlay__inner__header > .wasa-kredit-information-overlay__inner__header__close:after, #wasa-kredit-information-overlay > .wasa-kredit-information-overlay__inner > .wasa-kredit-information-overlay__inner__header > .wasa-kredit-information-overlay__inner__header__close:before {
+.wasa-kredit-information-overlay>.wasa-kredit-information-overlay__inner>.wasa-kredit-information-overlay__inner__header>.wasa-kredit-information-overlay__inner__header__close:after,
+.wasa-kredit-information-overlay>.wasa-kredit-information-overlay__inner>.wasa-kredit-information-overlay__inner__header>.wasa-kredit-information-overlay__inner__header__close:before {
     position: absolute !important;
     top: 50% !important;
     left: 50% !important;
-    content: \'\' !important;
+    content: '' !important;
     background: currentColor !important
 }
 
-.wasa-kredit-information-overlay > .wasa-kredit-information-overlay__inner > .wasa-kredit-information-overlay__inner__header > .wasa-kredit-information-overlay__inner__header__close:before {
+.wasa-kredit-information-overlay>.wasa-kredit-information-overlay__inner>.wasa-kredit-information-overlay__inner__header>.wasa-kredit-information-overlay__inner__header__close:before {
     width: 26px !important;
     height: 2px !important;
-    margin: -1px 0 0 13px !important
+    margin: -1px 0 0 -13px !important
 }
 
-.wasa-kredit-information-overlay > .wasa-kredit-information-overlay__inner > .wasa-kredit-information-overlay__inner__header > .wasa-kredit-information-overlay__inner__header__close:after {
+.wasa-kredit-information-overlay>.wasa-kredit-information-overlay__inner>.wasa-kredit-information-overlay__inner__header>.wasa-kredit-information-overlay__inner__header__close:after {
     width: 2px !important;
     height: 26px !important;
     margin: -13px 0 0 -1px !important
 }
 
-.wasa-kredit-information-overlay > .wasa-kredit-information-overlay__inner > .wasa-kredit-information-overlay__inner__body {
+.wasa-kredit-information-overlay>.wasa-kredit-information-overlay__inner>.wasa-kredit-information-overlay__inner__body {
     padding: 0 30px 30px 30px !important
 }
 
-.wasa-kredit-information-overlay > .wasa-kredit-information-overlay__inner > .wasa-kredit-information-overlay__inner__body > .wasa-kredit-information-overlay__inner__body__ol > li {
+.wasa-kredit-information-overlay>.wasa-kredit-information-overlay__inner>.wasa-kredit-information-overlay__inner__body>.wasa-kredit-information-overlay__inner__body__ol>li {
     font-family: Arial, serif !important;
     font-size: 16px !important;
     line-height: 22px !important;
@@ -250,7 +265,7 @@
     counter-increment: li !important
 }
 
-.wasa-kredit-information-overlay > .wasa-kredit-information-overlay__inner > .wasa-kredit-information-overlay__inner__body > .wasa-kredit-information-overlay__inner__body__ol li::before {
+.wasa-kredit-information-overlay>.wasa-kredit-information-overlay__inner>.wasa-kredit-information-overlay__inner__body>.wasa-kredit-information-overlay__inner__body__ol li::before {
     font-family: IntroCondBold, serif !important;
     font-size: 14px !important;
     position: absolute !important;
@@ -262,43 +277,45 @@
     color: #005aa0 !important
 }
 
-@media (max-width: 570px) {
-    .wasa-kredit-information-overlay > .wasa-kredit-information-overlay__inner {
+@media (max-width: 450px) {
+    .wasa-kredit-information-overlay>.wasa-kredit-information-overlay__inner {
         top: 63px !important;
         right: 5px !important;
         bottom: 5px !important;
         left: 5px !important;
-        overflow-y: auto;
+        /*             overflow-y: auto; */
         width: inherit !important;
         margin-left: 0 !important
     }
 
-    .wasa-kredit-information-overlay > .wasa-kredit-information-overlay__inner > .wasa-kredit-information-overlay__inner__header {
-        position: fixed;
-        z-index: 10;
-        top: 5px;
-        right: 5px;
-        left: 5px;
-        box-sizing: border-box;
-        height: 58px;
+    .wasa-kredit-information-overlay>.wasa-kredit-information-overlay__inner>.wasa-kredit-information-overlay__inner__header {
+        /*                 position: fixed!important; */
+        z-index: 10 !important;
+        top: 5px !important;
+        right: 5px !important;
+        left: 5px !important;
+        box-sizing: border-box !important;
+        height: 58px !important;
         padding: 15px !important;
-        background-color: #fff
+        background-color: #fff !important;
     }
 
-    .wasa-kredit-information-overlay > .wasa-kredit-information-overlay__inner > .wasa-kredit-information-overlay__inner__body {
-        padding: 14px !important
+    .wasa-kredit-information-overlay>.wasa-kredit-information-overlay__inner>.wasa-kredit-information-overlay__inner__body {
+        padding: 11px !important;
+        overflow-y: auto !important;
+        height: inherit !important;
     }
-    
+
     .wasa-kredit-information-overlay__inner__body__pricing__icon {
-        visibility: hidden;
+        visibility: hidden !important;
     }
 }
 
-.wasa-kredit-monthly-cost-widget > .wasa-kredit-monthly-cost-widget__wrapper > .wasa-kredit-monthly-cost-widget__separator {
+.wasa-kredit-monthly-cost-widget>.wasa-kredit-monthly-cost-widget__wrapper>.wasa-kredit-monthly-cost-widget__separator {
     border: 0 !important;
-      background-color: #005AA0 !important;
-      height: 1px !important;
-    margin-top: 4px !important;
+    background-color: #005AA0 !important;
+    height: 1px !important;
+    margin-top: 3px !important;
     margin-bottom: 2px !important;
 }
 
@@ -307,7 +324,7 @@
 }
 
 .wasa-kredit-information-overlay__inner__body__pricing {
-    background: #C9E1F6 !important; 
+    background: #C9E1F6 !important;
     padding: 20px !important;
 }
 
@@ -351,7 +368,7 @@
 }
 
 .wasa-kredit-information-overlay__inner__body__description {
-   margin-top: 20px !important;
+    margin-top: 20px !important;
 }
 
 .wasa-kredit-information-overlay__inner__body__description__title {
@@ -385,7 +402,7 @@
     text-align: right !important;
 }
 
-.wasa-kredit-information-overlay__inner__body__pricing > table tr td {
+.wasa-kredit-information-overlay__inner__body__pricing>table tr td {
     padding: unset !important;
     padding-right: 20px !important;
     text-align: unset !important;
@@ -422,9 +439,9 @@
     background-color: #005AA0;
     color: white !important;
     font-family: IntroCond, Arial, serif !important;
-    font-weight: bold !important;        
+    font-weight: bold !important;
     font-size: 1.125rem !important;
-    line-height: 1.5rem !important; 
+    line-height: 1.5rem !important;
     padding: 6px 13px 6px 13px !important;
     border: none;
 }
