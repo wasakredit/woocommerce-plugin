@@ -1,6 +1,6 @@
 {
 	"name": "wasa-kredit-checkout",
-	"version": "1.0.0",
+	"version": "2.5.5",
 	"description": "Wasa Kredit Checkout",
 	"main": "gulpfile.js",
 	"repository": "https://github.com/wasakredit/woocommerce-plugin.git",
@@ -14,7 +14,10 @@
 		"gulp-uglify": "^3.0.0",
 		"gulp-watch": "^4.3.11",
 		"gulp-wp-pot": "^2.0.7",
-		"prettier": "^1.5.3",
+		"prettier": "npm:wp-prettier@^3.0.3",
 		"pump": "^1.0.2"
+	},
+	"scripts": {
+		"build": "npx prettier assets/js --paren-spacing --tab-width 4 --print-width 120 --no-semi --write && npx gulp makePOT"
 	}
 }

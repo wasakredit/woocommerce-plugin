@@ -149,7 +149,7 @@ class Wasa_Kredit_Checkout_Request_Create_Invoice_Checkout extends Wasa_Kredit_C
 			'purchaser_email'           => $order->get_billing_email(),
 			'purchaser_phone'           => $order->get_billing_phone(),
 			'recipient_name'            => $order->get_shipping_first_name() . ' ' . $order->get_shipping_last_name(),
-			'recipient_phone'           => $order->get_billing_phone(),
+			'recipient_phone'           => preg_replace( '/\s/', '', $order->get_billing_phone() ),
 			'billing_address'           => array(
 				'company_name'   => $order->get_billing_company(),
 				'street_address' => $order->get_billing_address_1(),

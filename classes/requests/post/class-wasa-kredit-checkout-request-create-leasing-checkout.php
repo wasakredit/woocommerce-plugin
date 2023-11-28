@@ -45,37 +45,29 @@ class Wasa_Kredit_Checkout_Request_Create_Leasing_Checkout extends Wasa_Kredit_C
 			return;
 		}
 
-		$order_data      = $order->get_data();
-		$currency        = get_woocommerce_currency();
-		$shipping_cost   = $order_data['shipping_total'];
-		$cart_items      = WC()->cart->get_cart();
+		$currency        = $order->get_currency();
+		$shipping_cost   = $order->get_shipping_total();
 		$wasa_cart_items = array();
 
-		foreach ( $cart_items as $cart_item_key => $cart_item ) {
-			$product = apply_filters(
-				'woocommerce_cart_item_product',
-				$cart_item['data'],
-				$cart_item,
-				$cart_item_key
-			);
+		foreach ( $order->get_items() as $order_item ) {
+			$id      = ( empty( $order_item['variation_id'] ) ) ? $order_item['product_id'] : $order_item['variation_id'];
+			$product = wc_get_product( $id );
 
-			$tax_rates = WC_Tax::get_rates( $product->get_tax_class() );
-
-			if ( ! empty( $tax_rates ) ) {
-				$tax_rate = reset( $tax_rates )['rate'];
-			} else {
-				$tax_rate = '0';
+			// Check if the product has been permanently deleted.
+			if ( empty( $product ) ) {
+				continue;
 			}
 
-			$id   = $cart_item['product_id'];
-			$name = $product->get_name();
+			$tax_rate = intval( $order_item->get_tax_class() );
+			if ( empty( $tax_rate ) ) {
+				$tax_rate = 0;
+			}
 
-			$price_inc_vat   = number_format( wc_get_price_including_tax( $product ), 2, '.', '' );
-			$price_ex_vat    = number_format( wc_get_price_excluding_tax( $product ), 2, '.', '' );
-			$vat_percentage  = round( $tax_rate );
-			$price_vat       = number_format( $price_inc_vat - $price_ex_vat, 2, '.', '' );
-			$shipping_ex_vat = number_format( $shipping_cost, 2, '.', '' );
-			$quantity        = $cart_item['quantity'];
+			$name           = $order_item->get_name();
+			$quantity       = $order_item->get_quantity();
+			$price_ex_vat   = number_format( $order_item->get_total() / $quantity, 2, '.', '' );
+			$vat_percentage = $tax_rate;
+			$price_vat      = number_format( $order_item->get_total_tax() / $quantity, 2, '.', '' );
 
 			$wasa_cart_items[] = array(
 				'product_id'     => $id,
@@ -99,7 +91,7 @@ class Wasa_Kredit_Checkout_Request_Create_Leasing_Checkout extends Wasa_Kredit_C
 			'purchaser_email'           => $order->get_billing_email(),
 			'purchaser_phone'           => $order->get_billing_phone(),
 			'recipient_name'            => $order->get_shipping_first_name() . ' ' . $order->get_shipping_last_name(),
-			'recipient_phone'           => $order->get_billing_phone(),
+			'recipient_phone'           => preg_replace( '/\s/', '', $order->get_billing_phone() ),
 			'billing_address'           => array(
 				'company_name'   => $order->get_billing_company(),
 				'street_address' => $order->get_billing_address_1(),
@@ -126,7 +118,7 @@ class Wasa_Kredit_Checkout_Request_Create_Leasing_Checkout extends Wasa_Kredit_C
 			),
 			'cart_items'                => $wasa_cart_items,
 			'shipping_cost_ex_vat'      => array(
-				'amount'   => $shipping_ex_vat,
+				'amount'   => $shipping_cost,
 				'currency' => $currency,
 			),
 			'request_domain'            => get_site_url(),
