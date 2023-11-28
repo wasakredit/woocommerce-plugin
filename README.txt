@@ -3,11 +3,11 @@ Contributors: aos06wasakredit
 Donate link: https://developer.wasakredit.se
 Tags: woocommerce, ecommerce, e-commerce, checkout
 Requires at least: 4.0.0
-Tested up to: 6.3.2
+Tested up to: 6.4.1
 Requires PHP: 7.2
 WC requires at least: 5.0.0
-WC tested up to: 8.2.0
-Stable tag: 2.5.4
+WC tested up to: 8.2.1
+Stable tag: 2.5.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +55,12 @@ In the settings for Wasa's checkout, there are two new settings with the heading
 2. In the text field below, enter the path to the default checkout. For example, in my checkout, it is the "checkout". If it is not the same for you, you can easily get it by activating the standard checkout and copying the uri. Dy activates it at Settings> Advanced> Page Settings> Checkout Page> "Checkout".
 
 == Changelog ==
+= 2023-11-28    - version 2.5.5 =
+* Tweak         - You can now enable leasing and invoicing separately.
+* Fix           - The monthly price widget should now update to reflect a change in variable product and quantity.
+* Fix           - Fixed an issue related to discounts and coupons with leasing.
+* Fix           - Whitespace in the phone number should no longer cause the phone validation to fail. There is still an upper limit of 15 characters.
+
 = 2023-10-09    - version 2.5.4 =
 * Fix           - Fixed a critical error that sometimes happened when attempting to show an error notice.
 
