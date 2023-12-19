@@ -93,6 +93,8 @@ class Wasa_Kredit_Checkout_Public {
 			array(
 				'wasa_kredit_update_monthly_widget_url'   => WC_AJAX::get_endpoint( 'wasa_kredit_update_monthly_widget' ),
 				'wasa_kredit_update_monthly_widget_nonce' => wp_create_nonce( 'wasa_kredit_update_monthly_widget' ),
+				'thousand_separator'                      => wc_get_price_thousand_separator(),
+				'decimal_separator'                       => wc_get_price_decimal_separator(),
 			)
 		);
 
