@@ -50,6 +50,11 @@ class Wasa_Kredit_Checkout_Product_Widget {
 						'product_id'     => 'ADDON_PRICE',
 					);
 
+					// Only Swedish country and currency is supported.
+					if ( 'SEK' !== get_woocommerce_currency() ) {
+						return;
+					}
+
 					$monthly_cost_response = Wasa_Kredit_WC()->api->calculate_monthly_cost( $payload );
 
 					if ( ! is_wp_error( $monthly_cost_response ) ) {
@@ -202,7 +207,10 @@ class Wasa_Kredit_Checkout_Product_Widget {
 
 			return false;
 		}
-
+		// Only Swedish country and currency is supported.
+		if ( 'SEK' !== get_woocommerce_currency() ) {
+			return false;
+		}
 		$response = Wasa_Kredit_WC()->api->get_monthly_cost_widget( $price, $this->widget_format );
 
 		if ( ! is_wp_error( $response ) ) {
