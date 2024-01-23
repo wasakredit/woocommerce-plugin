@@ -7,7 +7,7 @@ Tested up to: 6.4.2
 Requires PHP: 7.2
 WC requires at least: 5.0.0
 WC tested up to: 8.4.0
-Stable tag: 2.5.6
+Stable tag: 2.5.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +55,9 @@ In the settings for Wasa's checkout, there are two new settings with the heading
 2. In the text field below, enter the path to the default checkout. For example, in my checkout, it is the "checkout". If it is not the same for you, you can easily get it by activating the standard checkout and copying the uri. Dy activates it at Settings> Advanced> Page Settings> Checkout Page> "Checkout".
 
 == Changelog ==
+= 2024-01-23    - version 2.5.7 =
+* Fix           - Fixed an issue related to the monthly cost widget that would happen when switching to an unsupported currency.
+
 = 2023-12-20    - version 2.5.6 =
 * Fix           - Solves issue with monthly cost not displayed correctly for variations in some cases.
 

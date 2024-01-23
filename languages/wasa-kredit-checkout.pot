@@ -1,4 +1,4 @@
-# Copyright (C) 2023 wasa-kredit-checkout
+# Copyright (C) 2024 wasa-kredit-checkout
 # This file is distributed under the same license as the wasa-kredit-checkout package.
 msgid ""
 msgstr ""
@@ -8,7 +8,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language-Team: Krokedil <info@krokedil.se>\n"
 "Last-Translator: Krokedil <info@krokedil.se>\n"
-"POT-Creation-Date: 2023-11-28 09:40+0000\n"
+"POT-Creation-Date: 2024-01-23 09:33+0000\n"
 "Report-Msgid-Bugs-To: http://krokedil.se\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
@@ -77,11 +77,11 @@ msgstr ""
 msgid "settings page"
 msgstr ""
 
-#: ../includes/class-wasa-kredit-checkout-list-widget.php:89
+#: ../includes/class-wasa-kredit-checkout-list-widget.php:98
 msgid "Financing"
 msgstr ""
 
-#: ../includes/class-wasa-kredit-checkout-list-widget.php:90, ../includes/class-wasa-kredit-checkout-payment-gateway.php:343, ../includes/class-wasa-kredit-checkout-product-widget.php:58
+#: ../includes/class-wasa-kredit-checkout-list-widget.php:99, ../includes/class-wasa-kredit-checkout-payment-gateway.php:343, ../includes/class-wasa-kredit-checkout-product-widget.php:63
 msgid "/month"
 msgstr ""
 
@@ -262,59 +262,59 @@ msgstr ""
 msgid "Proceed to select your monthly cost"
 msgstr ""
 
-#: ../includes/class-wasa-kredit-checkout-product-widget.php:139
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:144
 msgid "Product Page Widget placement"
 msgstr ""
 
-#: ../includes/class-wasa-kredit-checkout-product-widget.php:142
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:147
 msgid "No placement, I handle it myself"
 msgstr ""
 
-#: ../includes/class-wasa-kredit-checkout-product-widget.php:143
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:148
 msgid "Above Title"
 msgstr ""
 
-#: ../includes/class-wasa-kredit-checkout-product-widget.php:144
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:149
 msgid "Between Title and Price"
 msgstr ""
 
-#: ../includes/class-wasa-kredit-checkout-product-widget.php:145
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:150
 msgid "Between Price and Excerpt"
 msgstr ""
 
-#: ../includes/class-wasa-kredit-checkout-product-widget.php:146
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:151
 msgid "Between Excerpt and Add to cart button"
 msgstr ""
 
-#: ../includes/class-wasa-kredit-checkout-product-widget.php:147
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:152
 msgid "Between Add to cart button and Product meta"
 msgstr ""
 
-#: ../includes/class-wasa-kredit-checkout-product-widget.php:148
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:153
 msgid "Between Product meta and Product sharing buttons"
 msgstr ""
 
-#: ../includes/class-wasa-kredit-checkout-product-widget.php:149
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:154
 msgid "After Product sharing-buttons"
 msgstr ""
 
-#: ../includes/class-wasa-kredit-checkout-product-widget.php:152
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:157
 msgid "Select where to display the widget in your product pages."
 msgstr ""
 
-#: ../includes/class-wasa-kredit-checkout-product-widget.php:156
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:161
 msgid "Custom placement hook"
 msgstr ""
 
-#: ../includes/class-wasa-kredit-checkout-product-widget.php:157
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:162
 msgid "Enter a custom hook where you want the product page widget to be placed."
 msgstr ""
 
-#: ../includes/class-wasa-kredit-checkout-product-widget.php:162
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:167
 msgid "Custom placement hook priority"
 msgstr ""
 
-#: ../includes/class-wasa-kredit-checkout-product-widget.php:163
+#: ../includes/class-wasa-kredit-checkout-product-widget.php:168
 msgid "Enter a priority for the custom hook where you want the product page widget to be placed."
 msgstr ""
 
