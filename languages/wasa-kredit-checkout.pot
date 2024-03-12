@@ -8,7 +8,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language-Team: Krokedil <info@krokedil.se>\n"
 "Last-Translator: Krokedil <info@krokedil.se>\n"
-"POT-Creation-Date: 2024-01-23 09:33+0000\n"
+"POT-Creation-Date: 2024-03-12 10:04+0000\n"
 "Report-Msgid-Bugs-To: http://krokedil.se\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
@@ -81,11 +81,11 @@ msgstr ""
 msgid "Financing"
 msgstr ""
 
-#: ../includes/class-wasa-kredit-checkout-list-widget.php:99, ../includes/class-wasa-kredit-checkout-payment-gateway.php:343, ../includes/class-wasa-kredit-checkout-product-widget.php:63
+#: ../includes/class-wasa-kredit-checkout-list-widget.php:99, ../includes/class-wasa-kredit-checkout-payment-gateway.php:340, ../includes/class-wasa-kredit-checkout-product-widget.php:63
 msgid "/month"
 msgstr ""
 
-#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:14, ../includes/class-wasa-kredit-checkout-payment-gateway.php:302
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:14, ../includes/class-wasa-kredit-checkout-payment-gateway.php:299
 msgid "Wasa Kredit Leasing"
 msgstr ""
 
@@ -237,28 +237,28 @@ msgstr ""
 msgid "Only display the monthly cost widget if the product price is higher thant the entered number. Leave blank to disable this feature."
 msgstr ""
 
-#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:299, ../includes/class-wasa-kredit-checkout-payment-gateway.php:330
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:296, ../includes/class-wasa-kredit-checkout-payment-gateway.php:327
 msgid "Wasa Kredit Rental"
 msgstr ""
 
-#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:313
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:310
 msgid "Financing with Wasa Kredit Checkout"
 msgstr ""
 
-#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:327
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:324
 msgid "Finance your purchase with Wasa Kredit leasing"
 msgstr ""
 
-#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:331
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:328
 msgid "Finance your purchase with Wasa Kredit rental"
 msgstr ""
 
 #. translators: %s placeholder is a number to display number of months.
-#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:342
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:339
 msgid " for %s months"
 msgstr ""
 
-#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:350
+#: ../includes/class-wasa-kredit-checkout-payment-gateway.php:347
 msgid "Proceed to select your monthly cost"
 msgstr ""
 
