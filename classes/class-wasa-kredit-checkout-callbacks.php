@@ -98,7 +98,7 @@ class Wasa_Kredit_Callbacks {
 				return;
 			}
 
-			update_post_meta( $order->get_id(), '_transaction_id', $wasa_order_id );
+			$order->set_transaction_id( $wasa_order_id );
 			$order->add_order_note( __( 'Woocommerce associated order with wasa kredit id', 'wasa-kredit-checkout' ) . ' "' . $wasa_order_id . '"' );
 		} else {
 			$order = $orders[0];
