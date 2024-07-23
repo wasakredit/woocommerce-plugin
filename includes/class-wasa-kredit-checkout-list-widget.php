@@ -30,10 +30,6 @@ class Wasa_Kredit_Checkout_List_Widget {
 
 		$this->widget_lower_threshold = isset( $this->settings['widget_lower_threshold'] ) ? $this->settings['widget_lower_threshold'] : '';
 
-		if ( 'no' === $this->settings['enabled'] ) {
-			return;
-		}
-
 		// Only Swedish currency is supported.
 		if ( 'SEK' === get_woocommerce_currency() ) {
 			// Hooks.
