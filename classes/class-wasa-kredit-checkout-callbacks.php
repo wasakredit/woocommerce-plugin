@@ -95,6 +95,7 @@ class Wasa_Kredit_Callbacks {
 					'Wasa Kredit sent order update for id ' . $wasa_order_id . ' -> ' .
 					$order_status . ' but order was in state ' . $order->get_status() . ', ignoring update.'
 				);
+				$order->save();
 				return;
 			}
 
@@ -120,6 +121,8 @@ class Wasa_Kredit_Callbacks {
 		} else {
 			$order->add_order_note( __( 'Failed to find a mapping for Wasa Kredit status', 'wasa-kredit-checkout' ) . ' "' . $order_status . '"' );
 		}
+		
+		$order->save();
 	}
 
 	public function order_update_stats_authorize( WP_REST_Request $request ) {
