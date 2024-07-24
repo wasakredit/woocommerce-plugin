@@ -95,7 +95,6 @@ class Wasa_Kredit_Callbacks {
 					'Wasa Kredit sent order update for id ' . $wasa_order_id . ' -> ' .
 					$order_status . ' but order was in state ' . $order->get_status() . ', ignoring update.'
 				);
-				$order->save();
 				return;
 			}
 
