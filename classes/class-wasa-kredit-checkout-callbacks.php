@@ -98,8 +98,9 @@ class Wasa_Kredit_Callbacks {
 				return;
 			}
 
-			update_post_meta( $order->get_id(), '_transaction_id', $wasa_order_id );
+			$order->set_transaction_id( $wasa_order_id );
 			$order->add_order_note( __( 'Woocommerce associated order with wasa kredit id', 'wasa-kredit-checkout' ) . ' "' . $wasa_order_id . '"' );
+			$order->save();
 		} else {
 			$order = $orders[0];
 		}
@@ -120,6 +121,7 @@ class Wasa_Kredit_Callbacks {
 		} else {
 			$order->add_order_note( __( 'Failed to find a mapping for Wasa Kredit status', 'wasa-kredit-checkout' ) . ' "' . $order_status . '"' );
 		}
+		
 	}
 
 	public function order_update_stats_authorize( WP_REST_Request $request ) {

@@ -96,7 +96,6 @@ class Wasa_Kredit_Checkout_Order_Management {
 		} else {
 			$note = __( 'Error: You changed order status to ', 'wasa-kredit-checkout' ) . $order_status . __( ' but the order could not be changed at Wasa Kredit.', 'wasa-kredit-checkout' );
 			$order->add_order_note( $note );
-			$order->save();
 		}
 	}
 
