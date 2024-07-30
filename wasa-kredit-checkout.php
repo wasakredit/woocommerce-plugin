@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin URI:        https://github.com/wasakredit/woocommerse-plugin
  * Description:       Wasa Kredit Checkout offers financing as a payment method for B2B.
  * Author:            Wasa Kredit
- * Version:           2.5.8
+ * Version:           2.6.0
 
  * Author URI:        https://developer.wasakredit.se
  * License:           GPL-2.0+
@@ -42,7 +42,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Rename this for your plugin and update it as you release new versions.
  */
 
-define( 'WASA_KREDIT_CHECKOUT_VERSION', '2.5.8' );
+define( 'WASA_KREDIT_CHECKOUT_VERSION', '2.6.0' );
 define( 'WASA_KREDIT_CHECKOUT_PLUGIN_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'WASA_KREDIT_CHECKOUT_PLUGIN_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
 
@@ -223,7 +223,21 @@ if ( ! class_exists( 'Wasa_Kredit_Checkout' ) ) {
 			require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/classes/requests/get/class-wasa-kredit-checkout-request-validate-financed-invoice-amount.php';
 			require_once WASA_KREDIT_CHECKOUT_PLUGIN_PATH . '/classes/requests/get/class-wasa-kredit-checkout-request-validate-financed-leasing-amount.php';
 
+			add_action( 'before_woocommerce_init', array( $this, 'declare_wc_compatibility' ) );
+
 			$this->loader = new Wasa_Kredit_Checkout_Loader();
+		}
+
+		/**
+		 * Declare compatibility with WooCommerce features.
+		 *
+		 * @return void
+		 */
+		public function declare_wc_compatibility() {
+			// Declare HPOS compatibility.
+			if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+				\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+			}
 		}
 
 		/**

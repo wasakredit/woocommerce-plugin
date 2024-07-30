@@ -75,9 +75,8 @@ class Wasa_Kredit_Checkout_Product_Widget {
 		// Extend the Wasa Kredit settings with product page settings.
 		add_filter( 'wasa_kredit_settings', array( $this, 'extend_settings' ) );
 
-		if ( 'yes' === $this->settings['enabled'] ) {
-			add_action( 'woocommerce_single_product_summary', array( $this, 'product_widget_hook' ), 1 );
-		}
+		// Display the widget on the product page.
+		add_action( 'woocommerce_single_product_summary', array( $this, 'product_widget_hook' ), 1 );
 
 	}
 
