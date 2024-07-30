@@ -85,9 +85,13 @@ class Wasa_Kredit_Logger {
 				'body' => $response,
 				'code' => $code,
 			),
-			'timestamp'      => date( 'Y-m-d H:i:s' ), // phpcs:ignore WordPress.DateTime.RestrictedFunctions -- Date is not used for display.
-			'stack'          => self::get_stack(),
+			'timestamp'      => current_time( ' Y-m-d H:i:s' ),
 			'plugin_version' => WASA_KREDIT_CHECKOUT_VERSION,
+			'php_version'    => phpversion(),
+			'wc_version'     => WC()->version,
+			'wp_version'     => get_bloginfo( 'version' ),
+			'user_agent'     => wc_get_user_agent(),
+			'stack'          => self::get_stack(),
 		);
 	}
 
