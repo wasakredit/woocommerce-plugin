@@ -55,7 +55,7 @@ In the settings for Wasa's checkout, there are two new settings with the heading
 2. In the text field below, enter the path to the default checkout. For example, in my checkout, it is the "checkout". If it is not the same for you, you can easily get it by activating the standard checkout and copying the uri. Dy activates it at Settings> Advanced> Page Settings> Checkout Page> "Checkout".
 
 == Changelog ==
-= 2024-07-30    - version 2.6.0 =
+= 2024-08-26    - version 2.6.0 =
 * Feature       - Added support for WooCommerce's "High-Performance Order Storage" ("HPOS").
 * Tweak         - The product widgets will now be displayed even if the gateway is disabled provided that they've been enabled in the plugin settings.
 * Tweak         - Adjusted logging to make troubleshooting easier.
