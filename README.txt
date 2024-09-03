@@ -52,7 +52,7 @@ Or
 As of version 1.2.2 of Wasa Checkout for Woo commerce, there is a solution to the problem of working in parallel with other checkout providers taking over the checkout process.
 In the settings for Wasa's checkout, there are two new settings with the heading Advanced. When you activate the first one, a banner will be placed on the second supplier's checkout with a link to Woo-commerce's standard checkout. There is Wasa as a payment option together with other payment methods that are activated.
 1. Click on "Enable widget for redirection to regular checkout" or in swedish "Aktivera widget för omdirigering till ordinarie checkout".
-2. In the text field below, enter the path to the default checkout. For example, in my checkout, it is the "checkout". If it is not the same for you, you can easily get it by activating the standard checkout and copying the uri. Dy activates it at Settings> Advanced> Page Settings> Checkout Page> "Checkout".
+2. In the text field below, enter the path to the default checkout. For example, in my checkout, it is the "checkout". If it is not the same for you, you can easily get it by activating the standard checkout and copying the uri. To activate it, navigate to Settings > Advanced > Page Settings > Checkout Page and select "Checkout."
 
 == Changelog ==
 = 2024-08-26    - version 2.6.0 =
