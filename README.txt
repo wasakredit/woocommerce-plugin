@@ -3,10 +3,10 @@ Contributors: aos06wasakredit
 Donate link: https://developer.wasakredit.se
 Tags: woocommerce, ecommerce, e-commerce, checkout
 Requires at least: 4.0.0
-Tested up to: 6.6.1
+Tested up to: 6.6.2
 Requires PHP: 7.2
 WC requires at least: 5.0.0
-WC tested up to: 9.2.0
+WC tested up to: 9.3.1
 Stable tag: 2.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
