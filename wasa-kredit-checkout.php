@@ -125,7 +125,6 @@ if ( ! class_exists( 'Wasa_Kredit_Checkout' ) ) {
 			$this->plugin_name = 'wasa-kredit-checkout';
 
 			add_action( 'plugins_loaded', array( $this, 'init' ) );
-
 		}
 
 		/**
@@ -329,8 +328,6 @@ if ( ! class_exists( 'Wasa_Kredit_Checkout' ) ) {
 			$methods[] = Wasa_Kredit_InvoiceCheckout_Payment_Gateway::class;
 			return $methods;
 		}
-
-
 	}
 	Wasa_Kredit_Checkout::get_instance();
 }
@@ -346,7 +343,3 @@ if ( ! class_exists( 'Wasa_Kredit_Checkout' ) ) {
 function Wasa_Kredit_WC() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName
 	return Wasa_Kredit_Checkout::get_instance();
 }
-
-
-
-
