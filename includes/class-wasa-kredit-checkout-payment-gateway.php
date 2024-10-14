@@ -241,12 +241,9 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 			return false;
 		}
 
-		$cart_totals = WC()->cart->get_totals();
-		$cart_total  = $cart_totals['subtotal'] + $cart_totals['shipping_total'];
-
-		if ( empty( $this->financed_amount_status ) ) {
-			$this->financed_amount_status = Wasa_Kredit_WC()->api->validate_financed_leasing_amount( $cart_total );
-		}
+		// Leasing is only available above a specific total amount.
+		$cart_total                   = floatval( WC()->cart->get_total( 'checkout' ) );
+		$this->financed_amount_status = Wasa_Kredit_WC()->api->validate_financed_leasing_amount( $cart_total );
 
 		// Cart value is within partner limits.
 		if ( is_wp_error( $this->financed_amount_status ) || empty( $this->financed_amount_status['validation_result'] ) ) {
@@ -268,8 +265,7 @@ class Wasa_Kredit_Checkout_Payment_Gateway extends WC_Payment_Gateway {
 
 	public function process_payment( $order_id = null ) {
 		// When clicking Proceed button, create a on-hold order.
-		global $woocommerce;
-		$order = new WC_Order( $order_id );
+		$order = wc_get_order( $order_id );
 
 		return array(
 			'result'   => 'success',

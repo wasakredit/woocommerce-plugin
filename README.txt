@@ -3,11 +3,11 @@ Contributors: aos06wasakredit
 Donate link: https://developer.wasakredit.se
 Tags: woocommerce, ecommerce, e-commerce, checkout
 Requires at least: 4.0.0
-Tested up to: 6.5.4
+Tested up to: 6.6.2
 Requires PHP: 7.2
 WC requires at least: 5.0.0
-WC tested up to: 9.0.0
-Stable tag: 2.5.3
+WC tested up to: 9.3.1
+Stable tag: 2.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,9 +52,32 @@ Or
 As of version 1.2.2 of Wasa Checkout for Woo commerce, there is a solution to the problem of working in parallel with other checkout providers taking over the checkout process.
 In the settings for Wasa's checkout, there are two new settings with the heading Advanced. When you activate the first one, a banner will be placed on the second supplier's checkout with a link to Woo-commerce's standard checkout. There is Wasa as a payment option together with other payment methods that are activated.
 1. Click on "Enable widget for redirection to regular checkout" or in swedish "Aktivera widget för omdirigering till ordinarie checkout".
-2. In the text field below, enter the path to the default checkout. For example, in my checkout, it is the "checkout". If it is not the same for you, you can easily get it by activating the standard checkout and copying the uri. Dy activates it at Settings> Advanced> Page Settings> Checkout Page> "Checkout".
+2. In the text field below, enter the path to the default checkout. For example, in my checkout, it is the "checkout". If it is not the same for you, you can easily get it by activating the standard checkout and copying the uri. To activate it, navigate to Settings > Advanced > Page Settings > Checkout Page and select "Checkout."
 
 == Changelog ==
+= 2024-08-26    - version 2.6.0 =
+* Feature       - Added support for WooCommerce's "High-Performance Order Storage" ("HPOS").
+* Tweak         - The product widgets will now be displayed even if the gateway is disabled provided that they've been enabled in the plugin settings.
+* Tweak         - Adjusted logging to make troubleshooting easier.
+
+= 2024-03-12    - version 2.5.8 =
+* Fix           - Fixed a critical occur that would occur where leasing would still be shown as an available payment option although the minimum order amount was not met. This issue only happened if the cart contained a coupon.
+
+= 2024-01-23    - version 2.5.7 =
+* Fix           - Fixed an issue related to the monthly cost widget that would happen when switching to an unsupported currency.
+
+= 2023-12-20    - version 2.5.6 =
+* Fix           - Solves issue with monthly cost not displayed correctly for variations in some cases.
+
+= 2023-11-28    - version 2.5.5 =
+* Tweak         - You can now enable leasing and invoicing separately.
+* Fix           - The monthly price widget should now update to reflect a change in variable product and quantity.
+* Fix           - Fixed an issue related to discounts and coupons with leasing.
+* Fix           - Whitespace in the phone number should no longer cause the phone validation to fail. There is still an upper limit of 15 characters.
+
+= 2023-10-09    - version 2.5.4 =
+* Fix           - Fixed a critical error that sometimes happened when attempting to show an error notice.
+
 = 2023-07-24    - version 2.5.3 =
 * Fix           - Leasing should now work expected. Prior to this fix, an incorrect template was being used, causing the invoice template to be displayed instead.
 

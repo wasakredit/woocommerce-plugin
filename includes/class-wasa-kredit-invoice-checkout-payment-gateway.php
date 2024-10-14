@@ -59,6 +59,8 @@ class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 				wp_list_pluck( $form_fields, 'default' )
 			);
 		}
+
+		$this->enabled = ! empty( $this->settings['invoice_enabled'] ) && 'yes' === $this->settings['invoice_enabled'] ? 'yes' : 'no';
 	}
 
 	public function init_form_fields() {
@@ -158,6 +160,10 @@ class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 						$field,
 						$post_data
 					);
+
+					if ( 'enabled' === $key ) {
+						$this->settings['invoice_enabled'] = $this->settings[ $key ];
+					}
 				} catch ( Exception $e ) {
 					$this->add_error( $e->getMessage() );
 				}
@@ -171,6 +177,40 @@ class Wasa_Kredit_InvoiceCheckout_Payment_Gateway extends WC_Payment_Gateway {
 				$this->settings
 			)
 		);
+	}
+
+	/**
+	 * Update a single option.
+	 *
+	 * @see parent::update_option.
+
+	 * @param string $key Option key.
+	 * @param mixed  $value Value to set.
+	 * @return bool was anything saved?
+	 */
+	public function update_option( $key, $value = '' ) {
+		if ( 'enabled' === $key ) {
+			$key = 'invoice_enabled';
+		}
+
+		return parent::update_option( $key, $value );
+	}
+
+	/**
+	 * Get option from DB.
+	 *
+	 * @see parent::get_option.
+	 *
+	 * @param  string $key Option key.
+	 * @param  mixed  $empty_value Value when empty.
+	 * @return string The value specified for the option or a default value for the option.
+	 */
+	public function get_option( $key, $empty_value = null ) {
+		if ( 'enabled' === $key ) {
+			$key = 'invoice_enabled';
+		}
+
+		return parent::get_option( $key, $empty_value );
 	}
 
 	public function is_available() {

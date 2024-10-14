@@ -30,29 +30,30 @@ class Wasa_Kredit_Checkout_List_Widget {
 
 		$this->widget_lower_threshold = isset( $this->settings['widget_lower_threshold'] ) ? $this->settings['widget_lower_threshold'] : '';
 
-		if ( 'no' === $this->settings['enabled'] ) {
-			return;
+		// Only Swedish currency is supported.
+		if ( 'SEK' === get_woocommerce_currency() ) {
+			// Hooks.
+			add_action(
+				'woocommerce_before_shop_loop',
+				array( $this, 'save_product_prices' ),
+				10
+			);
+
+			add_action(
+				'woocommerce_shortcode_before_products_loop',
+				array( $this, 'save_product_prices_shortcodes' ),
+				10
+			);
+
+			add_action(
+				'woocommerce_after_shop_loop_item',
+				array( $this, 'display_leasing_price_per_product' ),
+				9
+			);
 		}
 
-		// Hooks.
-		add_action(
-			'woocommerce_before_shop_loop',
-			array( $this, 'save_product_prices' ),
-			10
-		);
-
-		add_action(
-			'woocommerce_shortcode_before_products_loop',
-			array( $this, 'save_product_prices_shortcodes' ),
-			10
-		);
-
-		add_action(
-			'woocommerce_after_shop_loop_item',
-			array( $this, 'display_leasing_price_per_product' ),
-			9
-		);
-
+		// Do not prevent shortcode from being registered due to currency mismatch as they should still be registered
+		// but their output should be empty if the currency is not support. Therefore, check currency within the registration function.
 		add_shortcode(
 			'wasa_kredit_list_widget',
 			array(
@@ -67,15 +68,19 @@ class Wasa_Kredit_Checkout_List_Widget {
 	 */
 	public function display_leasing_price_per_product() {
 
-		// Adds financing info betweeen price and Add to cart button.
-		global $product;
-
 		if ( 'yes' !== $this->settings['widget_on_product_list'] ) {
 			return;
 		}
 
-		$monthly_cost = 0;
+		// Only Swedish currency is supported.
+		if ( 'SEK' !== get_woocommerce_currency() ) {
+			return;
+		}
 
+		// Adds financing info between price and Add to cart button.
+		global $product;
+
+		$monthly_cost = 0;
 		if ( isset( $GLOBALS['product_leasing_prices'] ) &&
 		isset( $GLOBALS['product_leasing_prices'][ $product->get_id() ] ) ) {
 			$monthly_cost = $GLOBALS['product_leasing_prices'][ $product->get_id() ];
@@ -103,9 +108,10 @@ class Wasa_Kredit_Checkout_List_Widget {
 			return;
 		}
 
-		$payload['items'] = array();
-		// Payload will contain all products with price, currency and id.
 		$current_currency = get_woocommerce_currency();
+
+		// Payload will contain all products with price, currency and id.
+		$payload['items'] = array();
 
 		global $wp_query;
 		$loop = $wp_query;

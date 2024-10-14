@@ -50,6 +50,11 @@ class Wasa_Kredit_Checkout_Product_Widget {
 						'product_id'     => 'ADDON_PRICE',
 					);
 
+					// Only Swedish country and currency is supported.
+					if ( 'SEK' !== get_woocommerce_currency() ) {
+						return;
+					}
+
 					$monthly_cost_response = Wasa_Kredit_WC()->api->calculate_monthly_cost( $payload );
 
 					if ( ! is_wp_error( $monthly_cost_response ) ) {
@@ -70,9 +75,8 @@ class Wasa_Kredit_Checkout_Product_Widget {
 		// Extend the Wasa Kredit settings with product page settings.
 		add_filter( 'wasa_kredit_settings', array( $this, 'extend_settings' ) );
 
-		if ( 'yes' === $this->settings['enabled'] ) {
-			add_action( 'woocommerce_single_product_summary', array( $this, 'product_widget_hook' ), 1 );
-		}
+		// Display the widget on the product page.
+		add_action( 'woocommerce_single_product_summary', array( $this, 'product_widget_hook' ), 1 );
 
 	}
 
@@ -170,17 +174,28 @@ class Wasa_Kredit_Checkout_Product_Widget {
 	/**
 	 * HTML for product widget.
 	 */
-	private function get_product_widget() {
-		$product = wc_get_product();
+	public function get_product_widget( $price = false ) {
+		if ( empty( $price ) ) {
+			$product = wc_get_product();
 
-		if ( ! $product ) {
-			return;
-		}
+			if ( ! $product ) {
+				return false;
+			}
 
-		if ( $product->is_type( 'variable' ) ) {
-			$price = $product->get_variation_price( 'min' );
-		} else {
-			$price = wc_get_price_to_display( $product );
+			if ( $product->is_type( 'variable' ) ) {
+				$price = $product->get_variation_price( 'min' );
+			} elseif ( $product->is_type( 'bundle' ) ) {
+				$price = $product->get_bundle_price( 'min' );
+			} else {
+				$price = wc_get_price_to_display( $product );
+			}
+
+			// WOO-DISCOUNT-RULES: Check if the filter for retrieving the discounted price exists. Note: by default, quantity is 1.
+			// Link: https://gist.github.com/AshlinRejo/c37a155a42c0e30beafbbad183f0c4e8
+			if ( has_filter( 'advanced_woo_discount_rules_get_product_discount_price_from_custom_price' ) ) {
+				$maybe_price = apply_filters( 'advanced_woo_discount_rules_get_product_discount_price_from_custom_price', $price, $product, 1, $price, 'discounted_price', true );
+				$price       = false !== $maybe_price ? $maybe_price : $price;
+			}
 		}
 
 		// Don't display widget if price is lower thant lower threshold setting.
@@ -189,9 +204,12 @@ class Wasa_Kredit_Checkout_Product_Widget {
 			$level = 'info';
 			Wasa_Kredit_Logger::log( $log, $level, 'monthly_cost' );
 
-			return;
+			return false;
 		}
-
+		// Only Swedish country and currency is supported.
+		if ( 'SEK' !== get_woocommerce_currency() ) {
+			return false;
+		}
 		$response = Wasa_Kredit_WC()->api->get_monthly_cost_widget( $price, $this->widget_format );
 
 		if ( ! is_wp_error( $response ) ) {
