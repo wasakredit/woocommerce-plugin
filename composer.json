@@ -1,6 +1,6 @@
 {
   "name": "wasa/woocommerce-plugin",
-  "description": "Demo shop for the wasa ecom platform",
+  "description": "Shop for the wasa ecom platform",
   "prefer-stable" : true,
   "require": {
     "php": ">=7.2"

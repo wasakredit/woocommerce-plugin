@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin URI:        https://github.com/wasakredit/woocommerse-plugin
  * Description:       Wasa Kredit Checkout offers financing as a payment method for B2B.
  * Author:            Wasa Kredit
- * Version:           2.6.0
+ * Version:           2.6.1
 
  * Author URI:        https://developer.wasakredit.se
  * License:           GPL-2.0+
@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Domain Path:       /languages
  *
  * WC requires at least: 5.0.0
- * WC tested up to: 9.2.0
+ * WC tested up to: 9.3.1
  */
 
 // If this file is called directly, abort.
@@ -42,7 +42,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Rename this for your plugin and update it as you release new versions.
  */
 
-define( 'WASA_KREDIT_CHECKOUT_VERSION', '2.6.0' );
+define( 'WASA_KREDIT_CHECKOUT_VERSION', '2.6.1' );
 define( 'WASA_KREDIT_CHECKOUT_PLUGIN_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'WASA_KREDIT_CHECKOUT_PLUGIN_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
 
@@ -125,7 +125,6 @@ if ( ! class_exists( 'Wasa_Kredit_Checkout' ) ) {
 			$this->plugin_name = 'wasa-kredit-checkout';
 
 			add_action( 'plugins_loaded', array( $this, 'init' ) );
-
 		}
 
 		/**
@@ -329,8 +328,6 @@ if ( ! class_exists( 'Wasa_Kredit_Checkout' ) ) {
 			$methods[] = Wasa_Kredit_InvoiceCheckout_Payment_Gateway::class;
 			return $methods;
 		}
-
-
 	}
 	Wasa_Kredit_Checkout::get_instance();
 }
@@ -346,7 +343,3 @@ if ( ! class_exists( 'Wasa_Kredit_Checkout' ) ) {
 function Wasa_Kredit_WC() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName
 	return Wasa_Kredit_Checkout::get_instance();
 }
-
-
-
-

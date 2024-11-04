@@ -3,11 +3,11 @@ Contributors: aos06wasakredit
 Donate link: https://developer.wasakredit.se
 Tags: woocommerce, ecommerce, e-commerce, checkout
 Requires at least: 4.0.0
-Tested up to: 6.6.1
+Tested up to: 6.6.2
 Requires PHP: 7.2
 WC requires at least: 5.0.0
-WC tested up to: 9.2.0
-Stable tag: 2.6.0
+WC tested up to: 9.3.1
+Stable tag: 2.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,9 +52,14 @@ Or
 As of version 1.2.2 of Wasa Checkout for Woo commerce, there is a solution to the problem of working in parallel with other checkout providers taking over the checkout process.
 In the settings for Wasa's checkout, there are two new settings with the heading Advanced. When you activate the first one, a banner will be placed on the second supplier's checkout with a link to Woo-commerce's standard checkout. There is Wasa as a payment option together with other payment methods that are activated.
 1. Click on "Enable widget for redirection to regular checkout" or in swedish "Aktivera widget för omdirigering till ordinarie checkout".
-2. In the text field below, enter the path to the default checkout. For example, in my checkout, it is the "checkout". If it is not the same for you, you can easily get it by activating the standard checkout and copying the uri. Dy activates it at Settings> Advanced> Page Settings> Checkout Page> "Checkout".
+2. In the text field below, enter the path to the default checkout. For example, in my checkout, it is the "checkout". If it is not the same for you, you can easily get it by activating the standard checkout and copying the uri. To activate it, navigate to Settings > Advanced > Page Settings > Checkout Page and select "Checkout."
 
 == Changelog ==
+= 2024-11-04    - version 2.6.1 =
+* Fix           - Corrected typos.
+* Tweak         - Updated plugin description.
+* Tweak         - Introduced a new Wasa banner and icon.
+
 = 2024-08-26    - version 2.6.0 =
 * Feature       - Added support for WooCommerce's "High-Performance Order Storage" ("HPOS").
 * Tweak         - The product widgets will now be displayed even if the gateway is disabled provided that they've been enabled in the plugin settings.
