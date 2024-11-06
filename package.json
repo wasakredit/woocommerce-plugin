@@ -1,6 +1,6 @@
 {
 	"name": "wasa-kredit-checkout",
-	"version": "2.6.1",
+	"version": "2.6.2",
 	"description": "Wasa Kredit Checkout",
 	"main": "gulpfile.js",
 	"repository": "https://github.com/wasakredit/woocommerce-plugin.git",

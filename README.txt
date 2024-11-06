@@ -7,7 +7,7 @@ Tested up to: 6.7
 Requires PHP: 7.2
 WC requires at least: 5.0.0
 WC tested up to: 9.3.1
-Stable tag: 2.6.1
+Stable tag: 2.6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,6 +58,9 @@ In the settings for Wasa's checkout, there are two new settings with the heading
 2. In the text field below, enter the path to the default checkout. For example, in my checkout, it is the "checkout". If it is not the same for you, you can easily get it by activating the standard checkout and copying the uri. To activate it, navigate to Settings > Advanced > Page Settings > Checkout Page and select "Checkout."
 
 == Changelog ==
+= 2024-11-06    - version 2.6.2 =
+* Fix           - Bumped version to include previous release.
+
 = 2024-11-04    - version 2.6.1 =
 * Fix           - Corrected typos.
 * Tweak         - Updated plugin description.
