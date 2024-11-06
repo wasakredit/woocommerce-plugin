@@ -3,7 +3,7 @@ Contributors: aos06wasakredit
 Donate link: https://developer.wasakredit.se
 Tags: woocommerce, ecommerce, e-commerce, checkout
 Requires at least: 4.0.0
-Tested up to: 6.6.2
+Tested up to: 6.7
 Requires PHP: 7.2
 WC requires at least: 5.0.0
 WC tested up to: 9.3.1
@@ -15,7 +15,10 @@ Wasa Kredit Checkout provides a payment solution where you can pay through their
 
 == Description ==
 
-Wasa Kredit Checkout provides a payment solution where you can pay through their services.
+Wasa Kredit Checkout provides a payment solution where you can get your business customers to pay through; Invoicing, leasing and rental services for your Business to Business e-commerce.
+Instant and automatic credit assessment.
+To activate the plugin and get started, fill out the form
+https://www.wasakredit.se/foretag/saljfinansiering/e-handel-b2b/intresseanmalan-e-handel/
 
 === Checkout ===
 
