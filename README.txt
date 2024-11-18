@@ -17,8 +17,7 @@ Wasa Kredit Checkout provides a payment solution where you can pay through their
 
 Wasa Kredit Checkout provides a payment solution where you can get your business customers to pay through; Invoicing, leasing and rental services for your Business to Business e-commerce.
 Instant and automatic credit assessment.
-To activate the plugin and get started, fill out the form
-https://www.wasakredit.se/foretag/saljfinansiering/e-handel-b2b/intresseanmalan-e-handel/
+To activate the plugin and get started, fill out the form [on this page](https://www.wasakredit.se/foretag/saljfinansiering/e-handel-b2b/intresseanmalan-e-handel/).
 
 === Checkout ===
 
