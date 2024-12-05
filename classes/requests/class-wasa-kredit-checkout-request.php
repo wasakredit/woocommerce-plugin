@@ -181,21 +181,6 @@ abstract class Wasa_Kredit_Checkout_Request {
 		$response_code = wp_remote_retrieve_response_code( $response );
 		if ( $response_code < 200 || $response_code > 299 ) {
 			$data          = 'URL: ' . $request_url . ' - ' . wp_json_encode( $request_args );
-			$error_message = '';
-			// Get the error messages.
-			if ( null !== json_decode( $response['body'], true ) ) {
-				$errors = json_decode( $response['body'], true );
-
-				foreach ( $errors as $error ) {
-					if ( is_array( $error ) ) {
-						foreach ( $error as $e ) {
-							$error_message .= ' ' . $e;
-						}
-					} else {
-						$error_message .= ' ' . $error;
-					}
-				}
-			}
 			$code          = wp_remote_retrieve_response_code( $response );
 			$error_message = empty( $response['body'] ) ? "API Error ${code}" : json_decode( $response['body'], true );
 			$return        = new WP_Error( $code, $error_message, $data );
@@ -299,5 +284,4 @@ abstract class Wasa_Kredit_Checkout_Request {
 			'currency' => get_woocommerce_currency(),
 		);
 	}
-
 }
