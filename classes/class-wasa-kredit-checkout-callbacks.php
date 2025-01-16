@@ -90,7 +90,7 @@ class Wasa_Kredit_Callbacks {
 
 			// If order is not found, return.
 			if ( ! $order ) {
-				error_log( 'No order found with WooCommerce order id = "' . $woo_order_id . '"' );
+				Wasa_Kredit_Logger::log( 'No order found with WooCommerce order id = "' . $woo_order_id . '".' );
 				return;
 			}
 
