@@ -6,8 +6,8 @@ Requires at least: 4.0.0
 Tested up to: 6.7.1
 Requires PHP: 7.2
 WC requires at least: 5.0.0
-WC tested up to: 9.4.3
-Stable tag: 2.6.2
+WC tested up to: 9.4.1
+Stable tag: 2.6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,8 +17,7 @@ Wasa Kredit Checkout provides a payment solution where you can pay through their
 
 Wasa Kredit Checkout provides a payment solution where you can get your business customers to pay through; Invoicing, leasing and rental services for your Business to Business e-commerce.
 Instant and automatic credit assessment.
-To activate the plugin and get started, fill out the form
-https://www.wasakredit.se/foretag/saljfinansiering/e-handel-b2b/intresseanmalan-e-handel/
+To activate the plugin and get started, fill out the form [on this page](https://www.wasakredit.se/foretag/saljfinansiering/e-handel-b2b/intresseanmalan-e-handel/).
 
 === Checkout ===
 
@@ -58,6 +57,11 @@ In the settings for Wasa's checkout, there are two new settings with the heading
 2. In the text field below, enter the path to the default checkout. For example, in my checkout, it is the "checkout". If it is not the same for you, you can easily get it by activating the standard checkout and copying the uri. To activate it, navigate to Settings > Advanced > Page Settings > Checkout Page and select "Checkout."
 
 == Changelog ==
+= 2025-01-27    - version 2.6.3 =
+* Fix           - Fixed a PHP warning related to processing of API errors.
+* Tweak         - Check if the order could be found during callback handling before further processing. An error message will be logged if the order could not be found.
+* Tweak         - The WP log will now be used in favor of the PHP error log.
+
 = 2024-11-06    - version 2.6.2 =
 * Fix           - Bumped version to include previous release.
 
