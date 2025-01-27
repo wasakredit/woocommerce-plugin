@@ -54,7 +54,7 @@ class Wasa_Kredit_Callbacks {
 
 		// Check input parameters.
 		if ( ! isset( $wasa_order_id ) || ! isset( $order_status ) ) {
-			error_log( 'no order id or status set!' );
+			Wasa_Kredit_Logger::log( 'No Wasa order id or status set in order update request' );
 			return;
 		}
 
@@ -81,12 +81,19 @@ class Wasa_Kredit_Callbacks {
 				}
 			}
 			if ( ! isset( $woo_order_key ) ) {
-				error_log( 'No order found to update with id = "' . $wasa_order_id . '"' );
+				Wasa_Kredit_Logger::log( 'No WooCommerce order key found for Wasa order id = "' . $wasa_order_id . '" in order update request' );
 				return;
 			}
 
 			$woo_order_id = wc_get_order_id_by_order_key( $woo_order_key );
 			$order        = wc_get_order( $woo_order_id );
+
+			// If order is not found, return.
+			if ( ! $order ) {
+				Wasa_Kredit_Logger::log( 'No order found with WooCommerce order id = "' . $woo_order_id . '" in order update request' );
+				return;
+			}
+
 			// Only allow changing wasa order associations as long as the order is in status pending,
 			// meaning that no payment has been completed on wasa. This is because one order on woocommerce
 			// can in rare scenarios be associated with multiple orders in wasa.
@@ -121,12 +128,9 @@ class Wasa_Kredit_Callbacks {
 		} else {
 			$order->add_order_note( __( 'Failed to find a mapping for Wasa Kredit status', 'wasa-kredit-checkout' ) . ' "' . $order_status . '"' );
 		}
-		
 	}
 
 	public function order_update_stats_authorize( WP_REST_Request $request ) {
 		return true;
 	}
-
-
 } new Wasa_Kredit_Callbacks();
